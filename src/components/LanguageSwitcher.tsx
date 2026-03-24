@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 const languages = [
   { code: 'ru', name: 'RU', flag: '🇷🇺', fullName: 'Русский' },
   { code: 'en', name: 'EN', flag: '🇬🇧', fullName: 'English' },
-  { code: 'zh', name: 'ZH', flag: '🇨🇳', fullName: '中文' },
-  { code: 'fa', name: 'FA', flag: '🇮🇷', fullName: 'فارسی' },
 ];
 
 export default function LanguageSwitcher() {

@@ -80,15 +80,11 @@ const ResetIcon = () => (
 const LANG_LABELS: Record<string, string> = {
   ru: 'RU',
   en: 'EN',
-  zh: 'ZH',
-  ua: 'UA',
 };
 
 const LANG_FULL_LABELS: Record<string, string> = {
   ru: 'Русский',
   en: 'English',
-  zh: '中文',
-  ua: 'Українська',
 };
 
 // ============ Template List View ============
