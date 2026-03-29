@@ -2248,6 +2248,7 @@
       "trafficLimitLabel": "Traffic limit",
       "gbUnit": "GB",
       "trafficLimitHint": "0 = unlimited traffic",
+	  "deviceLimitHint": "0 = unlimited devices",
       "deviceLimitLabel": "Devices in tariff",
       "tierLevelLabel": "Tariff tier level",
       "tierLevelHint": "Affects upgrade availability between tariffs",
@@ -2326,7 +2327,7 @@
       "validation": {
         "nameRequired": "Enter tariff name",
         "nameLength": "Name must be 2 to 50 characters",
-        "deviceLimitRequired": "Specify number of devices (minimum 1)",
+        "deviceLimitRequired": "Specify number of devices (0 - unlimited)",
         "tierLevelInvalid": "Tier level must be between 1 and 10",
         "fieldsRequired": "Fill in required fields (devices, tier level)",
         "periodsRequired": "Add at least one period",

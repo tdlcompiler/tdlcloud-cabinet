@@ -2754,6 +2754,7 @@
       "trafficLimitLabel": "Лимит трафика",
       "gbUnit": "ГБ",
       "trafficLimitHint": "0 = безлимитный трафик",
+	  "deviceLimitHint": "0 = безлимитные устройства",
       "deviceLimitLabel": "Устройств в тарифе",
       "tierLevelLabel": "Уровень тарифа",
       "tierLevelHint": "Влияет на доступность перехода между тарифами",
@@ -2832,7 +2833,7 @@
       "validation": {
         "nameRequired": "Введите название тарифа",
         "nameLength": "Название должно быть от 2 до 50 символов",
-        "deviceLimitRequired": "Укажите количество устройств (минимум 1)",
+        "deviceLimitRequired": "Укажите количество устройств (0 - безлимит)",
         "tierLevelInvalid": "Уровень тарифа должен быть от 1 до 10",
         "fieldsRequired": "Заполните обязательные поля (устройства, уровень)",
         "periodsRequired": "Добавьте хотя бы один период",

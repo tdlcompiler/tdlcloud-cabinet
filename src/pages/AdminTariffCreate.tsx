@@ -281,9 +281,9 @@ export default function AdminTariffCreate() {
 
   const isLoading = createMutation.isPending || updateMutation.isPending;
 
-  // Validation like bot: name 2-50 chars, device_limit >= 1, tier_level 1-10
+  // Validation like bot: name 2-50 chars, device_limit >= 0 (0 = unlim), tier_level 1-10
   const isNameValid = name.length >= 2 && name.length <= 50;
-  const isDeviceLimitValid = deviceLimit !== '' && toNumber(deviceLimit) >= 1;
+  const isDeviceLimitValid = deviceLimit !== '' && toNumber(deviceLimit) >= 0;
   const isTierLevelValid =
     tierLevel !== '' && toNumber(tierLevel) >= 1 && toNumber(tierLevel) <= 10;
   const hasTrafficPackages = !trafficTopupEnabled || Object.keys(trafficTopupPackages).length > 0;
@@ -538,14 +538,23 @@ export default function AdminTariffCreate() {
               {t('admin.tariffs.deviceLimitLabel')}
               <span className="text-error-400">*</span>
             </label>
-            <input
-              type="number"
-              value={deviceLimit}
-              onChange={createNumberInputHandler(setDeviceLimit, 1)}
-              className={`input w-32 ${!isDeviceLimitValid ? 'border-error-500/50' : ''}`}
-              min={1}
-              placeholder="1"
-            />
+			<div className="flex items-center gap-2">
+              <input
+                type="number"
+                value={deviceLimit}
+                onChange={createNumberInputHandler(setDeviceLimit, 0)}
+                className={`input w-32 ${!isDeviceLimitValid ? 'border-error-500/50' : ''}`}
+                min={0}
+                placeholder="1"
+              />
+			  {(deviceLimit === 0 || deviceLimit === '') && (
+                  <span className="flex items-center gap-1 text-sm text-success-500">
+                    <InfinityIcon />
+                    {t('admin.tariffs.unlimited')}
+                  </span>
+              )}
+			</div>
+			<p className="mt-1 text-xs text-dark-500">{t('admin.tariffs.deviceLimitHint')}</p>
           </div>
 
           {/* Tier Level */}
