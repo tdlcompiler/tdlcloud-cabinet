@@ -1338,7 +1338,6 @@ img.twemoji {
     min-height: 44px;
     min-width: 44px;
   }
-}
 
 @layer utilities {
   /* Text gradient */
