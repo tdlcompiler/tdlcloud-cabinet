@@ -194,6 +194,7 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const { t } = useTranslation();
   const location = useLocation();
+  const user = useAuthStore((state) => state.user);
   const isAdmin = useAuthStore((state) => state.isAdmin);
   const logout = useAuthStore((state) => state.logout);
   const { isFullscreen, safeAreaInset, contentSafeAreaInset, platform, isMobile } =
@@ -266,6 +267,13 @@ export function AppShell({ children }: AppShellProps) {
     { path: '/profile', label: t('nav.profile'), icon: UserIcon },
   ];
 
+  const extendedDesktopNavItems = [
+    ...desktopNavItems,
+    ...(referralEnabled ? [{ path: '/referral', label: t('nav.referral'), icon: UsersIcon }] : []),
+    ...(giftEnabled ? [{ path: '/gift', label: t('nav.gift'), icon: GiftIcon }] : []),
+    ...(isAdmin ? [{ path: '/admin', label: t('admin.nav.title'), icon: ShieldIcon }] : []),
+  ];
+
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
@@ -274,6 +282,11 @@ export function AppShell({ children }: AppShellProps) {
   const handleNavClick = () => {
     haptic.impact('light');
   };
+
+  const activeDesktopLabel =
+    extendedDesktopNavItems.find((item) => isActive(item.path))?.label || t('nav.dashboard');
+  const userLabel =
+    user?.first_name || user?.username || (user?.telegram_id ? `#${user.telegram_id}` : 'TDL');
 
   // headerHeight comes from useHeaderHeight() — accounts for TG safe area in fullscreen
 
@@ -288,136 +301,131 @@ export function AppShell({ children }: AppShellProps) {
       <SuccessNotificationModal />
 
       {/* Desktop Header */}
-      <header className="fixed left-0 right-0 top-0 z-50 hidden border-b border-dark-800/50 bg-dark-950/95 lg:block">
-        <div className="mx-auto grid h-14 max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-6">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5" onClick={handleNavClick}>
-            <div className="relative flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-dark-800">
-              <span
-                className={cn(
-                  'absolute text-sm font-bold text-accent-400 transition-opacity duration-200',
-                  hasCustomLogo && isLogoPreloaded() ? 'opacity-0' : 'opacity-100',
-                )}
-              >
-                {logoLetter}
-              </span>
-              {hasCustomLogo && logoUrl && (
-                <img
-                  src={logoUrl}
-                  alt={appName || 'Logo'}
+      <header
+        className="fixed left-1/2 top-4 z-50 hidden -translate-x-1/2 lg:block"
+        style={{ width: 'min(calc(100% - 2rem), 80rem)' }}
+      >
+        <div className="tdl-shell-panel px-4 py-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 xl:grid-cols-[auto_1fr_auto]">
+            <Link to="/" className="flex min-w-0 items-center gap-3" onClick={handleNavClick}>
+              <div className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-accent-500/20 bg-dark-950/80 shadow-[0_16px_34px_rgba(var(--color-accent-500),0.14)]">
+                <span
                   className={cn(
-                    'absolute h-full w-full object-contain transition-opacity duration-200',
-                    isLogoPreloaded() ? 'opacity-100' : 'opacity-0',
+                    'absolute text-lg font-bold text-accent-300 transition-opacity duration-200',
+                    hasCustomLogo && isLogoPreloaded() ? 'opacity-0' : 'opacity-100',
                   )}
-                />
-              )}
-            </div>
-            <span className="text-base font-semibold text-dark-100">{appName}</span>
-          </Link>
+                >
+                  {logoLetter}
+                </span>
+                {hasCustomLogo && logoUrl && (
+                  <img
+                    src={logoUrl}
+                    alt={appName || 'Logo'}
+                    className={cn(
+                      'absolute h-full w-full object-contain transition-opacity duration-200',
+                      isLogoPreloaded() ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                )}
+              </div>
+              <div className="min-w-0">
+                <div className="tdl-kicker">TDL Cloud // Cabinet</div>
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="truncate text-base font-semibold text-dark-50">{appName}</span>
+                  <span className="tdl-chip hidden xl:inline-flex">{activeDesktopLabel}</span>
+                </div>
+              </div>
+            </Link>
 
-          {/* Center Navigation */}
-          <nav className="flex min-w-0 items-center gap-1">
-            {desktopNavItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={handleNavClick}
-                className={cn(
-                  'group flex items-center rounded-xl px-2.5 py-2 transition-all duration-200',
-                  isActive(item.path)
-                    ? 'bg-dark-800 text-dark-50'
-                    : 'text-dark-400 hover:bg-dark-800/50 hover:text-dark-200',
-                )}
-              >
-                <item.icon className="h-[18px] w-[18px] shrink-0" />
-                <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:ml-2 group-hover:max-w-40 group-hover:opacity-100">
-                  {item.label}
-                </span>
-              </Link>
-            ))}
-            {referralEnabled && (
-              <Link
-                to="/referral"
-                onClick={handleNavClick}
-                className={cn(
-                  'group flex items-center rounded-xl px-2.5 py-2 transition-all duration-200',
-                  isActive('/referral')
-                    ? 'bg-dark-800 text-dark-50'
-                    : 'text-dark-400 hover:bg-dark-800/50 hover:text-dark-200',
-                )}
-              >
-                <UsersIcon className="h-[18px] w-[18px] shrink-0" />
-                <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:ml-2 group-hover:max-w-40 group-hover:opacity-100">
-                  {t('nav.referral')}
-                </span>
-              </Link>
-            )}
-            {giftEnabled && (
-              <Link
-                to="/gift"
-                onClick={handleNavClick}
-                className={cn(
-                  'group flex items-center rounded-xl px-2.5 py-2 transition-all duration-200',
-                  isActive('/gift')
-                    ? 'bg-dark-800 text-dark-50'
-                    : 'text-dark-400 hover:bg-dark-800/50 hover:text-dark-200',
-                )}
-              >
-                <GiftIcon className="h-[18px] w-[18px] shrink-0" />
-                <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:ml-2 group-hover:max-w-40 group-hover:opacity-100">
-                  {t('nav.gift')}
-                </span>
-              </Link>
-            )}
-            {isAdmin && (
-              <>
-                <div className="mx-1 h-5 w-px shrink-0 bg-dark-700" />
+            <nav className="hidden min-w-0 items-center gap-1.5 rounded-[22px] border border-dark-700/60 bg-dark-950/45 p-1.5 xl:flex">
+              {desktopNavItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={handleNavClick}
+                  className={cn(
+                    'flex items-center gap-2 rounded-[16px] border px-3 py-2 text-sm font-medium transition-all duration-200',
+                    isActive(item.path)
+                      ? 'border-accent-500/20 bg-accent-500/10 text-accent-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_24px_rgba(var(--color-accent-500),0.08)]'
+                      : 'border-transparent text-dark-400 hover:border-dark-700/60 hover:bg-dark-800/55 hover:text-dark-50',
+                  )}
+                >
+                  <item.icon className="h-[18px] w-[18px] shrink-0" />
+                  <span className="whitespace-nowrap">{item.label}</span>
+                </Link>
+              ))}
+              {referralEnabled && (
+                <Link
+                  to="/referral"
+                  onClick={handleNavClick}
+                  className={cn(
+                    'flex items-center gap-2 rounded-[16px] border px-3 py-2 text-sm font-medium transition-all duration-200',
+                    isActive('/referral')
+                      ? 'border-accent-500/20 bg-accent-500/10 text-accent-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_24px_rgba(var(--color-accent-500),0.08)]'
+                      : 'border-transparent text-dark-400 hover:border-dark-700/60 hover:bg-dark-800/55 hover:text-dark-50',
+                  )}
+                >
+                  <UsersIcon className="h-[18px] w-[18px] shrink-0" />
+                  <span className="whitespace-nowrap">{t('nav.referral')}</span>
+                </Link>
+              )}
+              {giftEnabled && (
+                <Link
+                  to="/gift"
+                  onClick={handleNavClick}
+                  className={cn(
+                    'flex items-center gap-2 rounded-[16px] border px-3 py-2 text-sm font-medium transition-all duration-200',
+                    isActive('/gift')
+                      ? 'border-accent-500/20 bg-accent-500/10 text-accent-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_24px_rgba(var(--color-accent-500),0.08)]'
+                      : 'border-transparent text-dark-400 hover:border-dark-700/60 hover:bg-dark-800/55 hover:text-dark-50',
+                  )}
+                >
+                  <GiftIcon className="h-[18px] w-[18px] shrink-0" />
+                  <span className="whitespace-nowrap">{t('nav.gift')}</span>
+                </Link>
+              )}
+              {isAdmin && (
                 <Link
                   to="/admin"
                   onClick={handleNavClick}
                   className={cn(
-                    'group flex items-center rounded-xl px-2.5 py-2 transition-all duration-200',
+                    'flex items-center gap-2 rounded-[16px] border px-3 py-2 text-sm font-medium transition-all duration-200',
                     location.pathname.startsWith('/admin')
-                      ? 'bg-warning-500/10 text-warning-400'
-                      : 'text-warning-500/70 hover:bg-warning-500/10 hover:text-warning-400',
+                      ? 'border-warning-500/30 bg-warning-500/10 text-warning-300'
+                      : 'border-transparent text-warning-500/70 hover:border-warning-500/20 hover:bg-warning-500/10 hover:text-warning-300',
                   )}
                 >
                   <ShieldIcon className="h-[18px] w-[18px] shrink-0" />
-                  <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:ml-2 group-hover:max-w-40 group-hover:opacity-100">
-                    {t('admin.nav.title')}
-                  </span>
+                  <span className="whitespace-nowrap">{t('admin.nav.title')}</span>
                 </Link>
-              </>
-            )}
-          </nav>
-
-          {/* Right side actions */}
-          <div className="flex items-center justify-end gap-2">
-            <button
-              onClick={() => {
-                haptic.impact('light');
-                toggleTheme();
-              }}
-              className={cn(
-                'rounded-xl border border-dark-700/50 bg-dark-800/50 p-2 text-dark-400 transition-colors duration-200 hover:bg-dark-700 hover:text-accent-400',
-                !canToggleTheme && 'pointer-events-none invisible',
               )}
-              title={isDark ? t('theme.light') || 'Light mode' : t('theme.dark') || 'Dark mode'}
-            >
-              {isDark ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
-            </button>
-            <TicketNotificationBell isAdmin={location.pathname.startsWith('/admin')} />
-            <LanguageSwitcher />
-            <button
-              onClick={() => {
-                haptic.impact('light');
-                logout();
-              }}
-              className="rounded-xl border border-dark-700/50 bg-dark-800/50 p-2 text-dark-400 transition-colors duration-200 hover:bg-dark-700 hover:text-accent-400"
-              title={t('nav.logout')}
-            >
-              <LogoutIcon className="h-5 w-5" />
-            </button>
+            </nav>
+
+            <div className="flex items-center justify-end gap-2">
+              <div className="tdl-chip hidden 2xl:inline-flex">{userLabel}</div>
+              <button
+                onClick={() => {
+                  haptic.impact('light');
+                  toggleTheme();
+                }}
+                className={cn('btn-icon', !canToggleTheme && 'pointer-events-none invisible')}
+                title={isDark ? t('theme.light') || 'Light mode' : t('theme.dark') || 'Dark mode'}
+              >
+                {isDark ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
+              </button>
+              <TicketNotificationBell isAdmin={location.pathname.startsWith('/admin')} />
+              <LanguageSwitcher />
+              <button
+                onClick={() => {
+                  haptic.impact('light');
+                  logout();
+                }}
+                className="btn-icon"
+                title={t('nav.logout')}
+              >
+                <LogoutIcon className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -440,13 +448,15 @@ export function AppShell({ children }: AppShellProps) {
       />
 
       {/* Desktop spacer */}
-      <div className="hidden h-14 lg:block" />
+      <div className="hidden h-28 lg:block" />
 
       {/* Mobile spacer */}
       <div className="lg:hidden" style={{ height: headerHeight }} />
 
       {/* Main content */}
-      <main className="mx-auto max-w-6xl px-4 py-6 pb-28 lg:px-6 lg:pb-8">{children}</main>
+      <main className="mx-auto max-w-[80rem] px-4 py-6 pb-28 lg:px-6 lg:py-8 lg:pb-10">
+        {children}
+      </main>
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav

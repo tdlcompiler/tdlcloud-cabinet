@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
 import { initDataUser } from '@telegram-apps/sdk-react';
+import { useShallow } from 'zustand/shallow';
 
 import { useAuthStore } from '@/store/auth';
-import { useShallow } from 'zustand/shallow';
 import { useTheme } from '@/hooks/useTheme';
 import { usePlatform } from '@/platform';
 import {
@@ -21,7 +21,6 @@ import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import TicketNotificationBell from '@/components/TicketNotificationBell';
 
-// Icons
 import {
   HomeIcon,
   SubscriptionIcon,
@@ -43,10 +42,10 @@ import {
   SearchIcon,
 } from './icons';
 
+import type { TelegramPlatform } from '@/hooks/useTelegramSDK';
+
 const FALLBACK_NAME = import.meta.env.VITE_APP_NAME || 'Cabinet';
 const FALLBACK_LOGO = import.meta.env.VITE_APP_LOGO || 'V';
-
-import type { TelegramPlatform } from '@/hooks/useTelegramSDK';
 
 interface AppHeaderProps {
   mobileMenuOpen: boolean;
@@ -89,7 +88,6 @@ export function AppHeader({
   const [userPhotoUrl, setUserPhotoUrl] = useState<string | null>(null);
   const [logoLoaded, setLogoLoaded] = useState(() => isLogoPreloaded());
 
-  // Branding
   const { data: branding } = useQuery({
     queryKey: ['branding'],
     queryFn: async () => {
@@ -110,7 +108,6 @@ export function AppHeader({
   const hasCustomLogo = branding?.has_custom_logo || false;
   const logoUrl = branding ? brandingApi.getLogoUrl(branding) : null;
 
-  // Theme toggle visibility
   const { data: enabledThemes } = useQuery({
     queryKey: ['enabled-themes'],
     queryFn: themeColorsApi.getEnabledThemes,
@@ -118,24 +115,21 @@ export function AppHeader({
   });
   const canToggle = enabledThemes?.dark && enabledThemes?.light;
 
-  // Get user photo from Telegram
   useEffect(() => {
     try {
-      const user = initDataUser();
-      if (user?.photo_url) {
-        setUserPhotoUrl(user.photo_url);
+      const telegramUser = initDataUser();
+      if (telegramUser?.photo_url) {
+        setUserPhotoUrl(telegramUser.photo_url);
       }
     } catch {
-      // Not in Telegram or init data not available
+      // Not in Telegram.
     }
   }, []);
 
-  // Lock scroll when menu is open (works in iframe/Telegram Mini App)
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
     const preventDefault = (e: TouchEvent) => {
-      // Allow scrolling inside menu content
       const target = e.target as HTMLElement;
       if (target.closest('.mobile-menu-content')) return;
       e.preventDefault();
@@ -156,6 +150,7 @@ export function AppHeader({
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
   };
+
   const isAdminActive = () => location.pathname.startsWith('/admin');
 
   const navItems = [
@@ -171,243 +166,229 @@ export function AppHeader({
     { path: '/info', label: t('nav.info'), icon: InfoIcon },
   ];
 
+  const activeMobileLabel =
+    navItems.find((item) => isActive(item.path))?.label ||
+    (isAdminActive() ? t('admin.nav.title') : t('nav.dashboard'));
+
+  const userName = user?.first_name || user?.username || 'TDL User';
+  const userHandle = user?.username ? `@${user.username}` : `ID: ${user?.telegram_id ?? '---'}`;
+
   return (
     <>
-      {/* Header - only on mobile */}
       <header
-        className="glass fixed left-0 right-0 top-0 z-50 shadow-lg shadow-black/10 lg:hidden"
+        className="fixed left-0 right-0 top-0 z-50 lg:hidden"
         style={{
           paddingTop: isFullscreen
             ? `${Math.max(safeAreaInset.top, contentSafeAreaInset.top) + (telegramPlatform === 'android' ? 48 : 45)}px`
             : undefined,
         }}
       >
-        <div
-          className="mx-auto w-full px-4"
-          onClick={() => mobileMenuOpen && setMobileMenuOpen(false)}
-        >
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={cn('flex flex-shrink-0 items-center gap-2.5', !appName && 'mr-4')}
-            >
-              <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-linear-lg border border-dark-700/50 bg-dark-800/80 shadow-md">
-                <span
-                  className={cn(
-                    'absolute text-lg font-bold text-accent-400 transition-opacity duration-200',
-                    hasCustomLogo && logoLoaded ? 'opacity-0' : 'opacity-100',
-                  )}
-                >
-                  {logoLetter}
-                </span>
-                {hasCustomLogo && logoUrl && (
-                  <img
-                    src={logoUrl}
-                    alt={appName || 'Logo'}
-                    className={cn(
-                      'absolute h-full w-full object-contain transition-opacity duration-200',
-                      logoLoaded ? 'opacity-100' : 'opacity-0',
-                    )}
-                    onLoad={() => setLogoLoaded(true)}
-                  />
-                )}
-              </div>
-              {appName && (
-                <span className="whitespace-nowrap text-base font-semibold text-dark-100">
-                  {appName}
-                </span>
-              )}
-            </Link>
-
-            {/* Right side */}
-            <div className="flex items-center gap-1.5">
-              {/* Command palette trigger (web only) */}
-              {platform !== 'telegram' && (
-                <button
-                  onClick={() => {
-                    haptic.impact('light');
-                    onCommandPaletteOpen();
-                  }}
-                  className="btn-icon hidden sm:flex"
-                  title="Search (⌘K)"
-                >
-                  <SearchIcon className="h-5 w-5" />
-                </button>
-              )}
-
-              {/* Theme toggle */}
-              {canToggle && (
-                <button
-                  onClick={() => {
-                    haptic.impact('light');
-                    toggleTheme();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="relative rounded-linear-lg border border-dark-700/50 bg-dark-800/50 p-2 text-dark-400 transition-all duration-200 hover:bg-dark-700 hover:text-accent-400"
-                  title={isDark ? t('theme.light') || 'Light mode' : t('theme.dark') || 'Dark mode'}
-                >
-                  <div className="relative h-5 w-5">
-                    <div
-                      className={cn(
-                        'absolute inset-0 transition-all duration-300',
-                        isDark ? 'rotate-0 opacity-100' : 'rotate-90 opacity-0',
-                      )}
-                    >
-                      <MoonIcon className="h-5 w-5" />
-                    </div>
-                    <div
-                      className={cn(
-                        'absolute inset-0 transition-all duration-300',
-                        isDark ? '-rotate-90 opacity-0' : 'rotate-0 opacity-100',
-                      )}
-                    >
-                      <SunIcon className="h-5 w-5" />
-                    </div>
-                  </div>
-                </button>
-              )}
-
-              <div onClick={() => setMobileMenuOpen(false)}>
-                <TicketNotificationBell isAdmin={isAdminActive()} />
-              </div>
-              <div onClick={() => setMobileMenuOpen(false)}>
-                <LanguageSwitcher />
-              </div>
-
-              {/* Mobile menu button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  haptic.impact('light');
-                  setMobileMenuOpen(!mobileMenuOpen);
-                }}
-                className={`rounded-xl p-2.5 transition-all duration-200 ${
-                  mobileMenuOpen
-                    ? 'bg-dark-700 text-dark-100'
-                    : 'text-dark-400 hover:bg-dark-800 hover:text-dark-100'
-                }`}
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileMenuOpen}
+        <div className="mx-auto w-full px-4" onClick={() => mobileMenuOpen && setMobileMenuOpen(false)}>
+          <div className="tdl-shell-panel px-3 py-2.5">
+            <div className="flex items-center justify-between gap-3">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn('flex min-w-0 flex-shrink items-center gap-3', !appName && 'mr-4')}
               >
-                {mobileMenuOpen ? (
-                  <CloseIcon className="h-6 w-6" />
-                ) : (
-                  <MenuIcon className="h-6 w-6" />
+                <div className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-accent-500/20 bg-dark-950/80 shadow-[0_16px_34px_rgba(var(--color-accent-500),0.14)]">
+                  <span
+                    className={cn(
+                      'absolute text-lg font-bold text-accent-300 transition-opacity duration-200',
+                      hasCustomLogo && logoLoaded ? 'opacity-0' : 'opacity-100',
+                    )}
+                  >
+                    {logoLetter}
+                  </span>
+                  {hasCustomLogo && logoUrl && (
+                    <img
+                      src={logoUrl}
+                      alt={appName || 'Logo'}
+                      className={cn(
+                        'absolute h-full w-full object-contain transition-opacity duration-200',
+                        logoLoaded ? 'opacity-100' : 'opacity-0',
+                      )}
+                      onLoad={() => setLogoLoaded(true)}
+                    />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <div className="tdl-kicker">TDL Cloud</div>
+                  {appName && <div className="mt-1 truncate text-sm font-semibold text-dark-50">{appName}</div>}
+                  <div className="mt-1 text-[11px] text-dark-400">{activeMobileLabel}</div>
+                </div>
+              </Link>
+
+              <div className="flex items-center gap-1.5">
+                {platform !== 'telegram' && (
+                  <button
+                    onClick={() => {
+                      haptic.impact('light');
+                      onCommandPaletteOpen();
+                    }}
+                    className="btn-icon hidden sm:flex"
+                    title="Search"
+                  >
+                    <SearchIcon className="h-5 w-5" />
+                  </button>
                 )}
-              </button>
+
+                {canToggle && (
+                  <button
+                    onClick={() => {
+                      haptic.impact('light');
+                      toggleTheme();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="btn-icon relative"
+                    title={isDark ? t('theme.light') || 'Light mode' : t('theme.dark') || 'Dark mode'}
+                  >
+                    <div className="relative h-5 w-5">
+                      <div
+                        className={cn(
+                          'absolute inset-0 transition-all duration-300',
+                          isDark ? 'rotate-0 opacity-100' : 'rotate-90 opacity-0',
+                        )}
+                      >
+                        <MoonIcon className="h-5 w-5" />
+                      </div>
+                      <div
+                        className={cn(
+                          'absolute inset-0 transition-all duration-300',
+                          isDark ? '-rotate-90 opacity-0' : 'rotate-0 opacity-100',
+                        )}
+                      >
+                        <SunIcon className="h-5 w-5" />
+                      </div>
+                    </div>
+                  </button>
+                )}
+
+                <div onClick={() => setMobileMenuOpen(false)}>
+                  <TicketNotificationBell isAdmin={isAdminActive()} />
+                </div>
+                <div onClick={() => setMobileMenuOpen(false)}>
+                  <LanguageSwitcher />
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    haptic.impact('light');
+                    setMobileMenuOpen(!mobileMenuOpen);
+                  }}
+                  className={cn('btn-icon', mobileMenuOpen && 'border-accent-500/20 text-accent-300')}
+                  aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={mobileMenuOpen}
+                >
+                  {mobileMenuOpen ? (
+                    <CloseIcon className="h-6 w-6" />
+                  ) : (
+                    <MenuIcon className="h-6 w-6" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile menu overlay */}
       {mobileMenuOpen && (
-        <div
-          className="fixed inset-x-0 bottom-0 z-40 animate-fade-in lg:hidden"
-          style={{ top: headerHeight }}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileMenuOpen(false)} />
+        <div className="fixed inset-x-0 bottom-0 z-40 animate-fade-in lg:hidden" style={{ top: headerHeight }}>
+          <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
 
-          {/* Menu content */}
           <div
-            className="mobile-menu-content absolute inset-x-0 bottom-0 top-0 overflow-y-auto overscroll-contain border-t border-dark-800/50 bg-dark-900/95 pb-[calc(5rem+env(safe-area-inset-bottom,0px))]"
+            className="absolute inset-0 overflow-y-auto overscroll-contain px-4 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] pt-3"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
-            <div className="mx-auto max-w-6xl px-4 py-4">
-              {/* User info */}
-              <div className="mb-4 flex items-center justify-between border-b border-dark-800/50 pb-4">
-                <div className="flex items-center gap-3">
-                  {userPhotoUrl ? (
-                    <img
-                      src={userPhotoUrl}
-                      alt="Avatar"
-                      className="h-10 w-10 rounded-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                      }}
-                    />
-                  ) : null}
-                  <div
-                    className={cn(
-                      'flex h-10 w-10 items-center justify-center rounded-full bg-dark-700',
-                      userPhotoUrl ? 'hidden' : '',
-                    )}
-                  >
-                    <UserIcon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-dark-100">
-                      {user?.first_name || user?.username}
-                    </div>
-                    <div className="text-xs text-dark-500">
-                      @{user?.username || `ID: ${user?.telegram_id}`}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Nav items */}
-              <nav className="space-y-1">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={isActive(item.path) ? 'nav-item-active' : 'nav-item'}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    {item.label}
-                  </Link>
-                ))}
-
-                {isAdmin && (
-                  <>
-                    <div className="divider my-3" />
-                    <div className="px-4 py-1 text-xs font-medium uppercase tracking-wider text-dark-500">
-                      {t('admin.nav.title')}
-                    </div>
-                    <Link
-                      to="/admin"
-                      onClick={() => setMobileMenuOpen(false)}
+            <div className="mobile-menu-content mx-auto max-w-3xl">
+              <div className="tdl-shell-panel px-4 py-4">
+                <div className="mb-4 flex items-center justify-between gap-3 border-b border-dark-700/50 pb-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    {userPhotoUrl ? (
+                      <img
+                        src={userPhotoUrl}
+                        alt="Avatar"
+                        className="h-11 w-11 rounded-2xl object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
+                      />
+                    ) : null}
+                    <div
                       className={cn(
-                        'nav-item',
-                        isAdminActive()
-                          ? 'bg-warning-500/10 text-warning-400'
-                          : 'text-warning-500/70',
+                        'flex h-11 w-11 items-center justify-center rounded-2xl border border-dark-700/60 bg-dark-950/70',
+                        userPhotoUrl ? 'hidden' : '',
                       )}
                     >
-                      <CogIcon className="h-5 w-5" />
-                      {t('admin.nav.title')}
+                      <UserIcon className="h-5 w-5 text-dark-300" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="tdl-kicker">Session</div>
+                      <div className="truncate text-sm font-semibold text-dark-50">{userName}</div>
+                      <div className="truncate text-xs text-dark-400">{userHandle}</div>
+                    </div>
+                  </div>
+                  <span className="tdl-chip shrink-0">online</span>
+                </div>
+
+                <nav className="space-y-1">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={isActive(item.path) ? 'nav-item-active' : 'nav-item'}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      {item.label}
                     </Link>
-                  </>
-                )}
+                  ))}
 
-                <div className="divider my-3" />
+                  {isAdmin && (
+                    <>
+                      <div className="divider my-3" />
+                      <div className="tdl-kicker px-4 pb-1">{t('admin.nav.title')}</div>
+                      <Link
+                        to="/admin"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          'nav-item',
+                          isAdminActive()
+                            ? 'border-warning-500/30 bg-warning-500/10 text-warning-300'
+                            : 'text-warning-500/80',
+                        )}
+                      >
+                        <CogIcon className="h-5 w-5" />
+                        {t('admin.nav.title')}
+                      </Link>
+                    </>
+                  )}
 
-                <Link
-                  to="/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={isActive('/profile') ? 'nav-item-active' : 'nav-item'}
-                >
-                  <UserIcon className="h-5 w-5" />
-                  {t('nav.profile')}
-                </Link>
+                  <div className="divider my-3" />
 
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    logout();
-                  }}
-                  className="nav-item w-full text-error-400"
-                >
-                  <LogoutIcon className="h-5 w-5" />
-                  {t('nav.logout')}
-                </button>
-              </nav>
+                  <Link
+                    to="/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={isActive('/profile') ? 'nav-item-active' : 'nav-item'}
+                  >
+                    <UserIcon className="h-5 w-5" />
+                    {t('nav.profile')}
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      logout();
+                    }}
+                    className="nav-item w-full text-error-400"
+                  >
+                    <LogoutIcon className="h-5 w-5" />
+                    {t('nav.logout')}
+                  </button>
+                </nav>
+              </div>
             </div>
           </div>
         </div>

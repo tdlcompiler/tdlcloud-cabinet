@@ -1,8 +1,7 @@
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
 import { useCurrency } from '../../hooks/useCurrency';
-import { useTheme } from '../../hooks/useTheme';
-import { getGlassColors } from '../../utils/glassTheme';
 
 interface StatsGridProps {
   balanceRubles: number;
@@ -11,22 +10,9 @@ interface StatsGridProps {
   refLoading: boolean;
 }
 
-const ChevronIcon = ({ color }: { color: string }) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    style={{ flexShrink: 0 }}
-    aria-hidden="true"
-  >
-    <path
-      d="M6 4l4 4-4 4"
-      stroke={color}
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+const ChevronIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
   </svg>
 );
 
@@ -38,120 +24,97 @@ export default function StatsGrid({
 }: StatsGridProps) {
   const { t } = useTranslation();
   const { formatAmount, currencySymbol } = useCurrency();
-  const { isDark } = useTheme();
-  const g = getGlassColors(isDark);
-
-  const accentColor = 'rgb(var(--color-accent-400))';
-  const accentBg = 'rgba(var(--color-accent-400), 0.07)';
 
   const cards = [
     {
+      id: '01',
       label: t('dashboard.stats.balance'),
       value: `${formatAmount(balanceRubles)} ${currencySymbol}`,
-      valueColor: accentColor,
+      subtitle: t('nav.balance'),
       to: '/balance',
-      icon: (color: string) => (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={color}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <rect x="2" y="6" width="20" height="14" rx="2" />
-          <path d="M2 10h20" />
-          <path d="M6 14h.01M10 14h.01" />
+      accent: true,
+      onboarding: 'balance',
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <rect x="2.5" y="6" width="19" height="12" rx="2.5" />
+          <path d="M2.5 10h19" />
+          <path d="M7 14h2.5" />
         </svg>
       ),
-      iconBg: accentBg,
-      iconColor: accentColor,
-      loading: false,
-      onboarding: 'balance',
     },
     {
+      id: '02',
       label: t('dashboard.stats.referrals'),
       value: `${referralCount}`,
-      valueColor: g.text,
-      subtitle: `+${formatAmount(earningsRubles)} ${currencySymbol}`,
-      subtitleColor: accentColor,
+      subtitle: refLoading
+        ? t('common.loading')
+        : `+${formatAmount(earningsRubles)} ${currencySymbol}`,
       to: '/referral',
-      icon: (color: string) => (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={color}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+      accent: false,
+      icon: (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
           <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
         </svg>
       ),
-      iconBg: g.trackBg,
-      iconColor: g.textSecondary,
-      loading: refLoading,
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2.5">
-      {cards.map((card, i) => (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {cards.map((card) => (
         <Link
-          key={i}
+          key={card.id}
           to={card.to}
-          className="group relative overflow-hidden rounded-[18px] transition-all duration-200"
-          style={{
-            background: g.cardBg,
-            border: `1px solid ${g.cardBorder}`,
-            boxShadow: g.shadow,
-            padding: '18px 20px 20px',
-          }}
           data-onboarding={card.onboarding}
+          className="group relative overflow-hidden rounded-[24px] border border-dark-700/60 bg-dark-900/60 p-5 shadow-[0_20px_48px_rgba(2,6,23,0.22),inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-dark-600/70"
         >
-          {/* Top row: icon + label + arrow */}
-          <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[9px] transition-colors duration-500"
-                style={{ background: card.iconBg }}
-              >
-                {card.icon(card.iconColor)}
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--color-accent-400),0.12),transparent_28%)] opacity-60" />
+          <div className="relative z-10">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="tdl-kicker">{card.id}</div>
+                <div className="mt-2 text-sm font-medium text-dark-300">{card.label}</div>
               </div>
-              <span className="text-[13px] font-medium text-dark-50/45">{card.label}</span>
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-[14px] border ${
+                  card.accent
+                    ? 'border-accent-500/20 bg-accent-500/10 text-accent-300'
+                    : 'border-dark-700/60 bg-dark-950/55 text-dark-300'
+                }`}
+              >
+                {card.icon}
+              </div>
             </div>
-            <ChevronIcon color={g.textFaint} />
-          </div>
 
-          {/* Value */}
-          {card.loading ? (
-            <div className="skeleton h-8 w-20" />
-          ) : (
-            <>
-              <div
-                className="text-[28px] font-bold leading-tight tracking-tight transition-colors duration-500"
-                style={{ color: card.valueColor }}
-              >
-                {card.value}
+            {refLoading && !card.accent ? (
+              <div className="mt-6 space-y-2">
+                <div className="skeleton h-8 w-20" />
+                <div className="skeleton h-4 w-24" />
               </div>
-              {card.subtitle && (
+            ) : (
+              <div className="mt-6">
                 <div
-                  className="mt-0.5 text-[13px] font-semibold"
-                  style={{ color: card.subtitleColor }}
+                  className={`text-[30px] font-semibold leading-none tracking-tight ${
+                    card.accent ? 'text-accent-300' : 'text-dark-50'
+                  }`}
                 >
+                  {card.value}
+                </div>
+                <div className={`mt-2 text-sm ${card.accent ? 'text-dark-300' : 'text-accent-300'}`}>
                   {card.subtitle}
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
+
+            <div className="mt-6 flex items-center justify-between text-xs text-dark-400">
+              <span>{card.to === '/balance' ? t('nav.balance') : t('nav.referral')}</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                <ChevronIcon />
+              </span>
+            </div>
+          </div>
         </Link>
       ))}
     </div>

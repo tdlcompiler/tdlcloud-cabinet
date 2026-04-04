@@ -76,6 +76,8 @@ export interface EmailBroadcastCreateRequest {
 export interface CombinedBroadcastCreateRequest {
   channel: BroadcastChannel;
   target: string;
+  user_id?: number;
+  telegram_id?: number | null;
   // Telegram fields
   message_text?: string;
   selected_buttons?: string[];
@@ -84,6 +86,12 @@ export interface CombinedBroadcastCreateRequest {
   // Email fields
   email_subject?: string;
   email_html_content?: string;
+}
+
+export interface DirectBroadcastCreateRequest
+  extends Omit<CombinedBroadcastCreateRequest, 'target'> {
+  user_id: number;
+  target?: string;
 }
 
 export interface Broadcast {
@@ -139,6 +147,30 @@ export interface MediaUploadResponse {
   file_unique_id: string | null;
   media_url: string;
 }
+
+const BROADCAST_SEND_ENDPOINT = '/cabinet/admin/broadcasts/send';
+
+const isFallbackEligible = (error: unknown): boolean => {
+  const status = (error as { response?: { status?: number } })?.response?.status;
+  return status === 400 || status === 404 || status === 422;
+};
+
+const getDirectBroadcastTargets = (
+  userId: number,
+  telegramId?: number | null,
+  preferredTarget?: string,
+): string[] => {
+  const candidates = [
+    preferredTarget,
+    'user',
+    `user:${userId}`,
+    `user_id:${userId}`,
+    telegramId ? `telegram:${telegramId}` : null,
+    telegramId ? `telegram_id:${telegramId}` : null,
+  ];
+
+  return [...new Set(candidates.filter((value): value is string => Boolean(value)))];
+};
 
 export const adminBroadcastsApi = {
   // Get all available filters with counts (for Telegram)
@@ -209,8 +241,39 @@ export const adminBroadcastsApi = {
 
   // Create combined broadcast (Telegram, Email, or Both)
   createCombined: async (data: CombinedBroadcastCreateRequest): Promise<Broadcast> => {
-    const response = await apiClient.post<Broadcast>('/cabinet/admin/broadcasts/send', data);
+    const response = await apiClient.post<Broadcast>(BROADCAST_SEND_ENDPOINT, data);
     return response.data;
+  },
+
+  // Create a direct broadcast for a specific user. We try a few target formats so the
+  // cabinet stays compatible with different backend revisions.
+  createDirect: async (data: DirectBroadcastCreateRequest): Promise<Broadcast> => {
+    const { target, user_id, telegram_id, ...rest } = data;
+    const targets = getDirectBroadcastTargets(user_id, telegram_id, target);
+
+    let lastError: unknown;
+
+    for (let index = 0; index < targets.length; index += 1) {
+      const attempt = {
+        ...rest,
+        target: targets[index],
+        user_id,
+        telegram_id,
+      };
+
+      try {
+        const response = await apiClient.post<Broadcast>(BROADCAST_SEND_ENDPOINT, attempt);
+        return response.data;
+      } catch (error) {
+        lastError = error;
+
+        if (!isFallbackEligible(error) || index === targets.length - 1) {
+          throw error;
+        }
+      }
+    }
+
+    throw lastError ?? new Error('Failed to create direct broadcast');
   },
 
   // Get list of broadcasts

@@ -18,6 +18,7 @@ import {
 import { adminApi, type AdminTicket, type AdminTicketDetail } from '../api/admin';
 import { promocodesApi, type PromoGroup } from '../api/promocodes';
 import { promoOffersApi } from '../api/promoOffers';
+import { adminBroadcastsApi, type BroadcastChannel } from '../api/adminBroadcasts';
 import { ticketsApi } from '../api/tickets';
 import { AdminBackButton } from '../components/admin';
 import { createNumberInputHandler, toNumber } from '../utils/inputHelpers';
@@ -107,6 +108,26 @@ const ArrowUpIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
 const TelegramIcon = () => (
   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+  </svg>
+);
+
+const EmailIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+    />
+  </svg>
+);
+
+const SendIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+    />
   </svg>
 );
 
@@ -368,6 +389,13 @@ export default function AdminUserDetail() {
   const [offerValidHours, setOfferValidHours] = useState<number | ''>(24);
   const [offerSending, setOfferSending] = useState(false);
 
+  // Direct message
+  const [directChannel, setDirectChannel] = useState<BroadcastChannel>('telegram');
+  const [directTelegramMessage, setDirectTelegramMessage] = useState('');
+  const [directEmailSubject, setDirectEmailSubject] = useState('');
+  const [directEmailContent, setDirectEmailContent] = useState('');
+  const [directMessageSending, setDirectMessageSending] = useState(false);
+
   // Traffic packages
   const [selectedTrafficGb, setSelectedTrafficGb] = useState<string>('');
 
@@ -384,6 +412,23 @@ export default function AdminUserDetail() {
   const [giftsLoading, setGiftsLoading] = useState(false);
 
   const userId = id ? parseInt(id, 10) : null;
+  const hasTelegramContact =
+    typeof user?.telegram_id === 'number' ? user.telegram_id > 0 : Boolean(user?.telegram_id);
+  const hasEmailContact = Boolean(user?.email);
+  const hasVerifiedEmail = Boolean(user?.email && user?.email_verified);
+  const canSendDirectMessage =
+    hasPermission('broadcasts:create') ||
+    hasPermission('broadcasts:write') ||
+    hasPermission('broadcasts:read');
+  const directChannelIncludesTelegram = directChannel === 'telegram' || directChannel === 'both';
+  const directChannelIncludesEmail = directChannel === 'email' || directChannel === 'both';
+  const isDirectMessageValid =
+    (!directChannelIncludesTelegram ||
+      (hasTelegramContact && directTelegramMessage.trim().length > 0)) &&
+    (!directChannelIncludesEmail ||
+      (hasVerifiedEmail &&
+        directEmailSubject.trim().length > 0 &&
+        directEmailContent.trim().length > 0));
 
   const loadUser = useCallback(async () => {
     if (!userId) return;
@@ -602,6 +647,24 @@ export default function AdminUserDetail() {
     loadReferralsList,
     hasPermission,
   ]);
+
+  useEffect(() => {
+    const isCurrentChannelValid =
+      (directChannel === 'telegram' && hasTelegramContact) ||
+      (directChannel === 'email' && hasVerifiedEmail) ||
+      (directChannel === 'both' && hasTelegramContact && hasVerifiedEmail);
+
+    if (isCurrentChannelValid) return;
+
+    if (hasTelegramContact) {
+      setDirectChannel('telegram');
+      return;
+    }
+
+    if (hasVerifiedEmail) {
+      setDirectChannel('email');
+    }
+  }, [directChannel, hasTelegramContact, hasVerifiedEmail]);
 
   const handleUpdateBalance = async (isAdd: boolean) => {
     if (balanceAmount === '' || !userId) return;
@@ -901,6 +964,70 @@ export default function AdminUserDetail() {
       notify.error(t('admin.users.detail.offerSendError'), t('common.error'));
     } finally {
       setOfferSending(false);
+    }
+  };
+
+  const handleSendDirectMessage = async () => {
+    if (!userId || !user || !isDirectMessageValid) return;
+
+    const sentChannels: Array<'telegram' | 'email'> = [];
+
+    setDirectMessageSending(true);
+    try {
+      if (directChannelIncludesTelegram) {
+        await adminBroadcastsApi.createDirect({
+          channel: 'telegram',
+          user_id: userId,
+          telegram_id: hasTelegramContact ? user.telegram_id : null,
+          message_text: directTelegramMessage.trim(),
+          selected_buttons: ['home'],
+        });
+        sentChannels.push('telegram');
+      }
+
+      if (directChannelIncludesEmail) {
+        await adminBroadcastsApi.createDirect({
+          channel: 'email',
+          user_id: userId,
+          telegram_id: hasTelegramContact ? user.telegram_id : null,
+          email_subject: directEmailSubject.trim(),
+          email_html_content: directEmailContent.trim(),
+        });
+        sentChannels.push('email');
+      }
+
+      notify.success(
+        t(
+          sentChannels.length > 1
+            ? 'admin.users.detail.directMessage.successBoth'
+            : 'admin.users.detail.directMessage.successSingle',
+        ),
+        t('common.success'),
+      );
+
+      setDirectTelegramMessage('');
+      setDirectEmailSubject('');
+      setDirectEmailContent('');
+    } catch (error: unknown) {
+      const detail = (error as { response?: { data?: { detail?: string } } })?.response?.data
+        ?.detail;
+
+      if (sentChannels.length > 0) {
+        const channels = sentChannels
+          .map((channel) => t(`admin.broadcasts.channel.${channel}`))
+          .join(' + ');
+
+        notify.error(
+          detail
+            ? `${t('admin.users.detail.directMessage.partialError', { channels })} ${detail}`
+            : t('admin.users.detail.directMessage.partialError', { channels }),
+          t('common.error'),
+        );
+      } else {
+        notify.error(detail || t('admin.users.detail.directMessage.error'), t('common.error'));
+      }
+    } finally {
+      setDirectMessageSending(false);
     }
   };
 
@@ -1214,9 +1341,20 @@ export default function AdminUserDetail() {
           <div>
             <div className="font-semibold text-dark-100">{user.full_name}</div>
             <div className="flex items-center gap-2 text-sm text-dark-400">
-              <TelegramIcon />
-              {user.telegram_id}
-              {user.username && <span>@{user.username}</span>}
+              {hasTelegramContact ? (
+                <>
+                  <TelegramIcon />
+                  <span>{user.telegram_id}</span>
+                </>
+              ) : hasEmailContact ? (
+                <>
+                  <EmailIcon />
+                  <span>{user.email}</span>
+                </>
+              ) : (
+                <span>ID: {user.id}</span>
+              )}
+              {user.username && hasTelegramContact && <span>@{user.username}</span>}
             </div>
           </div>
         </div>
@@ -1517,6 +1655,242 @@ export default function AdminUserDetail() {
                 {user.restriction_reason && (
                   <div className="mt-1 text-xs text-dark-400">
                     {t('admin.users.detail.restrictions.reason')}: {user.restriction_reason}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {canSendDirectMessage && (
+              <div className="rounded-xl border border-accent-500/20 bg-dark-800/50 p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-dark-100">
+                      {t('admin.users.detail.directMessage.title')}
+                    </div>
+                    <p className="mt-1 max-w-2xl text-xs text-dark-500">
+                      {t('admin.users.detail.directMessage.description')}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => navigate('/admin/broadcasts')}
+                    className="rounded-lg border border-dark-700 bg-dark-900/60 px-3 py-2 text-xs text-dark-300 transition-colors hover:border-dark-600 hover:text-dark-100"
+                  >
+                    {t('admin.users.detail.directMessage.openBroadcasts')}
+                  </button>
+                </div>
+
+                <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                  <button
+                    type="button"
+                    onClick={() => setDirectChannel('telegram')}
+                    disabled={!hasTelegramContact}
+                    className={`rounded-xl border px-4 py-3 text-left transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
+                      directChannel === 'telegram'
+                        ? 'border-accent-500 bg-accent-500/10'
+                        : 'border-dark-700 bg-dark-900/40 hover:border-dark-600'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 text-sm font-medium text-dark-100">
+                      <TelegramIcon />
+                      {t('admin.broadcasts.channel.telegram')}
+                    </div>
+                    <div className="mt-1 text-xs text-dark-500">
+                      {t(
+                        hasTelegramContact
+                          ? 'admin.users.detail.directMessage.statusTelegramReady'
+                          : 'admin.users.detail.directMessage.statusTelegramMissing',
+                      )}
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setDirectChannel('email')}
+                    disabled={!hasVerifiedEmail}
+                    className={`rounded-xl border px-4 py-3 text-left transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
+                      directChannel === 'email'
+                        ? 'border-accent-500 bg-accent-500/10'
+                        : 'border-dark-700 bg-dark-900/40 hover:border-dark-600'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 text-sm font-medium text-dark-100">
+                      <EmailIcon />
+                      {t('admin.broadcasts.channel.email')}
+                    </div>
+                    <div className="mt-1 text-xs text-dark-500">
+                      {t(
+                        hasVerifiedEmail
+                          ? 'admin.users.detail.directMessage.statusEmailReady'
+                          : hasEmailContact
+                            ? 'admin.users.detail.directMessage.statusEmailUnverified'
+                            : 'admin.users.detail.directMessage.statusEmailMissing',
+                      )}
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setDirectChannel('both')}
+                    disabled={!hasTelegramContact || !hasVerifiedEmail}
+                    className={`rounded-xl border px-4 py-3 text-left transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
+                      directChannel === 'both'
+                        ? 'border-accent-500 bg-accent-500/10'
+                        : 'border-dark-700 bg-dark-900/40 hover:border-dark-600'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 text-sm font-medium text-dark-100">
+                      <TelegramIcon />
+                      <span>+</span>
+                      <EmailIcon />
+                      {t('admin.broadcasts.channel.both')}
+                    </div>
+                    <div className="mt-1 text-xs text-dark-500">
+                      {t(
+                        hasTelegramContact && hasVerifiedEmail
+                          ? 'admin.users.detail.directMessage.statusBothReady'
+                          : 'admin.users.detail.directMessage.statusBothMissing',
+                      )}
+                    </div>
+                  </button>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ${
+                      hasTelegramContact
+                        ? 'bg-success-500/15 text-success-400'
+                        : 'bg-dark-700/60 text-dark-400'
+                    }`}
+                  >
+                    <TelegramIcon />
+                    {t(
+                      hasTelegramContact
+                        ? 'admin.users.detail.directMessage.statusTelegramReady'
+                        : 'admin.users.detail.directMessage.statusTelegramMissing',
+                    )}
+                  </span>
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ${
+                      hasVerifiedEmail
+                        ? 'bg-success-500/15 text-success-400'
+                        : hasEmailContact
+                          ? 'bg-warning-500/15 text-warning-400'
+                          : 'bg-dark-700/60 text-dark-400'
+                    }`}
+                  >
+                    <EmailIcon />
+                    {t(
+                      hasVerifiedEmail
+                        ? 'admin.users.detail.directMessage.statusEmailReady'
+                        : hasEmailContact
+                          ? 'admin.users.detail.directMessage.statusEmailUnverified'
+                          : 'admin.users.detail.directMessage.statusEmailMissing',
+                    )}
+                  </span>
+                </div>
+
+                {hasEmailContact && !hasVerifiedEmail && (
+                  <p className="mt-3 rounded-xl border border-warning-500/20 bg-warning-500/10 px-3 py-2 text-xs text-warning-400">
+                    {t('admin.users.detail.directMessage.emailVerificationNote')}
+                  </p>
+                )}
+
+                {!hasTelegramContact && !hasVerifiedEmail ? (
+                  <div className="mt-4 rounded-xl border border-dark-700/60 bg-dark-900/40 px-4 py-3 text-sm text-dark-400">
+                    {t('admin.users.detail.directMessage.unavailable')}
+                  </div>
+                ) : (
+                  <div className="mt-4 space-y-4">
+                    {directChannelIncludesTelegram && (
+                      <div>
+                        <label className="mb-2 block text-sm font-medium text-dark-300">
+                          {t('admin.broadcasts.messageText')}
+                        </label>
+                        <textarea
+                          value={directTelegramMessage}
+                          onChange={(e) => setDirectTelegramMessage(e.target.value)}
+                          placeholder={t('admin.broadcasts.messageTextPlaceholder')}
+                          rows={5}
+                          maxLength={4000}
+                          className="input min-h-[140px] resize-y"
+                        />
+                        <div className="mt-1 text-right text-xs text-dark-500">
+                          {directTelegramMessage.length}/4000
+                        </div>
+                      </div>
+                    )}
+
+                    {directChannelIncludesEmail && (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="mb-2 block text-sm font-medium text-dark-300">
+                            {t('admin.broadcasts.emailSubject')}
+                          </label>
+                          <input
+                            type="text"
+                            value={directEmailSubject}
+                            onChange={(e) => setDirectEmailSubject(e.target.value)}
+                            placeholder={t('admin.broadcasts.emailSubjectPlaceholder')}
+                            className="input"
+                            maxLength={200}
+                          />
+                        </div>
+
+                        <div>
+                          <label className="mb-2 block text-sm font-medium text-dark-300">
+                            {t('admin.broadcasts.emailContent')}
+                          </label>
+                          <p className="mb-2 text-xs text-dark-500">
+                            {t('admin.broadcasts.emailContentHint')}
+                          </p>
+                          <textarea
+                            value={directEmailContent}
+                            onChange={(e) => setDirectEmailContent(e.target.value)}
+                            placeholder={t('admin.broadcasts.emailContentPlaceholder')}
+                            rows={8}
+                            className="input min-h-[180px] resize-y font-mono text-sm"
+                          />
+                        </div>
+
+                        <div className="rounded-xl border border-dark-700/50 bg-dark-900/50 p-3">
+                          <p className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-dark-500">
+                            {t('admin.broadcasts.emailVariables')}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {['{{user_name}}', '{{email}}', '{{user_id}}', '{{telegram_id}}'].map(
+                              (variable) => (
+                                <code
+                                  key={variable}
+                                  className="rounded bg-dark-700 px-2 py-1 text-xs text-accent-400"
+                                >
+                                  {variable}
+                                </code>
+                              ),
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="text-xs text-dark-500">
+                        {t('admin.users.detail.directMessage.queueNote')}
+                      </p>
+                      <button
+                        onClick={handleSendDirectMessage}
+                        disabled={!isDirectMessageValid || directMessageSending}
+                        className="btn-primary flex items-center justify-center gap-2"
+                      >
+                        {directMessageSending ? (
+                          <RefreshIcon className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <SendIcon />
+                        )}
+                        {directMessageSending
+                          ? t('admin.users.detail.directMessage.sending')
+                          : t('admin.users.detail.directMessage.send')}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

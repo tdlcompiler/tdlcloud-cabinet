@@ -1,13 +1,21 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useAuthStore } from '../store/auth';
 import { useBlockingStore } from '../store/blocking';
 import { subscriptionApi } from '../api/subscription';
 import { referralApi } from '../api/referral';
 import { balanceApi } from '../api/balance';
 import { wheelApi } from '../api/wheel';
+import { giftApi } from '../api/gift';
+import { promoApi } from '../api/promo';
+import { API } from '../config/constants';
+import { useCurrency } from '../hooks/useCurrency';
+import { useBranding } from '../hooks/useBranding';
+import { cn } from '../lib/utils';
+
 import Onboarding, { useOnboarding } from '../components/Onboarding';
 import PromoOffersSection from '../components/PromoOffersSection';
 import NewsSection from '../components/news/NewsSection';
@@ -15,15 +23,18 @@ import SubscriptionCardActive from '../components/dashboard/SubscriptionCardActi
 import SubscriptionCardExpired from '../components/dashboard/SubscriptionCardExpired';
 import TrialOfferCard from '../components/dashboard/TrialOfferCard';
 import StatsGrid from '../components/dashboard/StatsGrid';
-import { giftApi } from '../api/gift';
-import { promoApi } from '../api/promo';
 import PendingGiftCard from '../components/dashboard/PendingGiftCard';
 import SubscriptionListCard from '../components/subscription/SubscriptionListCard';
-import { API } from '../config/constants';
 
 const ChevronRightIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  </svg>
+);
+
+const ArrowUpRightIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M9 7h8v8" />
   </svg>
 );
 
@@ -33,17 +44,24 @@ export default function Dashboard() {
   const user = useAuthStore((state) => state.user);
   const refreshUser = useAuthStore((state) => state.refreshUser);
   const queryClient = useQueryClient();
+  const { formatAmount, currencySymbol } = useCurrency();
+  const { appName } = useBranding();
   const { isCompleted: isOnboardingCompleted, complete: completeOnboarding } = useOnboarding();
-  const [showOnboarding, setShowOnboarding] = useState(false);
   const blockingType = useBlockingStore((state) => state.blockingType);
-  const [trialError, setTrialError] = useState<string | null>(null);
 
-  // Refresh user data on mount
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [trialError, setTrialError] = useState<string | null>(null);
+  const [trafficRefreshCooldown, setTrafficRefreshCooldown] = useState(0);
+  const [trafficData, setTrafficData] = useState<{
+    traffic_used_gb: number;
+    traffic_used_percent: number;
+    is_unlimited: boolean;
+  } | null>(null);
+
   useEffect(() => {
     refreshUser();
   }, [refreshUser]);
 
-  // Fetch balance from API
   const { data: balanceData } = useQuery({
     queryKey: ['balance'],
     queryFn: balanceApi.getBalance,
@@ -51,7 +69,6 @@ export default function Dashboard() {
     refetchOnMount: 'always',
   });
 
-  // Multi-tariff: check if user has multiple subscriptions
   const { data: multiSubData } = useQuery({
     queryKey: ['subscriptions-list'],
     queryFn: () => subscriptionApi.getSubscriptions(),
@@ -91,7 +108,7 @@ export default function Dashboard() {
   const { data: wheelConfig } = useQuery({
     queryKey: ['wheel-config'],
     queryFn: wheelApi.getConfig,
-    staleTime: 60000,
+    staleTime: 60_000,
     retry: false,
   });
 
@@ -125,26 +142,21 @@ export default function Dashboard() {
     },
   });
 
-  // Traffic refresh state and mutation
-  const [trafficRefreshCooldown, setTrafficRefreshCooldown] = useState(0);
-  const [trafficData, setTrafficData] = useState<{
-    traffic_used_gb: number;
-    traffic_used_percent: number;
-    is_unlimited: boolean;
-  } | null>(null);
-
   const refreshTrafficMutation = useMutation({
     mutationFn: () => subscriptionApi.refreshTraffic(subscription?.id),
-    onSuccess: (data) => {
+    onSuccess: (data: {
+      traffic_used_gb: number;
+      traffic_used_percent: number;
+      is_unlimited: boolean;
+      rate_limited?: boolean;
+      retry_after_seconds?: number;
+    }) => {
       setTrafficData({
         traffic_used_gb: data.traffic_used_gb,
         traffic_used_percent: data.traffic_used_percent,
         is_unlimited: data.is_unlimited,
       });
-      localStorage.setItem(
-        `traffic_refresh_ts_${subscription?.id ?? 'default'}`,
-        Date.now().toString(),
-      );
+      localStorage.setItem(`traffic_refresh_ts_${subscription?.id ?? 'default'}`, Date.now().toString());
       if (data.rate_limited && data.retry_after_seconds) {
         setTrafficRefreshCooldown(data.retry_after_seconds);
       } else {
@@ -162,7 +174,6 @@ export default function Dashboard() {
     },
   });
 
-  // Cooldown timer
   useEffect(() => {
     if (trafficRefreshCooldown <= 0) return;
     const timer = setInterval(() => {
@@ -171,7 +182,6 @@ export default function Dashboard() {
     return () => clearInterval(timer);
   }, [trafficRefreshCooldown]);
 
-  // Auto-refresh traffic on mount (with 30s caching)
   const hasAutoRefreshed = useRef(false);
 
   useEffect(() => {
@@ -179,7 +189,7 @@ export default function Dashboard() {
     if (hasAutoRefreshed.current) return;
     hasAutoRefreshed.current = true;
 
-    const lastRefresh = localStorage.getItem(`traffic_refresh_ts_${subscription?.id ?? 'default'}`);
+    const lastRefresh = localStorage.getItem(`traffic_refresh_ts_${subscription.id}`);
     const now = Date.now();
     const cacheMs = API.TRAFFIC_CACHE_MS;
 
@@ -197,7 +207,6 @@ export default function Dashboard() {
 
   const hasNoSubscription = subscriptionResponse?.has_subscription === false && !subLoading;
 
-  // Show onboarding for new users after data loads
   useEffect(() => {
     if (!isOnboardingCompleted && !subLoading && !refLoading && !blockingType) {
       const timer = setTimeout(() => setShowOnboarding(true), 500);
@@ -237,61 +246,111 @@ export default function Dashboard() {
     }
 
     return steps;
-  }, [t, subscription]);
+  }, [subscription, t]);
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
     completeOnboarding();
   };
 
+  const displayName = user?.first_name || user?.username || appName;
+  const subscriptionSummary = isMultiTariff
+    ? t('dashboard.subscriptions', 'Subscriptions')
+    : subscription?.tariff_name || t('nav.subscription');
+  const subscriptionMeta = isMultiTariff
+    ? `${multiSubData?.subscriptions.length ?? 0} ${t('dashboard.subscriptions', 'plans')}`
+    : subscription
+      ? `${subscription.days_left} ${t('subscription.daysShort')}`
+      : t('dashboard.yourSubscription');
+
+  const primaryAction = isMultiTariff
+    ? { to: '/subscriptions', label: t('dashboard.manageAll', 'Manage all') }
+    : subscription
+      ? { to: `/subscriptions/${subscription.id}`, label: t('dashboard.viewSubscription') }
+      : { to: '/subscription/purchase', label: t('dashboard.expired.tariffs') };
+
+  const heroMetrics = [
+    {
+      label: t('dashboard.stats.balance'),
+      value: `${formatAmount(balanceData?.balance_rubles || 0)} ${currencySymbol}`,
+      tone: 'text-accent-300',
+    },
+    {
+      label: t('dashboard.stats.referrals'),
+      value: `${referralInfo?.total_referrals || 0}`,
+      tone: 'text-dark-50',
+    },
+    {
+      label: t('nav.subscription'),
+      value: subscriptionSummary,
+      tone: 'text-dark-50',
+      meta: subscriptionMeta,
+    },
+  ];
+
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div data-onboarding="welcome">
-        <h1 className="text-2xl font-bold text-dark-50 sm:text-3xl">
-          {t('dashboard.welcome', { name: user?.first_name || user?.username || '' })}
-        </h1>
-        <div className="mt-1 flex flex-wrap items-center gap-2">
-          <p className="text-dark-400">{t('dashboard.yourSubscription')}</p>
-          {promoGroupData?.group_name && (
-            <span
-              className="inline-flex max-w-[160px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
-              style={{
-                background: 'rgba(var(--color-accent-400), 0.1)',
-                border: '1px solid rgba(var(--color-accent-400), 0.2)',
-                color: 'rgb(var(--color-accent-400))',
-              }}
-            >
-              <svg
-                className="shrink-0"
-                width="10"
-                height="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span className="truncate">{promoGroupData.group_name}</span>
-            </span>
-          )}
-        </div>
-      </div>
+      <section className="tdl-shell-panel p-6 sm:p-7" data-onboarding="welcome">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.95fr)]">
+          <div className="relative z-10">
+            <div className="tdl-kicker">TDL Cloud // Control Surface</div>
+            <h1 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight text-dark-50 sm:text-4xl">
+              {t('dashboard.welcome', { name: displayName })}
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-dark-300 sm:text-base">
+              {t('dashboard.yourSubscription')}
+            </p>
 
-      {/* Pending Gift Activations */}
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <span className="tdl-chip">{subscriptionSummary}</span>
+              {promoGroupData?.group_name && <span className="tdl-chip">{promoGroupData.group_name}</span>}
+              {wheelConfig?.is_enabled && <span className="tdl-chip">{t('nav.wheel')}</span>}
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link to={primaryAction.to} className="btn-primary px-4 py-3 text-sm">
+                {primaryAction.label}
+                <ArrowUpRightIcon />
+              </Link>
+              <Link to="/support" className="btn-secondary px-4 py-3 text-sm">
+                {t('nav.support')}
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative z-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            {heroMetrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="rounded-[22px] border border-dark-700/60 bg-dark-950/45 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+              >
+                <div className="tdl-kicker">{metric.label}</div>
+                <div className={cn('mt-3 text-xl font-semibold tracking-tight sm:text-2xl', metric.tone)}>
+                  {metric.value}
+                </div>
+                {metric.meta && <div className="mt-2 text-xs text-dark-400">{metric.meta}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {pendingGifts && pendingGifts.length > 0 && <PendingGiftCard gifts={pendingGifts} />}
 
-      {/* Multi-tariff: show subscription cards (max 3) */}
       {isMultiTariff && multiSubData?.subscriptions && (
-        <div className="space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <span className="text-sm font-medium opacity-60">
-              {t('dashboard.subscriptions', 'Подписки')}
-            </span>
-            <Link to="/subscriptions" className="text-xs text-accent-400 hover:underline">
-              {t('dashboard.manageAll', 'Управление')} →
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-3 px-1">
+            <div>
+              <div className="tdl-kicker">Plans</div>
+              <h2 className="mt-2 text-lg font-semibold tracking-tight text-dark-50">
+                {t('dashboard.subscriptions', 'Subscriptions')}
+              </h2>
+            </div>
+            <Link to="/subscriptions" className="link text-sm">
+              {t('dashboard.manageAll', 'Manage all')}
             </Link>
           </div>
+
           {multiSubData.subscriptions.slice(0, 3).map((sub) => (
             <SubscriptionListCard
               key={sub.id}
@@ -299,26 +358,42 @@ export default function Dashboard() {
               onClick={() => navigate(`/subscriptions/${sub.id}`)}
             />
           ))}
+
           {multiSubData.subscriptions.length > 3 && (
             <Link
               to="/subscriptions"
-              className="flex w-full items-center justify-center rounded-2xl border border-dashed border-white/15 p-3 text-xs opacity-50 transition-opacity hover:opacity-80"
+              className="card flex w-full items-center justify-center border border-dashed border-dark-600/70 p-3 text-xs text-dark-400 transition-colors hover:text-dark-200"
             >
-              {t('dashboard.showAll', 'Показать все')} ({multiSubData.subscriptions.length})
+              {t('dashboard.showAll', 'Show all')} ({multiSubData.subscriptions.length})
             </Link>
           )}
+
           <Link
             to="/subscription/purchase"
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-accent-500/15 p-3.5 text-sm font-medium text-accent-400 transition-all hover:bg-accent-500/25"
+            className="btn-secondary flex w-full items-center justify-center gap-2 py-3.5"
           >
-            <span className="text-base">+</span> {t('subscriptions.buyAnother', 'Купить ещё тариф')}
+            <span className="text-base">+</span>
+            {t('subscriptions.buyAnother', 'Buy another tariff')}
           </Link>
-        </div>
+        </section>
       )}
 
-      {/* Subscription Status Card — hidden in multi-tariff (managed via /subscriptions) */}
       {!isMultiTariff && (
-        <>
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-3 px-1">
+            <div>
+              <div className="tdl-kicker">Service Layer</div>
+              <h2 className="mt-2 text-lg font-semibold tracking-tight text-dark-50">
+                {t('dashboard.yourSubscription')}
+              </h2>
+            </div>
+            {subscription && (
+              <Link to={`/subscriptions/${subscription.id}`} className="link hidden text-sm sm:inline-flex">
+                {t('dashboard.viewSubscription')}
+              </Link>
+            )}
+          </div>
+
           {subLoading ? (
             <div className="bento-card">
               <div className="mb-4 flex items-center justify-between">
@@ -349,10 +424,9 @@ export default function Dashboard() {
               connectedDevices={devicesData?.total ?? 0}
             />
           ) : null}
-        </>
+        </section>
       )}
 
-      {/* Trial Activation */}
       {hasNoSubscription && !trialLoading && trialInfo?.is_available && (
         <TrialOfferCard
           trialInfo={trialInfo}
@@ -363,37 +437,70 @@ export default function Dashboard() {
         />
       )}
 
-      {/* Promo Offers */}
-      <PromoOffersSection />
+      <section className="space-y-3">
+        <div className="px-1">
+          <div className="tdl-kicker">Commercial Layer</div>
+          <h2 className="mt-2 text-lg font-semibold tracking-tight text-dark-50">{t('nav.balance')}</h2>
+        </div>
+        <PromoOffersSection />
+      </section>
 
-      {/* Stats Grid */}
-      <StatsGrid
-        balanceRubles={balanceData?.balance_rubles || 0}
-        referralCount={referralInfo?.total_referrals || 0}
-        earningsRubles={referralInfo?.available_balance_rubles || 0}
-        refLoading={refLoading}
-      />
+      <section className="space-y-3">
+        <div className="px-1">
+          <div className="tdl-kicker">Account Signals</div>
+          <h2 className="mt-2 text-lg font-semibold tracking-tight text-dark-50">
+            {t('dashboard.stats.balance')}
+          </h2>
+        </div>
+        <StatsGrid
+          balanceRubles={balanceData?.balance_rubles || 0}
+          referralCount={referralInfo?.total_referrals || 0}
+          earningsRubles={referralInfo?.available_balance_rubles || 0}
+          refLoading={refLoading}
+        />
+      </section>
 
-      {/* Fortune Wheel Banner */}
       {wheelConfig?.is_enabled && (
-        <Link to="/wheel" className="bento-card-hover group flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-3xl">🎰</span>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-base font-semibold text-dark-100">{t('wheel.banner.title')}</h3>
-              <p className="text-sm text-dark-400">{t('wheel.banner.description')}</p>
+        <Link to="/wheel" className="tdl-shell-panel group block p-5">
+          <div className="relative z-10 flex items-center justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[20px] border border-accent-500/20 bg-accent-500/10 text-accent-300">
+                <svg
+                  className="h-7 w-7"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364 6.364l-2.121-2.121M8.757 8.757L6.636 6.636m11.728 0l-2.121 2.121M8.757 15.243l-2.121 2.121"
+                  />
+                  <circle cx="12" cy="12" r="4.5" />
+                </svg>
+              </div>
+              <div className="min-w-0">
+                <div className="tdl-kicker">{t('nav.wheel')}</div>
+                <h3 className="mt-2 text-base font-semibold text-dark-50">{t('wheel.banner.title')}</h3>
+                <p className="mt-1 text-sm text-dark-400">{t('wheel.banner.description')}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex-shrink-0 text-dark-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-400">
-            <ChevronRightIcon />
+            <div className="flex-shrink-0 text-dark-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-300">
+              <ChevronRightIcon />
+            </div>
           </div>
         </Link>
       )}
 
-      {/* News Section */}
-      <NewsSection />
+      <section className="space-y-3">
+        <div className="px-1">
+          <div className="tdl-kicker">Dispatch</div>
+          <h2 className="mt-2 text-lg font-semibold tracking-tight text-dark-50">{t('nav.info')}</h2>
+        </div>
+        <NewsSection />
+      </section>
 
-      {/* Onboarding Tutorial */}
       {showOnboarding && (
         <Onboarding
           steps={onboardingSteps}

@@ -311,6 +311,12 @@ export default function Login() {
     setForgotPasswordError('');
   };
 
+  const accessChips = [
+    'Telegram',
+    ...(isEmailAuthEnabled ? ['Email'] : []),
+    ...oauthProviders.slice(0, 2).map((provider) => provider.display_name),
+  ];
+
   return (
     <div
       className="flex min-h-[100dvh] items-center justify-center px-4 sm:px-6 lg:px-8"
@@ -335,9 +341,67 @@ export default function Login() {
         <LanguageSwitcher />
       </div>
 
-      <div className="relative w-full max-w-md space-y-5">
+      <div className="relative grid w-full max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(380px,460px)] lg:items-start">
+        <div className="tdl-shell-panel hidden p-8 lg:block">
+          <div className="relative z-10 flex h-full flex-col justify-between gap-8">
+            <div>
+              <div className="tdl-kicker">TDL Cloud // Access Layer</div>
+              <div className="mt-4 flex items-center gap-4">
+                <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-[22px] border border-accent-500/20 bg-dark-950/80 shadow-[0_16px_34px_rgba(var(--color-accent-500),0.14)]">
+                  <span
+                    className={`absolute text-2xl font-bold text-accent-300 transition-opacity duration-200 ${branding?.has_custom_logo && logoLoaded ? 'opacity-0' : 'opacity-100'}`}
+                  >
+                    {appLogo}
+                  </span>
+                  {branding?.has_custom_logo && logoUrl && (
+                    <img
+                      src={logoUrl}
+                      alt={appName || 'Logo'}
+                      className={`absolute h-full w-full object-contain transition-opacity duration-200 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      onLoad={() => setLogoLoaded(true)}
+                    />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <h1 className="text-4xl font-bold tracking-tight text-dark-50">{appName}</h1>
+                  <p className="mt-2 max-w-lg text-sm leading-6 text-dark-300">
+                    Secure cabinet access for balance, subscriptions, referrals and support in a single TDL Cloud surface.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[22px] border border-dark-700/60 bg-dark-950/50 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                <div className="tdl-kicker">Channels</div>
+                <div className="mt-3 text-2xl font-semibold text-accent-300">{accessChips.length}</div>
+                <div className="mt-2 text-xs text-dark-400">sign-in options</div>
+              </div>
+              <div className="rounded-[22px] border border-dark-700/60 bg-dark-950/50 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                <div className="tdl-kicker">Invite</div>
+                <div className="mt-3 truncate text-lg font-semibold text-dark-50">{referralCode || 'Direct'}</div>
+                <div className="mt-2 text-xs text-dark-400">{referralCode ? t('auth.referralInvite') : 'standard route'}</div>
+              </div>
+              <div className="rounded-[22px] border border-dark-700/60 bg-dark-950/50 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                <div className="tdl-kicker">Mode</div>
+                <div className="mt-3 text-lg font-semibold text-dark-50">{isTelegramWebApp ? 'Mini App' : 'Web'}</div>
+                <div className="mt-2 text-xs text-dark-400">current session</div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {accessChips.map((chip) => (
+                <span key={chip} className="tdl-chip">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-5">
         {/* Logo & branding */}
-        <div className="text-center">
+        <div className="text-center lg:text-left">
           <div className="relative mx-auto mb-3 flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-dark-700/50 bg-dark-800/80 shadow-md">
             {/* Letter fallback */}
             <span
@@ -788,6 +852,7 @@ export default function Login() {
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

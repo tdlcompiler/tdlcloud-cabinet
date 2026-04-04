@@ -251,9 +251,17 @@
   .dark body {
     @apply bg-dark-950 font-sans text-dark-100 antialiased;
     overscroll-behavior-y: contain;
-    /* iOS smooth scrolling */
     -webkit-overflow-scrolling: touch;
     position: relative;
+    background-image:
+      radial-gradient(circle at top left, rgba(var(--color-accent-500), 0.2), transparent 34%),
+      radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 28%),
+      linear-gradient(
+        180deg,
+        rgba(var(--color-dark-900), 0.94) 0%,
+        rgba(var(--color-dark-950), 1) 58%
+      );
+    background-attachment: fixed;
   }
 
   /* Global Noise Texture — no mix-blend-mode to avoid fullscreen GPU compositing */
@@ -261,12 +269,28 @@
     content: '';
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -2;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: 0.03;
+    opacity: 0.025;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(56, 189, 248, 0.12), transparent 22%);
+    background-position: center center;
+    background-size: 112px 112px, 112px 112px, 100% 100%;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 88%);
+    opacity: 0.45;
   }
 
   /* Disable noise on mobile to save GPU */
@@ -274,12 +298,19 @@
     body::before {
       display: none;
     }
+
+    body::after {
+      background-size: 72px 72px, 72px 72px, 100% 100%;
+      opacity: 0.24;
+    }
   }
 
   /* Main content — containment removed to avoid GPU layer conflicts
      with isolation: isolate on content wrapper */
   main {
     contain: content;
+    isolation: isolate;
+    position: relative;
   }
 
   /* Light theme - Champagne */
@@ -287,6 +318,25 @@
     @apply bg-champagne-200 font-sans text-champagne-900 antialiased;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
+    background-image:
+      radial-gradient(circle at top left, rgba(var(--color-accent-400), 0.16), transparent 30%),
+      linear-gradient(
+        180deg,
+        rgba(var(--color-champagne-50), 0.98) 0%,
+        rgba(var(--color-champagne-200), 1) 68%
+      );
+  }
+
+  .light body::before {
+    opacity: 0.02;
+  }
+
+  .light body::after {
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(var(--color-accent-400), 0.12), transparent 24%);
+    opacity: 0.33;
   }
 
   /* Light theme: swap dark palette → dynamic champagne palette from API.
@@ -353,23 +403,70 @@ img.twemoji {
 @layer components {
   /* ========== BENTO DESIGN SYSTEM ========== */
 
+  .tdl-shell-panel {
+    @apply relative overflow-hidden border border-dark-700/60 bg-dark-900/70;
+    border-radius: 28px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 35%),
+      linear-gradient(145deg, rgba(var(--color-dark-900), 0.94), rgba(var(--color-dark-850), 0.9));
+    box-shadow:
+      0 24px 60px rgba(2, 6, 23, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 0 0 1px rgba(56, 189, 248, 0.04);
+  }
+
+  .tdl-shell-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-400), 0.16), transparent 28%),
+      linear-gradient(315deg, rgba(56, 189, 248, 0.08), transparent 22%);
+    opacity: 0.6;
+  }
+
+  .tdl-kicker {
+    @apply font-mono text-[11px] font-semibold uppercase tracking-[0.28em] text-dark-400;
+  }
+
+  .tdl-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-dark-700/60 bg-dark-950/70 px-3 py-1.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-dark-300;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
   .bento-card {
-    @apply border border-dark-700/40 bg-dark-900/70;
-    border-radius: var(--bento-radius);
+    @apply relative overflow-hidden border border-dark-700/60;
+    border-radius: calc(var(--bento-radius) + 2px);
     padding: var(--bento-padding);
-    /* Glass Border - Inset Highlight */
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-    /* Stagger animation support */
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 35%),
+      linear-gradient(145deg, rgba(var(--color-dark-900), 0.92), rgba(var(--color-dark-850), 0.86));
+    box-shadow:
+      0 22px 48px rgba(2, 6, 23, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     animation: bentoFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: calc(var(--stagger, 0) * 50ms);
-    position: relative;
-    overflow: hidden;
   }
 
   @media (min-width: 1024px) {
     .bento-card {
-      @apply bg-dark-900/60;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-400), 0.14), transparent 24%),
+      linear-gradient(315deg, rgba(56, 189, 248, 0.06), transparent 20%);
+    opacity: 0.55;
+  }
   }
 
   /* Disable animation if user prefers reduced motion */
@@ -389,20 +486,21 @@ img.twemoji {
   }
 
   .bento-card-hover:hover {
-    @apply border-dark-600/50 bg-dark-800/60 shadow-lg;
+    @apply border-dark-600/70;
     transform: translateY(-2px) translateZ(0);
-    /* Intensify Glass Border & Add Top Spotlight */
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
-      0 10px 40px -10px rgba(0, 0, 0, 0.5);
+      0 28px 56px rgba(2, 6, 23, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      inset 0 0 0 1px rgba(var(--color-accent-400), 0.08);
   }
 
-  /* CSS Spotlight Effect via pseudo-element */
   .bento-card-hover::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 60%);
+    background:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 58%),
+      linear-gradient(90deg, transparent, rgba(var(--color-accent-400), 0.08), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -427,8 +525,12 @@ img.twemoji {
   }
 
   .bento-card-glow:hover {
-    @apply border-accent-500/30 shadow-glow;
+    @apply border-accent-500/40;
     transform: translateY(-2px) translateZ(0);
+    box-shadow:
+      0 24px 52px rgba(2, 6, 23, 0.3),
+      0 0 0 1px rgba(var(--color-accent-500), 0.14),
+      0 0 36px rgba(var(--color-accent-500), 0.12);
   }
 
   .bento-card-glow:active {
@@ -456,33 +558,40 @@ img.twemoji {
   }
 
   .light .bento-card {
-    @apply border-champagne-300/50 bg-champagne-50/90 shadow-sm;
-    /* Light Theme Glass Border */
-    box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.03);
+    @apply border-champagne-300/70 shadow-sm;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)),
+      linear-gradient(145deg, rgba(var(--color-champagne-50), 0.98), rgba(var(--color-champagne-100), 0.92));
+    box-shadow:
+      0 22px 52px rgba(148, 163, 184, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.025);
   }
 
   @media (min-width: 1024px) {
     .light .bento-card {
-      @apply bg-champagne-50/85;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
   }
 
   .light .bento-card-hover:hover {
-    @apply border-champagne-400/50 bg-champagne-50 shadow-md;
+    @apply border-champagne-400/70 shadow-md;
     transform: translateY(-2px) translateZ(0);
-    /* Intensify Light Theme Glass Border */
     box-shadow:
-      inset 0 1px 0 0 rgba(0, 0, 0, 0.06),
-      0 10px 40px -10px rgba(160, 139, 94, 0.15);
+      0 24px 50px rgba(148, 163, 184, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      inset 0 0 0 1px rgba(var(--color-accent-400), 0.06);
   }
 
-  /* Adjust spotlight for light theme to be a warm glow */
   .light .bento-card-hover::after {
-    background: radial-gradient(circle at top, rgba(255, 253, 249, 0.8), transparent 70%);
+    background:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.75), transparent 66%),
+      linear-gradient(90deg, transparent, rgba(var(--color-accent-400), 0.07), transparent);
   }
 
   .light .bento-card-glow:hover {
-    @apply border-accent-400/40 shadow-lg;
+    @apply border-accent-400/45 shadow-lg;
     transform: translateY(-2px) translateZ(0);
   }
 
@@ -490,23 +599,38 @@ img.twemoji {
 
   /* Cards - Dark (unified style) */
   .card {
-    @apply border border-dark-700/40 bg-dark-900/70 p-5 transition-colors duration-200 sm:p-6;
-    border-radius: var(--bento-radius);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    @apply relative overflow-hidden border border-dark-700/60 p-5 transition-colors duration-200 sm:p-6;
+    border-radius: calc(var(--bento-radius) + 2px);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.042), transparent 35%),
+      linear-gradient(145deg, rgba(var(--color-dark-900), 0.94), rgba(var(--color-dark-850), 0.88));
+    box-shadow:
+      0 20px 48px rgba(2, 6, 23, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   @media (min-width: 1024px) {
     .card {
-      @apply bg-dark-900/60;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
   }
 
   .card-hover {
-    @apply card cursor-pointer hover:border-dark-600/50 hover:bg-dark-800/60 active:scale-[0.98];
+    @apply card cursor-pointer hover:border-dark-600/70 active:scale-[0.98];
+    box-shadow:
+      0 20px 48px rgba(2, 6, 23, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .card-glow {
-    @apply card cursor-pointer hover:border-accent-500/30 hover:shadow-glow;
+    @apply card cursor-pointer hover:border-accent-500/35;
+    box-shadow:
+      0 20px 48px rgba(2, 6, 23, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .card-animated {
@@ -515,7 +639,13 @@ img.twemoji {
 
   /* Glass effect - Dark (optimized for mobile) */
   .glass {
-    @apply border border-dark-700/30 bg-dark-900/80;
+    @apply border border-dark-700/60 bg-dark-900/80;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 35%),
+      linear-gradient(145deg, rgba(var(--color-dark-900), 0.9), rgba(var(--color-dark-950), 0.82));
+    box-shadow:
+      0 20px 48px rgba(2, 6, 23, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   /* Enable backdrop-blur only on desktop where it's performant */
@@ -527,28 +657,59 @@ img.twemoji {
 
   /* Buttons - Dark */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium duration-200 ease-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-900 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold duration-200 ease-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-900 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+    border-radius: 14px;
+    letter-spacing: 0.01em;
     transition-property: color, background-color, border-color, box-shadow, transform, opacity;
   }
 
   .btn-primary {
-    @apply btn bg-accent-500 text-white shadow-lg shadow-accent-500/25 hover:bg-accent-400 hover:shadow-xl hover:shadow-accent-500/30 focus-visible:ring-accent-500 active:bg-accent-600;
+    @apply btn text-white focus-visible:ring-accent-500;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--color-accent-500), 1) 0%,
+      rgba(56, 189, 248, 0.94) 100%
+    );
+    box-shadow:
+      0 16px 32px rgba(var(--color-accent-500), 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+
+  .btn-primary:hover {
+    box-shadow:
+      0 20px 38px rgba(var(--color-accent-500), 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    filter: saturate(1.05);
+  }
+
+  .btn-primary:active {
+    filter: brightness(0.96);
   }
 
   .btn-secondary {
-    @apply btn border border-dark-700 bg-dark-800 text-dark-200 hover:border-dark-600 hover:bg-dark-700 hover:text-dark-100 focus-visible:ring-dark-500 active:bg-dark-600;
+    @apply btn border border-dark-700/70 bg-dark-950/60 text-dark-100 hover:border-dark-600/80 hover:text-dark-50 focus-visible:ring-dark-500;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 10px 24px rgba(2, 6, 23, 0.18);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(var(--color-dark-800), 0.72));
   }
 
   .btn-ghost {
-    @apply btn text-dark-400 hover:bg-dark-800 hover:text-dark-100 focus-visible:ring-dark-500;
+    @apply btn text-dark-300 hover:bg-dark-800/60 hover:text-dark-50 focus-visible:ring-dark-500;
   }
 
   .btn-danger {
-    @apply btn border border-error-500/30 bg-error-500/10 text-error-400 hover:border-error-500/50 hover:bg-error-500/20 focus-visible:ring-error-500 active:bg-error-500/30;
+    @apply btn border border-error-500/35 text-error-300 hover:border-error-500/50 focus-visible:ring-error-500;
+    background: linear-gradient(180deg, rgba(239, 68, 68, 0.16), rgba(239, 68, 68, 0.08));
   }
 
   .btn-icon {
-    @apply rounded-lg p-2 text-dark-400 duration-200 hover:bg-dark-800 hover:text-dark-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/50 active:scale-95;
+    @apply border border-dark-700/60 bg-dark-950/55 p-2 text-dark-300 duration-200 hover:border-dark-600/80 hover:bg-dark-800/80 hover:text-dark-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/50 active:scale-95;
+    border-radius: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     transition-property: color, background-color, transform;
   }
 
@@ -559,7 +720,14 @@ img.twemoji {
 
   /* Inputs - Dark */
   .input {
-    @apply w-full rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-100 placeholder-dark-500 duration-200 focus:border-accent-500/50 focus:outline-none focus:ring-2 focus:ring-accent-500/20;
+    @apply w-full border border-dark-700/60 px-4 py-3 text-sm text-dark-100 placeholder-dark-500 duration-200 focus:border-accent-500/50 focus:outline-none focus:ring-2 focus:ring-accent-500/20;
+    border-radius: 16px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 45%),
+      rgba(var(--color-dark-950), 0.58);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.035),
+      0 10px 24px rgba(2, 6, 23, 0.14);
     transition-property: color, background-color, border-color, box-shadow;
   }
 
@@ -590,11 +758,13 @@ img.twemoji {
 
   .label {
     @apply mb-2 block text-sm font-medium text-dark-300;
+    letter-spacing: 0.01em;
   }
 
   /* Badge - Dark */
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    letter-spacing: 0.04em;
   }
 
   .badge-success {
@@ -619,7 +789,8 @@ img.twemoji {
 
   /* Progress bar - Dark */
   .progress-bar {
-    @apply h-2 w-full overflow-hidden rounded-full bg-dark-800;
+    @apply h-2.5 w-full overflow-hidden rounded-full bg-dark-950/80;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
 
   .progress-fill {
@@ -638,24 +809,33 @@ img.twemoji {
 
   /* Navigation - Dark */
   .nav-item {
-    @apply flex items-center gap-3 rounded-xl px-4 py-3 text-dark-400 duration-200 hover:bg-dark-800/50 hover:text-dark-100;
+    @apply flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-dark-400 duration-200 hover:border-dark-700/60 hover:bg-dark-800/55 hover:text-dark-50;
     transition-property: color, background-color;
   }
 
   .nav-item-active {
-    @apply nav-item bg-accent-500/10 text-accent-400;
+    @apply nav-item border-accent-500/20 text-accent-300;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-500), 0.16), rgba(56, 189, 248, 0.08)),
+      rgba(var(--color-dark-900), 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 12px 24px rgba(var(--color-accent-500), 0.08);
   }
 
   .bottom-nav {
-    @apply fixed z-50 bg-dark-900/95;
+    @apply fixed z-50 border border-dark-700/60 bg-dark-900/95;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     left: 16px;
     right: 16px;
-    border-radius: var(--bento-radius);
-    padding: 8px 4px;
+    border-radius: 24px;
+    padding: 8px 6px;
     transform: translateZ(0);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 38%),
+      linear-gradient(145deg, rgba(var(--color-dark-900), 0.95), rgba(var(--color-dark-950), 0.92));
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.4),
+      0 24px 48px rgba(2, 6, 23, 0.34),
       0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   }
 
@@ -666,22 +846,28 @@ img.twemoji {
   }
 
   .bottom-nav-item {
-    @apply flex min-w-[56px] flex-1 shrink-0 flex-col items-center justify-center rounded-2xl px-3 py-2.5 text-dark-500 duration-200;
+    @apply flex min-w-[56px] flex-1 shrink-0 flex-col items-center justify-center rounded-[18px] border border-transparent px-3 py-2.5 text-dark-500 duration-200;
     transition-property: color, background-color;
   }
 
   .bottom-nav-item:hover {
-    @apply text-dark-300;
+    @apply border-dark-700/40 text-dark-300;
   }
 
   .bottom-nav-item-active {
-    @apply flex min-w-[56px] flex-1 shrink-0 flex-col items-center justify-center rounded-2xl bg-accent-500/15 px-3 py-2.5 text-accent-400 duration-200;
+    @apply flex min-w-[56px] flex-1 shrink-0 flex-col items-center justify-center rounded-[18px] border border-accent-500/20 px-3 py-2.5 text-accent-300 duration-200;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-500), 0.16), rgba(56, 189, 248, 0.08)),
+      rgba(var(--color-dark-900), 0.7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 12px 24px rgba(var(--color-accent-500), 0.08);
     transition-property: color, background-color;
   }
 
   /* Divider - Dark */
   .divider {
-    @apply border-t border-dark-800/50;
+    @apply border-t border-dark-700/50;
   }
 
   /* ========== MOBILE PERFORMANCE: Disable backdrop-blur ========== */
@@ -703,29 +889,62 @@ img.twemoji {
   /* ========== LIGHT THEME COMPONENTS (Champagne) ========== */
 
   /* Cards - Light */
+  .light .tdl-shell-panel {
+    @apply border-champagne-300/70 bg-champagne-50/90;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)),
+      linear-gradient(145deg, rgba(var(--color-champagne-50), 0.98), rgba(var(--color-champagne-100), 0.9));
+    box-shadow:
+      0 24px 54px rgba(148, 163, 184, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.03);
+  }
+
+  .light .tdl-kicker {
+    @apply text-champagne-600;
+  }
+
+  .light .tdl-chip {
+    @apply border-champagne-300/70 bg-white/85 text-champagne-700;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
   .light .card {
-    @apply border-champagne-300/50 bg-champagne-50/90 p-5 shadow-sm sm:p-6;
-    border-radius: var(--bento-radius);
-    box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.03);
+    @apply border-champagne-300/70 p-5 shadow-sm sm:p-6;
+    border-radius: calc(var(--bento-radius) + 2px);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)),
+      linear-gradient(145deg, rgba(var(--color-champagne-50), 0.98), rgba(var(--color-champagne-100), 0.9));
+    box-shadow:
+      0 22px 52px rgba(148, 163, 184, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.025);
   }
 
   @media (min-width: 1024px) {
     .light .card {
-      @apply bg-champagne-50/85;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
   }
 
   .light .card-hover {
-    @apply hover:border-champagne-400/50 hover:bg-champagne-50 hover:shadow-md;
+    @apply hover:border-champagne-400/80 hover:shadow-md;
   }
 
   .light .card-glow {
-    @apply hover:border-accent-400/40 hover:shadow-lg;
+    @apply hover:border-accent-400/45 hover:shadow-lg;
   }
 
   /* Glass effect - Light (optimized for mobile) */
   .light .glass {
-    @apply border border-champagne-300/40 bg-champagne-50/90;
+    @apply border border-champagne-300/70 bg-champagne-50/90;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.72)),
+      linear-gradient(145deg, rgba(var(--color-champagne-50), 0.98), rgba(var(--color-champagne-100), 0.88));
+    box-shadow:
+      0 22px 52px rgba(148, 163, 184, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.84);
   }
 
   @media (min-width: 1024px) {
@@ -740,28 +959,39 @@ img.twemoji {
   }
 
   .light .btn-primary {
-    @apply bg-champagne-700 text-white shadow-lg shadow-champagne-500/20 hover:bg-champagne-600 hover:shadow-xl hover:shadow-champagne-500/30 focus-visible:ring-champagne-500 active:bg-champagne-800;
+    @apply text-white;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--color-accent-600), 1) 0%,
+      rgba(var(--color-accent-400), 0.94) 100%
+    );
+    box-shadow:
+      0 16px 32px rgba(var(--color-accent-500), 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 
   .light .btn-secondary {
-    @apply border border-champagne-300 bg-champagne-50 text-champagne-800 hover:border-champagne-400 hover:bg-champagne-100 hover:text-champagne-900 focus-visible:ring-champagne-400 active:bg-champagne-200;
+    @apply border border-champagne-300/80 bg-white/85 text-champagne-800 hover:border-champagne-400 hover:text-champagne-900 focus-visible:ring-champagne-400;
+    box-shadow:
+      0 10px 24px rgba(148, 163, 184, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
   }
 
   .light .btn-ghost {
-    @apply text-champagne-600 hover:bg-champagne-200/50 hover:text-champagne-900 focus-visible:ring-champagne-400;
+    @apply text-champagne-700 hover:bg-champagne-200/50 hover:text-champagne-900 focus-visible:ring-champagne-400;
   }
 
   .light .btn-danger {
-    @apply border border-error-200 bg-error-50 text-error-600 hover:border-error-300 hover:bg-error-100 active:bg-error-200;
+    @apply border border-error-200 bg-error-50/80 text-error-700 hover:border-error-300 hover:bg-error-100 active:bg-error-200;
   }
 
   .light .btn-icon {
-    @apply text-champagne-500 hover:bg-champagne-200/50 hover:text-champagne-800;
+    @apply border border-champagne-300/70 bg-white/80 text-champagne-600 hover:bg-champagne-100 hover:text-champagne-800;
   }
 
   /* Inputs - Light */
   .light .input {
-    @apply rounded-xl border border-champagne-300 bg-champagne-50 text-champagne-900 placeholder-champagne-400 focus:border-accent-400 focus:ring-accent-300/30;
+    @apply border border-champagne-300/80 bg-white/88 text-champagne-900 placeholder-champagne-400 focus:border-accent-400 focus:ring-accent-300/30;
   }
 
   .light .input-error {
@@ -809,18 +1039,27 @@ img.twemoji {
 
   /* Navigation - Light */
   .light .nav-item {
-    @apply text-champagne-600 hover:bg-champagne-200/50 hover:text-champagne-900;
+    @apply border border-transparent text-champagne-700 hover:border-champagne-300/80 hover:bg-champagne-200/50 hover:text-champagne-900;
   }
 
   .light .nav-item-active {
-    @apply bg-champagne-200/70 text-champagne-800;
+    @apply border-accent-300/40 text-accent-700;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-400), 0.14), rgba(255, 255, 255, 0.55)),
+      rgba(var(--color-champagne-100), 0.84);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      0 12px 24px rgba(148, 163, 184, 0.12);
   }
 
   .light .bottom-nav {
-    @apply bg-white/95;
+    @apply border-champagne-300/80 bg-white/95;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.76)),
+      linear-gradient(145deg, rgba(var(--color-champagne-50), 0.98), rgba(var(--color-champagne-100), 0.9));
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
+      0 24px 48px rgba(148, 163, 184, 0.16),
+      0 0 0 1px rgba(15, 23, 42, 0.05);
   }
 
   @media (min-width: 1024px) {
@@ -830,20 +1069,26 @@ img.twemoji {
   }
 
   .light .bottom-nav-item {
-    @apply text-champagne-500;
+    @apply border border-transparent text-champagne-500;
   }
 
   .light .bottom-nav-item:hover {
-    @apply text-champagne-700;
+    @apply border-champagne-300/80 text-champagne-700;
   }
 
   .light .bottom-nav-item-active {
-    @apply bg-champagne-300/40 text-champagne-800;
+    @apply border-accent-300/40 text-accent-700;
+    background:
+      linear-gradient(135deg, rgba(var(--color-accent-400), 0.14), rgba(255, 255, 255, 0.55)),
+      rgba(var(--color-champagne-100), 0.84);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      0 12px 24px rgba(148, 163, 184, 0.12);
   }
 
   /* Divider - Light */
   .light .divider {
-    @apply border-t border-champagne-200;
+    @apply border-t border-champagne-300/70;
   }
 
   /* Safe area */
