@@ -467,7 +467,6 @@ img.twemoji {
       linear-gradient(315deg, rgba(56, 189, 248, 0.06), transparent 20%);
     opacity: 0.55;
   }
-  }
 
   /* Disable animation if user prefers reduced motion */
   @media (prefers-reduced-motion: reduce) {
@@ -1338,6 +1337,7 @@ img.twemoji {
     min-height: 44px;
     min-width: 44px;
   }
+}
 
 @layer utilities {
   /* Text gradient */
