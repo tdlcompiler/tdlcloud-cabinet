@@ -69,7 +69,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
   </svg>
 );
 
-const BUILTIN_TABS = new Set<string>([/*'faq', */'rules', 'privacy', 'offer', 'loyalty']);
+const BUILTIN_TABS = new Set<string>(['rules', 'privacy', 'offer']);
 
 // Sanitize HTML content to prevent XSS
 const sanitizeHtml = (html: string): string => {
@@ -482,11 +482,9 @@ export default function Info() {
   });
 
   const builtinTabs: Array<{ id: string; label: string; icon: React.FC; emoji?: string }> = [
-    { id: 'faq', label: t('info.faq'), icon: QuestionIcon },
     { id: 'rules', label: t('info.rules'), icon: DocumentIcon },
     { id: 'privacy', label: t('info.privacy'), icon: ShieldIcon },
     { id: 'offer', label: t('info.offer'), icon: DocumentIcon },
-    { id: 'loyalty', label: t('info.loyalty'), icon: StarIcon },
   ];
 
   const customTabs = extraPages.map((p) => {
