@@ -69,7 +69,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
   </svg>
 );
 
-const BUILTIN_TABS = new Set<string>(['faq', 'rules', 'privacy', 'offer', 'loyalty']);
+const BUILTIN_TABS = new Set<string>([/*'faq', */'rules', 'privacy', 'offer', 'loyalty']);
 
 // Sanitize HTML content to prevent XSS
 const sanitizeHtml = (html: string): string => {
