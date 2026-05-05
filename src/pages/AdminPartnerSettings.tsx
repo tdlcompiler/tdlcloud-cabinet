@@ -42,7 +42,7 @@ export default function AdminPartnerSettings() {
     withdrawal_requisites_text: string;
   }>({
     referral_program_enabled: true,
-    partner_section_visible: true,
+    partner_section_visible: false,
     withdrawal_enabled: false,
     withdrawal_min_amount_kopeks: 100000,
     withdrawal_cooldown_days: 30,
