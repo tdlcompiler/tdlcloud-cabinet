@@ -17,7 +17,7 @@ const InfoIcon = () => (
   </svg>
 );
 
-const QuestionIcon = () => (
+/*const QuestionIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
     <path
       strokeLinecap="round"
@@ -25,7 +25,7 @@ const QuestionIcon = () => (
       d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
     />
   </svg>
-);
+);*/
 
 const DocumentIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -69,7 +69,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
   </svg>
 );
 
-const BUILTIN_TABS = new Set<string>(['rules', 'privacy', 'offer']);
+const BUILTIN_TABS = new Set<string>([/*'faq', */'rules', 'privacy', 'offer'/*, 'loyalty'*/]);
 
 // Sanitize HTML content to prevent XSS
 const sanitizeHtml = (html: string): string => {
@@ -482,9 +482,11 @@ export default function Info() {
   });
 
   const builtinTabs: Array<{ id: string; label: string; icon: React.FC; emoji?: string }> = [
+    /*{ id: 'faq', label: t('info.faq'), icon: QuestionIcon },*/
     { id: 'rules', label: t('info.rules'), icon: DocumentIcon },
     { id: 'privacy', label: t('info.privacy'), icon: ShieldIcon },
     { id: 'offer', label: t('info.offer'), icon: DocumentIcon },
+    /*{ id: 'loyalty', label: t('info.loyalty'), icon: StarIcon },*/
   ];
 
   const customTabs = extraPages.map((p) => {
