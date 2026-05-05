@@ -43,8 +43,8 @@ import {
   SearchIcon,
 } from './icons';
 
-const FALLBACK_NAME = import.meta.env.VITE_APP_NAME || 'Cabinet';
-const FALLBACK_LOGO = import.meta.env.VITE_APP_LOGO || 'V';
+const FALLBACK_NAME = import.meta.env.VITE_APP_NAME || 'TDL Cloud';
+const FALLBACK_LOGO = import.meta.env.VITE_APP_LOGO || 'T';
 
 import type { TelegramPlatform } from '@/hooks/useTelegramSDK';
 

@@ -11,8 +11,8 @@ services:
         # API URL - use /api for same-server deployment or full URL for external backend
         VITE_API_URL: ${VITE_API_URL:-/api}
         VITE_TELEGRAM_BOT_USERNAME: ${VITE_TELEGRAM_BOT_USERNAME}
-        VITE_APP_NAME: ${VITE_APP_NAME:-Cabinet}
-        VITE_APP_LOGO: ${VITE_APP_LOGO:-V}
+        VITE_APP_NAME: ${VITE_APP_NAME:-TDL Cloud}
+        VITE_APP_LOGO: ${VITE_APP_LOGO:-T}
     container_name: cabinet_frontend
     restart: unless-stopped
     env_file:
