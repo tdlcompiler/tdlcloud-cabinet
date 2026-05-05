@@ -369,7 +369,7 @@ function ReplacementFaqView({ items }: { items: FaqItem[] }) {
 
 export default function Info() {
   const { t, i18n } = useTranslation();
-  const [activeTab, setActiveTab] = useState<string>('faq');
+  const [activeTab, setActiveTab] = useState<string>('rules');
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const locale = i18n.language.split('-')[0];
 
