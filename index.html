@@ -2,53 +2,141 @@
 <html lang="ru" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="data:," />
+
+    <link rel="icon" href="/logo.svg" />
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
+
+    <title>Личный кабинет TDL Cloud</title>
+
+    <meta
+      name="description"
+      content="Личный кабинет TDL Cloud — управление подпиской"
+    />
+
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://lk.tdlcloud.ru/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Личный кабинет TDL Cloud" />
+    <meta
+      property="og:description"
+      content="Управление подпиской аккаунта TDL Cloud."
+    />
+    <meta property="og:url" content="https://lk.tdlcloud.ru/" />
+    <meta property="og:site_name" content="TDL Cloud" />
+    <meta
+      property="og:image"
+      content="https://lk.tdlcloud.ru/preview.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Личный кабинет TDL Cloud" />
+    <meta
+      name="twitter:description"
+      content="Управление подпиской TDL Cloud."
+    />
+    <meta
+      name="twitter:image"
+      content="https://lk.tdlcloud.ru/preview.png"
+    />
+
     <meta name="theme-color" content="#0a0f1a" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="TDL Cloud"
+    />
+    <meta name="application-name" content="TDL Cloud" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Loading...</title>
+    <meta
+      name="referrer"
+      content="strict-origin-when-cross-origin"
+    />
+	
+	<link rel="alternate" hreflang="ru" href="https://lk.tdlcloud.ru/">
+	<link rel="alternate" hreflang="x-default" href="https://lk.tdlcloud.ru/">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
+
     <noscript>
       <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
     </noscript>
+	
+	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@type": "SoftwareApplication",
+	  "name": "TDL Cloud",
+	  "applicationCategory": "NetworkingApplication",
+	  "operatingSystem": "Windows, Android, iOS, macOS, Linux",
+	  "url": "https://tdlcloud.ru",
+	  "offers": {
+		"@type": "Offer",
+		"price": "120",
+		"priceCurrency": "RUB"
+	  }
+	}
+	</script>
+
     <script>
       // Load Telegram Web App script only inside Telegram environment
-      (function() {
-        var isTelegram = window.TelegramWebviewProxy ||
-          location.hash.indexOf('tgWebApp') !== -1 ||
-          location.search.indexOf('tgWebApp') !== -1;
+      (function () {
+        var isTelegram =
+          window.TelegramWebviewProxy ||
+          location.hash.indexOf("tgWebApp") !== -1 ||
+          location.search.indexOf("tgWebApp") !== -1;
+
         if (isTelegram) {
-          var s = document.createElement('script');
-          s.src = 'https://telegram.org/js/telegram-web-app.js';
+          var s = document.createElement("script");
+          s.src = "https://telegram.org/js/telegram-web-app.js";
           s.async = true;
           document.head.appendChild(s);
         }
       })();
     </script>
+
     <style>
       body {
         background-color: #0a0f1a;
       }
     </style>
   </head>
+
   <body>
     <div id="root"></div>
+
+    <!-- Fallback for bots / no JS -->
+    <noscript>
+      <h1>Личный кабинет TDL Cloud</h1>
+      <p>
+        Вход в личный кабинет TDL Cloud для управления
+        подпиской, устройствами, конфигурациями и
+        настройками аккаунта.
+      </p>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
