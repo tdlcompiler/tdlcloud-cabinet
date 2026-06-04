@@ -1756,7 +1756,8 @@
         "dailyLimit": "Daily Spin Limit (0 = unlimited)",
         "minSubDays": "Min subscription days for day payment",
         "promocodes": "Promocodes",
-        "promoPrefix": "Promo code prefix"
+        "promoPrefix": "Promo code prefix",
+        "promoValidityDays": "Promo code validity (days)"
       },
       "starsNotEnabledGlobally": "Star payments are not enabled in Payment Methods. Enable \"Telegram Stars\" in the Payment Methods section.",
       "prizes": {
@@ -1783,7 +1784,9 @@
           "emoji": "Emoji",
           "color": "Color",
           "active": "Active",
-          "worth": "Worth"
+          "worth": "Worth",
+          "probability": "Manual probability (0–1)",
+          "probabilityHint": "Empty = auto by RTP"
         },
         "promo": {
           "title": "Promo Code Settings",
@@ -1801,7 +1804,9 @@
         "times": "times",
         "times_one": "{{count}} time",
         "times_other": "{{count}} times",
-        "topWins": "Top Wins"
+        "topWins": "Top Wins",
+        "loadError": "Failed to load statistics",
+        "empty": "No spins yet"
       }
     },
     "broadcasts": {

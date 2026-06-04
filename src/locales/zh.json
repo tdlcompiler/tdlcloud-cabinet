@@ -1509,7 +1509,8 @@
         "promoPrefix": "优惠码前缀",
         "spinCost": "旋转费用",
         "limitsAndRtp": "限制和RTP",
-        "promocodes": "促销码"
+        "promocodes": "促销码",
+        "promoValidityDays": "促销码有效期（天）"
       },
       "starsNotEnabledGlobally": "星星支付未在支付方式中启用。请在「支付方式」中启用「Telegram Stars」。",
       "prizes": {
@@ -1536,7 +1537,9 @@
           "emoji": "表情",
           "color": "颜色",
           "active": "启用",
-          "worth": "价值"
+          "worth": "价值",
+          "probability": "手动概率 (0–1)",
+          "probabilityHint": "留空 = 按 RTP 自动"
         },
         "promo": {
           "title": "优惠码设置",
@@ -1553,7 +1556,9 @@
         "prizeDistribution": "奖品分布",
         "times": "次",
         "times_other": "{{count}} 次",
-        "topWins": "最高奖品"
+        "topWins": "最高奖品",
+        "loadError": "无法加载统计数据",
+        "empty": "暂无抽奖记录"
       }
     },
     "broadcasts": {

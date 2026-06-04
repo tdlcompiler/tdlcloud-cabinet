@@ -1432,7 +1432,8 @@
         "promoPrefix": "پیشوند کد تخفیف",
         "spinCost": "هزینه چرخش",
         "limitsAndRtp": "محدودیت‌ها و RTP",
-        "promocodes": "کدهای تخفیف"
+        "promocodes": "کدهای تخفیف",
+        "promoValidityDays": "اعتبار کد تخفیف (روز)"
       },
       "starsNotEnabledGlobally": "پرداخت با ستاره در روش‌های پرداخت فعال نیست. «Telegram Stars» را در بخش «روش‌های پرداخت» فعال کنید.",
       "prizes": {
@@ -1459,7 +1460,9 @@
           "emoji": "ایموجی",
           "color": "رنگ",
           "active": "فعال",
-          "worth": "ارزش"
+          "worth": "ارزش",
+          "probability": "احتمال دستی (۰–۱)",
+          "probabilityHint": "خالی = خودکار بر اساس RTP"
         },
         "promo": {
           "title": "تنظیمات کد تخفیف",
@@ -1476,7 +1479,9 @@
         "prizeDistribution": "توزیع جوایز",
         "times": "بار",
         "times_other": "{{count}} بار",
-        "topWins": "برترین برنده‌ها"
+        "topWins": "برترین برنده‌ها",
+        "loadError": "بارگذاری آمار ناموفق بود",
+        "empty": "هنوز چرخشی انجام نشده"
       }
     },
     "broadcasts": {
