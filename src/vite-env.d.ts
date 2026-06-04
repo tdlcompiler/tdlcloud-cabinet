@@ -19,6 +19,8 @@ interface ImportMeta {
 interface TelegramWebAppGlobal {
   onEvent?: (event: string, callback: () => void) => void;
   offEvent?: (event: string, callback: () => void) => void;
+  /** Closes the Mini App (injected by telegram-web-app.js). */
+  close?: () => void;
 }
 
 /** Telegram Login JS SDK — loaded from https://oauth.telegram.org/js/telegram-login.js */

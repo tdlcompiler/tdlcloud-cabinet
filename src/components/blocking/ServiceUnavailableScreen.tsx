@@ -4,7 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useBlockingStore } from '../../store/blocking';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { pingBackend, hasEverReachedBackend } from '../../api/health';
-import { CloudWarningIcon, RestartIcon } from '@/components/icons';
+import { isInTelegramWebApp, closeTelegramApp } from '../../hooks/useTelegramSDK';
+import { CloudWarningIcon, RestartIcon, CloseIcon } from '@/components/icons';
 
 const POLL_INTERVAL_MS = 5000;
 
@@ -21,6 +22,7 @@ export default function ServiceUnavailableScreen() {
   const queryClient = useQueryClient();
   const [isChecking, setIsChecking] = useState(false);
   const isCheckingRef = useRef(false);
+  const inTelegram = isInTelegramWebApp();
 
   const recover = useCallback(() => {
     clearBlocking();
@@ -132,6 +134,18 @@ export default function ServiceUnavailableScreen() {
             </>
           )}
         </button>
+
+        {/* Close button — Telegram Mini App only (a browser tab can't be closed
+            by script). Reliably exits the Mini App instead of routing back. */}
+        {inTelegram && (
+          <button
+            onClick={closeTelegramApp}
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-dark-700 px-6 py-4 font-semibold text-dark-300 transition-colors duration-200 hover:bg-dark-800 hover:text-white"
+          >
+            <CloseIcon className="h-5 w-5" />
+            {t('blocking.serviceUnavailable.close')}
+          </button>
+        )}
 
         {/* Decorative dots */}
         <div className="mt-8 flex items-center justify-center gap-2">

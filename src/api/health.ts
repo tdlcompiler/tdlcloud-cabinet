@@ -85,8 +85,18 @@ let confirmInFlight = false;
  * already shown.
  */
 export async function reportPossibleBackendDown(): Promise<void> {
-  if (confirmInFlight) return;
   if (useBlockingStore.getState().blockingType === 'backend_unavailable') return;
+  // During the INITIAL bootstrap (we've never reached the backend yet) the
+  // caller's failed request is itself the confirmation, so flip the screen
+  // IMMEDIATELY and synchronously. A deferred probe here would let the /login
+  // page paint for the ~probe duration before the outage screen — the "jump"
+  // we must avoid. Once the app has loaded, fall through to the confirm-probe so
+  // a one-off network blip can't blank a working session.
+  if (!everReachedBackend) {
+    useBlockingStore.getState().setBackendUnavailable();
+    return;
+  }
+  if (confirmInFlight) return;
   confirmInFlight = true;
   try {
     const reachable = await pingBackend();
@@ -95,5 +105,22 @@ export async function reportPossibleBackendDown(): Promise<void> {
     }
   } finally {
     confirmInFlight = false;
+  }
+}
+
+/**
+ * Eager liveness check fired once at app launch (from main.tsx), in parallel
+ * with auth bootstrap. If the backend is already down at launch this paints the
+ * ServiceUnavailableScreen immediately — before the auth flow can flash the
+ * /login page — even on the no-stored-token path that makes no early request.
+ * No-op if the app has already reached the backend or another blocking screen
+ * is showing.
+ */
+export async function checkBackendOnStartup(): Promise<void> {
+  if (everReachedBackend) return;
+  if (useBlockingStore.getState().blockingType !== null) return;
+  const reachable = await pingBackend();
+  if (!reachable && !everReachedBackend && useBlockingStore.getState().blockingType === null) {
+    useBlockingStore.getState().setBackendUnavailable();
   }
 }
