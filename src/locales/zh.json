@@ -4138,7 +4138,8 @@
         "vk": "VK"
       },
       "backToAccounts": "返回账户列表"
-    }
+    },
+    "emailMergePasswordRequired": "该邮箱已属于另一个账户。要合并账户，请输入该账户的密码。"
   },
   "theme": {
     "colors": "主题颜色",

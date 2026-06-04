@@ -4594,7 +4594,8 @@
         "vk": "VK"
       },
       "backToAccounts": "Back to accounts"
-    }
+    },
+    "emailMergePasswordRequired": "This email already belongs to another account. To merge the accounts, enter that account's password."
   },
   "theme": {
     "colors": "Theme Colors",

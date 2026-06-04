@@ -409,7 +409,12 @@ export default function ConnectedAccounts() {
     },
     onError: (err: { response?: { data?: { detail?: string } } }) => {
       const detail = err.response?.data?.detail;
-      if (detail?.includes('already registered')) {
+      // The email belongs to another account and merging it requires proving
+      // ownership: the backend asks for THAT account's password (account-takeover
+      // fix). Guide the user to enter it rather than showing a dead-end error.
+      if (detail?.includes('merge')) {
+        setEmailError(t('profile.emailMergePasswordRequired'));
+      } else if (detail?.includes('already registered')) {
         setEmailError(t('profile.emailAlreadyRegistered'));
       } else if (detail?.includes('already have a verified email')) {
         setEmailError(t('profile.alreadyHaveEmail'));
