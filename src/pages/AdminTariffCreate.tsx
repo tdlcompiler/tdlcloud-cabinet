@@ -706,8 +706,10 @@ export default function AdminTariffCreate() {
                       >
                         {isSelected && <CheckIcon />}
                       </div>
-                      <span className="flex-1 text-sm font-medium">{squad.name}</span>
-                      <span className="text-xs text-dark-500">
+                      <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                        {squad.name}
+                      </span>
+                      <span className="shrink-0 text-xs text-dark-500">
                         {squad.members_count} {t('admin.tariffs.externalSquadUsers')}
                       </span>
                     </button>
@@ -1068,7 +1070,9 @@ export default function AdminTariffCreate() {
                       >
                         {isSelected && <CheckIcon />}
                       </div>
-                      <span className="flex-1 text-sm font-medium">{group.name}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                        {group.name}
+                      </span>
                     </button>
                   );
                 })}
