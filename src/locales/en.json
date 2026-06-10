@@ -1613,6 +1613,7 @@
       "quickAmountsAdd": "Add",
       "quickAmountsInvalid": "Enter a positive amount in rubles",
       "quickAmountsLimit": "No more than 10 amounts",
+      "quickAmountsRemove": "Remove amount {{value}} ₽",
       "conditions": "Display conditions",
       "userTypeFilter": "User type",
       "userTypeAll": "All",

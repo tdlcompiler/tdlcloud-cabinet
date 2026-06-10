@@ -1635,6 +1635,7 @@
       "quickAmountsAdd": "Добавить",
       "quickAmountsInvalid": "Введите положительную сумму в рублях",
       "quickAmountsLimit": "Не более 10 сумм",
+      "quickAmountsRemove": "Удалить сумму {{value}} ₽",
       "conditions": "Условия отображения",
       "userTypeFilter": "Тип пользователя",
       "userTypeAll": "Все",

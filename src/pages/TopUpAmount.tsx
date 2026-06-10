@@ -376,7 +376,7 @@ export default function TopUpAmount() {
   };
 
   const quickAmounts = (
-    method.quick_amounts && method.quick_amounts.length > 0
+    method.quick_amounts != null
       ? method.quick_amounts.map((kopeks) => kopeks / 100)
       : [100, 300, 500, 1000]
   ).filter((a) => a >= minRubles && a <= maxRubles);

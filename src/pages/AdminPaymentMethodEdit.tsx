@@ -127,7 +127,8 @@ export default function AdminPaymentMethodEdit() {
 
   const addQuickAmount = () => {
     setQuickAmountsError(null);
-    const value = parseFloat(quickAmountInput.replace(',', '.'));
+    const parsed = parseFloat(quickAmountInput.replace(',', '.'));
+    const value = Math.round(parsed);
     if (isNaN(value) || value <= 0) {
       setQuickAmountsError(t('admin.paymentMethods.quickAmountsInvalid'));
       return;
@@ -351,6 +352,7 @@ export default function AdminPaymentMethodEdit() {
                   key={value}
                   type="button"
                   onClick={() => removeQuickAmount(value)}
+                  aria-label={t('admin.paymentMethods.quickAmountsRemove', { value })}
                   className="flex items-center gap-1.5 rounded-xl border border-accent-500/30 bg-accent-500/10 px-3 py-1.5 text-sm font-medium text-accent-300 transition-colors hover:border-error-500/40 hover:bg-error-500/10 hover:text-error-400"
                 >
                   <span>{value} ₽</span>
