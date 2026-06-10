@@ -4628,7 +4628,8 @@
         "sortOrder": "Порядок сортировки",
         "icon": "Иконка (эмодзи)",
         "pageType": "Тип страницы",
-        "replacesTab": "Заменяет таб"
+        "replacesTab": "Заменяет таб",
+        "displayMode": "Отображение"
       },
       "replacesTabNone": "Не заменяет",
       "replacesTabOptions": {
@@ -4636,6 +4637,11 @@
         "rules": "Правила",
         "privacy": "Конфиденциальность",
         "offer": "Оферта"
+      },
+      "displayModes": {
+        "bot": "Только бот",
+        "web": "Только веб",
+        "both": "Бот и веб"
       },
       "replacesTabConflict": "уже занят",
       "replacesTabWarning": "Другая страница уже заменяет этот таб. При сохранении она будет снята.",

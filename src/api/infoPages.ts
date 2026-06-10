@@ -43,7 +43,7 @@ export interface InfoPageCreateRequest {
   sort_order: number;
   icon: string | null;
   replaces_tab: ReplacesTab | null;
-  display_mode?: InfoPageDisplayMode;
+  display_mode: InfoPageDisplayMode;
 }
 
 export interface InfoPageUpdateRequest {
