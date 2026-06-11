@@ -1043,6 +1043,8 @@
       "starfieldDesc": "向观察者飞来的星星",
       "matrixRain": "黑客帝国雨",
       "matrixRainDesc": "下落的字符列",
+      "liquidGradient": "流体渐变",
+      "liquidGradientDesc": "模糊的网格渐变色块",
       "geminiEffect": "Gemini效果",
       "geminiEffectDesc": "类似Google Gemini的SVG效果",
       "speed": "速度",

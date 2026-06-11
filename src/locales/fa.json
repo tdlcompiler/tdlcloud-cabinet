@@ -1043,6 +1043,8 @@
       "starfieldDesc": "پرواز در میان ستاره‌ها",
       "matrixRain": "باران ماتریکس",
       "matrixRainDesc": "ستون‌های نمادهای در حال سقوط",
+      "liquidGradient": "گرادیان مایع",
+      "liquidGradientDesc": "حباب‌های گرادیان مات و روان",
       "geminiEffect": "افکت Gemini",
       "geminiEffectDesc": "افکت SVG مشابه Google Gemini",
       "speed": "سرعت",

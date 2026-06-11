@@ -1161,6 +1161,8 @@
       "starfieldDesc": "Stars flying toward the viewer",
       "matrixRain": "Matrix Rain",
       "matrixRainDesc": "Falling columns of glyphs",
+      "liquidGradient": "Liquid Gradient",
+      "liquidGradientDesc": "Blurred mesh gradient blobs",
       "geminiEffect": "Gemini Effect",
       "geminiEffectDesc": "SVG effect like Google Gemini",
       "speed": "Speed",

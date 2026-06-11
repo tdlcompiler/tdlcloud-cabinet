@@ -22,6 +22,7 @@ const backgroundImports: Record<Exclude<BackgroundType, 'none'>, () => Promise<u
   snowfall: () => import('./snowfall'),
   starfield: () => import('./starfield'),
   'matrix-rain': () => import('./matrix-rain'),
+  'liquid-gradient': () => import('./liquid-gradient'),
 };
 
 /** Prefetch the JS chunk for a background type (call early to avoid lazy-load delay) */
@@ -55,6 +56,7 @@ export const backgroundComponents: Record<
   snowfall: lazy(() => import('./snowfall')),
   starfield: lazy(() => import('./starfield')),
   'matrix-rain': lazy(() => import('./matrix-rain')),
+  'liquid-gradient': lazy(() => import('./liquid-gradient')),
 };
 
 // Registry of all background definitions with settings for the editor
@@ -720,6 +722,38 @@ export const backgroundRegistry: BackgroundDefinition[] = [
           { label: 'Latin', value: 'latin' },
           { label: 'Binary', value: 'binary' },
         ],
+      },
+    ],
+  },
+  {
+    type: 'liquid-gradient',
+    labelKey: 'admin.backgrounds.liquidGradient',
+    descriptionKey: 'admin.backgrounds.liquidGradientDesc',
+    category: 'css',
+    settings: [
+      { key: 'color1', label: 'admin.backgrounds.color1', type: 'color', default: '#6366f1' },
+      { key: 'color2', label: 'admin.backgrounds.color2', type: 'color', default: '#ec4899' },
+      { key: 'color3', label: 'admin.backgrounds.color3', type: 'color', default: '#22d3ee' },
+      { key: 'color4', label: 'admin.backgrounds.color4', type: 'color', default: '#a855f7' },
+      {
+        key: 'speed',
+        label: 'admin.backgrounds.speed',
+        type: 'select',
+        default: 'normal',
+        options: [
+          { label: 'admin.backgrounds.slow', value: 'slow' },
+          { label: 'admin.backgrounds.normal', value: 'normal' },
+          { label: 'admin.backgrounds.fast', value: 'fast' },
+        ],
+      },
+      {
+        key: 'blurAmount',
+        label: 'admin.backgrounds.blurAmount',
+        type: 'number',
+        min: 10,
+        max: 120,
+        step: 5,
+        default: 60,
       },
     ],
   },

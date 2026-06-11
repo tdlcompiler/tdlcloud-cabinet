@@ -1191,6 +1191,8 @@
       "starfieldDesc": "Полёт сквозь звёздное небо",
       "matrixRain": "Matrix Rain",
       "matrixRainDesc": "Падающие колонки символов",
+      "liquidGradient": "Liquid Gradient",
+      "liquidGradientDesc": "Жидкий mesh-градиент из размытых блобов",
       "geminiEffect": "Gemini Effect",
       "geminiEffectDesc": "SVG-эффект как на Google Gemini",
       "speed": "Скорость",
