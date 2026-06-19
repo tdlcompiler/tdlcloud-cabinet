@@ -78,7 +78,7 @@ export function Skeleton({
         return (
           <div
             key={index}
-            className={`${baseClasses} ${animation} rounded-(--bento-radius,24px) border border-dark-700/30 p-4 ${className}`}
+            className={`${baseClasses} ${animation} rounded-[var(--bento-radius,24px)] border border-dark-700/30 p-4 ${className}`}
             style={style}
           >
             {/* Header */}
@@ -118,7 +118,7 @@ export function Skeleton({
         return (
           <div
             key={index}
-            className={`${baseClasses} ${animation} min-h-[160px] w-full rounded-(--bento-radius,24px) border border-dark-700/30 ${className}`}
+            className={`${baseClasses} ${animation} min-h-[160px] w-full rounded-[var(--bento-radius,24px)] border border-dark-700/30 ${className}`}
             style={style}
           />
         );

@@ -285,7 +285,7 @@ export function ClassicPurchaseWizard({
                   >
                     {promoPeriod.percent && promoPeriod.percent > 0 && (
                       <div
-                        className={`absolute top-2 right-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
+                        className={`absolute right-2 top-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
                           promoPeriod.isPromoGroup ? 'bg-success-500' : 'bg-warning-500'
                         }`}
                       >
@@ -329,7 +329,7 @@ export function ClassicPurchaseWizard({
                   >
                     {promoTraffic.percent && promoTraffic.percent > 0 && (
                       <div
-                        className={`absolute top-2 right-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
+                        className={`absolute right-2 top-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
                           promoTraffic.isPromoGroup ? 'bg-success-500' : 'bg-warning-500'
                         }`}
                       >
@@ -383,7 +383,7 @@ export function ClassicPurchaseWizard({
                     >
                       {promoServer.percent && promoServer.percent > 0 ? (
                         <div
-                          className={`absolute top-2 right-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
+                          className={`absolute right-2 top-2 z-10 rounded-full px-2 py-0.5 text-xs font-medium text-white shadow-sm ${
                             promoServer.isPromoGroup ? 'bg-success-500' : 'bg-warning-500'
                           }`}
                         >
@@ -392,7 +392,7 @@ export function ClassicPurchaseWizard({
                       ) : null}
                       <div className="flex items-center gap-3">
                         <div
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 ${
+                          className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 ${
                             selectedServers.includes(server.uuid)
                               ? 'border-accent-500 bg-accent-500'
                               : 'border-dark-600'
@@ -434,7 +434,7 @@ export function ClassicPurchaseWizard({
                     setSelectedDevices(Math.max(selectedPeriod.devices.min, selectedDevices - 1))
                   }
                   disabled={selectedDevices <= selectedPeriod.devices.min}
-                  className="btn-secondary flex h-14 w-14 items-center justify-center p-0! text-2xl"
+                  className="btn-secondary flex h-14 w-14 items-center justify-center !p-0 text-2xl"
                 >
                   -
                 </button>
@@ -447,7 +447,7 @@ export function ClassicPurchaseWizard({
                     setSelectedDevices(Math.min(selectedPeriod.devices.max, selectedDevices + 1))
                   }
                   disabled={selectedDevices >= selectedPeriod.devices.max}
-                  className="btn-secondary flex h-14 w-14 items-center justify-center p-0! text-2xl"
+                  className="btn-secondary flex h-14 w-14 items-center justify-center !p-0 text-2xl"
                 >
                   +
                 </button>

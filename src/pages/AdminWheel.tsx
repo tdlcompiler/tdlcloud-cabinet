@@ -107,7 +107,7 @@ function SortablePrizeCard({
         <button
           {...attributes}
           {...listeners}
-          className="shrink-0 cursor-grab touch-none rounded-lg p-1.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-2.5"
+          className="flex-shrink-0 cursor-grab touch-none rounded-lg p-1.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-2.5"
           title={t('admin.wheel.prizes.dragToReorder')}
         >
           <GripVerticalIcon />
@@ -115,7 +115,7 @@ function SortablePrizeCard({
 
         {/* Prize icon */}
         <div
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-lg sm:h-10 sm:w-10 sm:text-xl"
+          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-lg sm:h-10 sm:w-10 sm:text-xl"
           style={{ backgroundColor: prize.color + '30' }}
         >
           {prize.emoji}
@@ -131,7 +131,7 @@ function SortablePrizeCard({
         </div>
 
         {/* Actions */}
-        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
+        <div className="flex flex-shrink-0 items-center gap-0.5 sm:gap-1">
           <button
             onClick={onToggleExpand}
             className="btn-ghost p-1.5 sm:p-2"
@@ -413,7 +413,7 @@ export default function AdminWheel() {
         <div className="flex gap-1 border-b border-dark-700 pb-2 sm:gap-2">
           <button
             onClick={() => setActiveTab('settings')}
-            className={`flex items-center gap-1.5 rounded-t-lg px-3 py-2 text-sm whitespace-nowrap transition-colors sm:gap-2 sm:px-4 sm:text-base ${
+            className={`flex items-center gap-1.5 whitespace-nowrap rounded-t-lg px-3 py-2 text-sm transition-colors sm:gap-2 sm:px-4 sm:text-base ${
               activeTab === 'settings'
                 ? 'border-b-2 border-accent-500 bg-dark-800 text-accent-400'
                 : 'text-dark-400 hover:text-dark-200'
@@ -424,7 +424,7 @@ export default function AdminWheel() {
           </button>
           <button
             onClick={() => setActiveTab('prizes')}
-            className={`flex items-center gap-1.5 rounded-t-lg px-3 py-2 text-sm whitespace-nowrap transition-colors sm:gap-2 sm:px-4 sm:text-base ${
+            className={`flex items-center gap-1.5 whitespace-nowrap rounded-t-lg px-3 py-2 text-sm transition-colors sm:gap-2 sm:px-4 sm:text-base ${
               activeTab === 'prizes'
                 ? 'border-b-2 border-accent-500 bg-dark-800 text-accent-400'
                 : 'text-dark-400 hover:text-dark-200'
@@ -435,7 +435,7 @@ export default function AdminWheel() {
           </button>
           <button
             onClick={() => setActiveTab('statistics')}
-            className={`flex items-center gap-1.5 rounded-t-lg px-3 py-2 text-sm whitespace-nowrap transition-colors sm:gap-2 sm:px-4 sm:text-base ${
+            className={`flex items-center gap-1.5 whitespace-nowrap rounded-t-lg px-3 py-2 text-sm transition-colors sm:gap-2 sm:px-4 sm:text-base ${
               activeTab === 'statistics'
                 ? 'border-b-2 border-accent-500 bg-dark-800 text-accent-400'
                 : 'text-dark-400 hover:text-dark-200'
@@ -449,7 +449,7 @@ export default function AdminWheel() {
 
       {/* Settings Tab */}
       {activeTab === 'settings' && (
-        <div className="space-y-6 card p-6">
+        <div className="card space-y-6 p-6">
           {/* Enable toggle */}
           <div className="flex items-center justify-between">
             <div>
@@ -468,7 +468,7 @@ export default function AdminWheel() {
               }`}
             >
               <span
-                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
                   (settingsForm?.is_enabled ?? config.is_enabled)
                     ? 'translate-x-5'
                     : 'translate-x-0'
@@ -758,14 +758,14 @@ export default function AdminWheel() {
 
       {/* Prizes Tab */}
       {activeTab === 'prizes' && (
-        <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+        <div className="grid gap-6 lg:grid-cols-[1fr,300px]">
           {/* Prize list */}
           <div className="space-y-4">
             <div className="flex items-center justify-between gap-2">
               <p className="text-sm text-dark-400">{t('admin.wheel.prizes.dragToReorder')}</p>
               <button
                 onClick={() => setIsCreating(true)}
-                className="btn-primary flex shrink-0 items-center gap-2"
+                className="btn-primary flex flex-shrink-0 items-center gap-2"
               >
                 <PlusIcon />
                 <span className="hidden sm:inline">{t('admin.wheel.prizes.addPrize')}</span>

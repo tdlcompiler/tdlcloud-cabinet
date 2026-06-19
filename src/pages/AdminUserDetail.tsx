@@ -754,7 +754,7 @@ export default function AdminUserDetail() {
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <AdminBackButton to="/admin/users" />
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-lg font-bold text-white">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-lg font-bold text-white">
             {user.first_name?.[0] || user.username?.[0] || '?'}
           </div>
           <div>
@@ -773,7 +773,7 @@ export default function AdminUserDetail() {
 
       {/* Tabs */}
       <div
-        className="-mx-4 mb-6 scrollbar-hide flex gap-2 overflow-x-auto px-4 py-1"
+        className="scrollbar-hide -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 py-1"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {(['info', 'subscription', 'balance', 'sync', 'tickets', 'gifts', 'referrals'] as const)
@@ -782,7 +782,7 @@ export default function AdminUserDetail() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`shrink-0 rounded-xl px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all ${
+              className={`shrink-0 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition-all ${
                 activeTab === tab
                   ? 'bg-accent-500/15 text-accent-400 ring-1 ring-accent-500/30'
                   : 'bg-dark-800/50 text-dark-400 active:bg-dark-700'

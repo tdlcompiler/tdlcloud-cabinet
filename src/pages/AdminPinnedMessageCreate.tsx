@@ -190,7 +190,7 @@ export default function AdminPinnedMessageCreate() {
       </div>
 
       {/* Content */}
-      <div className="space-y-6 card">
+      <div className="card space-y-6">
         {/* Message text */}
         <div>
           <label htmlFor="pm-content" className="mb-2 block text-sm font-medium text-dark-300">
@@ -203,7 +203,7 @@ export default function AdminPinnedMessageCreate() {
             placeholder={t('admin.pinnedMessages.contentPlaceholder')}
             rows={6}
             maxLength={4000}
-            className="min-h-[150px] input resize-y"
+            className="input min-h-[150px] resize-y"
           />
           <div className="mt-1 text-right text-xs text-dark-400">{content.length}/4000</div>
         </div>
@@ -276,7 +276,7 @@ export default function AdminPinnedMessageCreate() {
       </div>
 
       {/* Settings */}
-      <div className="space-y-4 card">
+      <div className="card space-y-4">
         <h2 className="text-lg font-semibold text-dark-100">
           {t('admin.pinnedMessages.settings')}
         </h2>
@@ -312,7 +312,7 @@ export default function AdminPinnedMessageCreate() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between card">
+      <div className="card flex items-center justify-between">
         <button onClick={() => navigate('/admin/pinned-messages')} className="btn-secondary">
           {t('common.cancel')}
         </button>

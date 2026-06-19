@@ -43,7 +43,7 @@ export function UserDetailPanel({ userId, className }: UserDetailPanelProps) {
       </div>
 
       {/* Content */}
-      <div className="overflow-y-auto p-4 pb-[calc(1rem+var(--safe-bottom,0))]">
+      <div className="overflow-y-auto p-4 pb-[calc(1rem+var(--safe-bottom,0px))]">
         {isLoading && (
           <div className="flex items-center justify-center py-8">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-dark-600 border-t-accent-400" />
@@ -89,7 +89,7 @@ export function UserDetailPanel({ userId, className }: UserDetailPanelProps) {
 
             {/* Subscription */}
             <div className="rounded-lg border border-dark-700/50 bg-dark-800/40 p-3">
-              <h4 className="mb-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
+              <h4 className="mb-2 text-xs font-medium uppercase tracking-wider text-dark-500">
                 {t('admin.referralNetwork.user.subscription')}
               </h4>
               {user.subscription_name ? (
@@ -129,7 +129,7 @@ export function UserDetailPanel({ userId, className }: UserDetailPanelProps) {
 
             {/* Personal stats */}
             <div className="rounded-lg border border-dark-700/50 bg-dark-800/40 p-3">
-              <h4 className="mb-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
+              <h4 className="mb-2 text-xs font-medium uppercase tracking-wider text-dark-500">
                 {t('admin.referralNetwork.user.personalStats')}
               </h4>
               <div className="space-y-2">
@@ -154,7 +154,7 @@ export function UserDetailPanel({ userId, className }: UserDetailPanelProps) {
 
             {/* Referral branch */}
             <div className="rounded-lg border border-dark-700/50 bg-dark-800/40 p-3">
-              <h4 className="mb-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
+              <h4 className="mb-2 text-xs font-medium uppercase tracking-wider text-dark-500">
                 {t('admin.referralNetwork.user.referralBranch')}
               </h4>
               <div className="space-y-2">
@@ -183,7 +183,7 @@ export function UserDetailPanel({ userId, className }: UserDetailPanelProps) {
 
             {/* Source */}
             <div className="rounded-lg border border-dark-700/50 bg-dark-800/40 p-3">
-              <h4 className="mb-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
+              <h4 className="mb-2 text-xs font-medium uppercase tracking-wider text-dark-500">
                 {t('admin.referralNetwork.user.source')}
               </h4>
               <div className="space-y-2">

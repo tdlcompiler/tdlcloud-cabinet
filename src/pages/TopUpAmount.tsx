@@ -419,8 +419,8 @@ export default function TopUpAmount() {
         <div
           className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
             isStarsMethod
-              ? 'bg-linear-to-br from-yellow-500/20 to-orange-500/20 text-yellow-400'
-              : 'bg-linear-to-br from-accent-500/20 to-accent-600/20 text-accent-400'
+              ? 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20 text-yellow-400'
+              : 'bg-gradient-to-br from-accent-500/20 to-accent-600/20 text-accent-400'
           }`}
         >
           <div className="flex h-7 w-7 items-center justify-center">{getMethodIcon(method.id)}</div>
@@ -451,7 +451,7 @@ export default function TopUpAmount() {
               >
                 {opt.name}
                 {selectedOption === opt.id && (
-                  <span className="absolute top-1.5 right-1.5">
+                  <span className="absolute right-1.5 top-1.5">
                     <span className="block h-2 w-2 rounded-full bg-accent-500" />
                   </span>
                 )}
@@ -494,7 +494,7 @@ export default function TopUpAmount() {
               className="h-14 w-full bg-transparent px-4 pr-12 text-xl font-bold text-dark-100 placeholder:text-dark-600 focus:outline-none"
               autoComplete="off"
             />
-            <span className="absolute top-1/2 right-4 -translate-y-1/2 text-base font-semibold text-dark-500">
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-base font-semibold text-dark-500">
               {currencySymbol}
             </span>
           </div>
@@ -506,7 +506,7 @@ export default function TopUpAmount() {
               isPending || !amount || parseFloat(amount) <= 0
                 ? 'cursor-not-allowed bg-dark-700 text-dark-500'
                 : isStarsMethod
-                  ? 'bg-linear-to-r from-yellow-500 to-orange-500 text-white shadow-lg shadow-yellow-500/25 hover:from-yellow-400 hover:to-orange-400 active:from-yellow-600 active:to-orange-600'
+                  ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg shadow-yellow-500/25 hover:from-yellow-400 hover:to-orange-400 active:from-yellow-600 active:to-orange-600'
                   : 'bg-accent-500 text-on-accent shadow-lg shadow-accent-500/25 transition-colors hover:bg-accent-400 active:bg-accent-600'
             }`}
           >

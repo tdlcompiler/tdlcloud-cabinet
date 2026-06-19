@@ -117,8 +117,9 @@ const sections: AdminSection[] = [
   {
     id: 'analytics',
     titleKey: 'admin.groups.analytics',
-    accent: 'rgb(var(--rt-success-400))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-success-400)), rgb(var(--rt-accent-500)))',
+    accent: 'rgb(var(--color-success-400))',
+    gradient:
+      'linear-gradient(135deg, rgb(var(--color-success-400)), rgb(var(--color-accent-500)))',
     items: [
       {
         name: 'admin.nav.dashboard',
@@ -149,8 +150,8 @@ const sections: AdminSection[] = [
   {
     id: 'users',
     titleKey: 'admin.groups.users',
-    accent: 'rgb(var(--rt-accent-400))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-accent-400)), rgb(var(--rt-error-400)))',
+    accent: 'rgb(var(--color-accent-400))',
+    gradient: 'linear-gradient(135deg, rgb(var(--color-accent-400)), rgb(var(--color-error-400)))',
     items: [
       { name: 'admin.nav.users', icon: 'users', to: '/admin/users', permission: 'users:read' },
       {
@@ -176,8 +177,8 @@ const sections: AdminSection[] = [
   {
     id: 'tariffs',
     titleKey: 'admin.groups.tariffs',
-    accent: 'rgb(var(--rt-warning-400))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-warning-400)), rgb(var(--rt-error-300)))',
+    accent: 'rgb(var(--color-warning-400))',
+    gradient: 'linear-gradient(135deg, rgb(var(--color-warning-400)), rgb(var(--color-error-300)))',
     items: [
       { name: 'admin.nav.tariffs', icon: 'tag', to: '/admin/tariffs', permission: 'tariffs:read' },
       {
@@ -215,8 +216,8 @@ const sections: AdminSection[] = [
   {
     id: 'marketing',
     titleKey: 'admin.groups.marketing',
-    accent: 'rgb(var(--rt-accent-300))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-accent-300)), rgb(var(--rt-accent-600)))',
+    accent: 'rgb(var(--color-accent-300))',
+    gradient: 'linear-gradient(135deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-600)))',
     items: [
       { name: 'admin.nav.news', icon: 'newspaper', to: '/admin/news', permission: 'news:read' },
       {
@@ -261,8 +262,9 @@ const sections: AdminSection[] = [
   {
     id: 'system',
     titleKey: 'admin.groups.system',
-    accent: 'rgb(var(--rt-accent-500))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-accent-500)), rgb(var(--rt-success-500)))',
+    accent: 'rgb(var(--color-accent-500))',
+    gradient:
+      'linear-gradient(135deg, rgb(var(--color-accent-500)), rgb(var(--color-success-500)))',
     items: [
       {
         name: 'admin.nav.channelSubscriptions',
@@ -318,8 +320,8 @@ const sections: AdminSection[] = [
   {
     id: 'security',
     titleKey: 'admin.groups.security',
-    accent: 'rgb(var(--rt-error-400))',
-    gradient: 'linear-gradient(135deg, rgb(var(--rt-error-400)), rgb(var(--rt-accent-600)))',
+    accent: 'rgb(var(--color-error-400))',
+    gradient: 'linear-gradient(135deg, rgb(var(--color-error-400)), rgb(var(--color-accent-600)))',
     items: [
       { name: 'admin.nav.roles', icon: 'shield', to: '/admin/roles', permission: 'roles:read' },
       {
@@ -692,7 +694,7 @@ export default function AdminPanel() {
 
         {/* Hero + Search */}
         <div className="flex shrink-0 flex-wrap items-center gap-3">
-          <h1 className="text-lg font-bold tracking-tight text-dark-50 sm:text-xl light:text-champagne-900">
+          <h1 className="text-lg font-bold tracking-tight text-dark-50 light:text-champagne-900 sm:text-xl">
             {t('admin.panel.title')}
           </h1>
           <div className="flex items-center gap-1.5 text-xs text-dark-400 light:text-champagne-500">
@@ -704,8 +706,8 @@ export default function AdminPanel() {
             {t('admin.panel.statsOnline')}
           </div>
           {/* Search */}
-          <div className="relative ml-auto max-w-[360px] min-w-[160px] flex-1">
-            <div className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-dark-500 [&>svg]:h-3.5 [&>svg]:w-3.5">
+          <div className="relative ml-auto min-w-[160px] max-w-[360px] flex-1">
+            <div className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-dark-500 [&>svg]:h-3.5 [&>svg]:w-3.5">
               {icons.search}
             </div>
             <input
@@ -714,20 +716,20 @@ export default function AdminPanel() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('admin.panel.searchPlaceholder')}
               aria-label={t('admin.panel.searchPlaceholder')}
-              className="w-full rounded-xl border border-dark-700/50 bg-dark-800/40 py-2 pr-16 pl-8 font-sans text-xs text-dark-100 backdrop-blur-lg transition-all outline-none placeholder:text-dark-500 focus:border-accent-500/40 focus:shadow-[0_0_0_3px_rgba(var(--rt-accent-500),0.08)] light:border-champagne-300/50 light:bg-champagne-100/60 light:text-champagne-900 light:placeholder:text-champagne-500 light:focus:border-accent-500/40"
+              className="w-full rounded-xl border border-dark-700/50 bg-dark-800/40 py-2 pl-8 pr-16 font-sans text-xs text-dark-100 outline-none backdrop-blur-lg transition-all placeholder:text-dark-500 focus:border-accent-500/40 focus:shadow-[0_0_0_3px_rgba(var(--color-accent-500),0.08)] light:border-champagne-300/50 light:bg-champagne-100/60 light:text-champagne-900 light:placeholder:text-champagne-500 light:focus:border-accent-500/40"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
                 aria-label={t('admin.panel.searchClear')}
-                className="absolute top-1/2 right-12 -translate-y-1/2 text-dark-500 transition-colors hover:text-dark-300 [&>svg]:h-3.5 [&>svg]:w-3.5"
+                className="absolute right-12 top-1/2 -translate-y-1/2 text-dark-500 transition-colors hover:text-dark-300 [&>svg]:h-3.5 [&>svg]:w-3.5"
               >
                 {icons.x}
               </button>
             )}
             <kbd
               aria-hidden="true"
-              className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-md border border-dark-700/50 bg-dark-800/60 px-1.5 py-0.5 font-mono text-2xs text-dark-500"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md border border-dark-700/50 bg-dark-800/60 px-1.5 py-0.5 font-mono text-2xs text-dark-500"
             >
               {IS_MAC ? '\u2318' : 'Ctrl+'}K
             </kbd>

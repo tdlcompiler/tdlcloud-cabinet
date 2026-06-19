@@ -201,7 +201,7 @@ export default function AdminBroadcastDetail() {
           </div>
           <div className="h-3 overflow-hidden rounded-full bg-dark-700">
             <div
-              className="h-full bg-linear-to-r from-accent-500 to-accent-400 transition-all duration-300"
+              className="h-full bg-gradient-to-r from-accent-500 to-accent-400 transition-all duration-300"
               style={{ width: `${broadcast.progress_percent}%` }}
             />
           </div>
@@ -249,7 +249,7 @@ export default function AdminBroadcastDetail() {
             <TelegramIcon />
             {t('admin.broadcasts.message')}
           </p>
-          <div className="max-h-60 overflow-y-auto rounded-lg bg-dark-700/50 p-4 whitespace-pre-wrap text-dark-100">
+          <div className="max-h-60 overflow-y-auto whitespace-pre-wrap rounded-lg bg-dark-700/50 p-4 text-dark-100">
             {broadcast.message_text}
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function AdminBroadcastDetail() {
       {broadcast.email_html_content && (
         <div className="rounded-xl border border-dark-700 bg-dark-800/50 p-4">
           <p className="mb-2 text-sm text-dark-400">{t('admin.broadcasts.emailContent')}</p>
-          <div className="max-h-60 overflow-y-auto rounded-lg bg-dark-700/50 p-4 font-mono text-xs whitespace-pre-wrap text-dark-100">
+          <div className="max-h-60 overflow-y-auto whitespace-pre-wrap rounded-lg bg-dark-700/50 p-4 font-mono text-xs text-dark-100">
             {broadcast.email_html_content}
           </div>
         </div>

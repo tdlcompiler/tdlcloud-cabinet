@@ -102,9 +102,9 @@ function ProgressBar({ loading }: { loading: boolean }) {
   if (!visible) return null;
 
   return (
-    <div className="absolute top-0 right-0 left-0 z-50 h-0.5 overflow-hidden rounded-full bg-dark-700/50">
+    <div className="absolute left-0 right-0 top-0 z-50 h-0.5 overflow-hidden rounded-full bg-dark-700/50">
       <div
-        className="h-full rounded-full bg-linear-to-r from-accent-500 to-accent-400 transition-all duration-200 ease-out"
+        className="h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400 transition-all duration-200 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -571,7 +571,7 @@ export default function AdminBulkActions() {
                 className={cn(
                   'flex h-5 w-5 items-center justify-center rounded-md border-2 transition-all duration-150',
                   table.getIsAllRowsSelected()
-                    ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--rt-accent-500),0.4)]'
+                    ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--color-accent-500),0.4)]'
                     : table.getIsSomeRowsSelected()
                       ? 'border-accent-500 bg-accent-500/30'
                       : 'border-dark-500 bg-dark-700/60 hover:border-accent-500/50 hover:bg-dark-600/60',
@@ -616,7 +616,7 @@ export default function AdminBulkActions() {
                 className={cn(
                   'flex h-5 w-5 items-center justify-center rounded-md border-2 transition-all duration-150',
                   row.getIsSelected()
-                    ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--rt-accent-500),0.4)]'
+                    ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--color-accent-500),0.4)]'
                     : 'border-dark-500 bg-dark-700/60 hover:border-accent-500/50 hover:bg-dark-600/60',
                 )}
                 aria-label={
@@ -651,7 +651,7 @@ export default function AdminBulkActions() {
                     e.stopPropagation();
                     toggleExpandRow(user.id);
                   }}
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 transition-transform"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 transition-transform"
                   aria-label={
                     isExpanded
                       ? t('admin.bulkActions.collapseSubscriptions')
@@ -662,7 +662,7 @@ export default function AdminBulkActions() {
                   <ChevronExpandIcon expanded={isExpanded} />
                 </button>
               ) : (
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-[10px] font-medium text-white">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-[10px] font-medium text-white">
                   {user.first_name?.[0] || user.username?.[0] || '?'}
                 </div>
               )}
@@ -672,7 +672,7 @@ export default function AdminBulkActions() {
                     {user.full_name}
                   </span>
                   {canExpand && (
-                    <span className="shrink-0 rounded-md bg-dark-700/60 px-1.5 py-0.5 text-[9px] font-medium text-dark-400 tabular-nums">
+                    <span className="shrink-0 rounded-md bg-dark-700/60 px-1.5 py-0.5 text-[9px] font-medium tabular-nums text-dark-400">
                       {subCount}
                     </span>
                   )}
@@ -851,7 +851,7 @@ export default function AdminBulkActions() {
           <div>
             <div className="flex items-center gap-2.5">
               <h1 className="text-xl font-bold text-dark-100">{t('admin.bulkActions.title')}</h1>
-              <span className="rounded-lg border border-dark-700 bg-dark-800 px-2 py-0.5 text-xs font-medium text-dark-400 tabular-nums">
+              <span className="rounded-lg border border-dark-700 bg-dark-800 px-2 py-0.5 text-xs font-medium tabular-nums text-dark-400">
                 {total.toLocaleString()}
               </span>
             </div>
@@ -878,9 +878,9 @@ export default function AdminBulkActions() {
               value={searchInput}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder={t('admin.bulkActions.filters.search')}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2.5 pr-4 pl-10 text-sm text-dark-100 transition-colors outline-none placeholder:text-dark-500 focus:border-accent-500/40 focus:shadow-[0_0_0_3px_rgba(var(--rt-accent-500),0.08)]"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2.5 pl-10 pr-4 text-sm text-dark-100 outline-none transition-colors placeholder:text-dark-500 focus:border-accent-500/40 focus:shadow-[0_0_0_3px_rgba(var(--color-accent-500),0.08)]"
             />
-            <div className="absolute top-1/2 left-3 -translate-y-1/2 text-dark-500">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dark-500">
               <SearchIcon />
             </div>
           </div>
@@ -972,7 +972,7 @@ export default function AdminBulkActions() {
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-3 py-2.5 text-xs font-medium whitespace-nowrap text-dark-400"
+                        className="whitespace-nowrap px-3 py-2.5 text-xs font-medium text-dark-400"
                         style={{ width: header.getSize() }}
                       >
                         {header.isPlaceholder
@@ -1048,7 +1048,7 @@ export default function AdminBulkActions() {
                 setLimit(Number(e.target.value));
                 setOffset(0);
               }}
-              className="rounded-lg border border-dark-700 bg-dark-800 px-2 py-1.5 text-xs text-dark-200 transition-colors outline-none focus:border-accent-500/40"
+              className="rounded-lg border border-dark-700 bg-dark-800 px-2 py-1.5 text-xs text-dark-200 outline-none transition-colors focus:border-accent-500/40"
             >
               {[25, 50, 100, 200].map((n) => (
                 <option key={n} value={n}>

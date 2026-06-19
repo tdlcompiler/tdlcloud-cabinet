@@ -91,9 +91,9 @@ function ProgressBar({ loading }: { loading: boolean }) {
   if (!visible) return null;
 
   return (
-    <div className="absolute top-0 right-0 left-0 z-50 h-0.5 overflow-hidden rounded-full bg-dark-700/50">
+    <div className="absolute left-0 right-0 top-0 z-50 h-0.5 overflow-hidden rounded-full bg-dark-700/50">
       <div
-        className="h-full rounded-full bg-linear-to-r from-accent-500 to-accent-400 transition-all duration-200 ease-out"
+        className="h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400 transition-all duration-200 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -428,7 +428,7 @@ export default function AdminTrafficUsage() {
           const item = row.original;
           return (
             <div className="flex items-center gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-[10px] font-medium text-white">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-[10px] font-medium text-white">
                 {item.full_name?.[0] || '?'}
               </div>
               <div className="min-w-0">
@@ -700,7 +700,7 @@ export default function AdminTrafficUsage() {
       {/* Toast */}
       {toast && (
         <div
-          className={`fixed top-4 left-1/2 z-50 -translate-x-1/2 rounded-xl border px-4 py-2 text-sm shadow-lg ${
+          className={`fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-xl border px-4 py-2 text-sm shadow-lg ${
             toast.type === 'success'
               ? 'border-success-500/30 bg-success-500/20 text-success-400'
               : 'border-error-500/30 bg-error-500/20 text-error-400'
@@ -777,7 +777,7 @@ export default function AdminTrafficUsage() {
               step="0.1"
               min="0"
               max="9999"
-              className="w-20 [appearance:textfield] bg-transparent text-xs text-dark-200 placeholder-dark-500 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="w-20 bg-transparent text-xs text-dark-200 placeholder-dark-500 [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             {totalThreshold && (
               <button
@@ -798,7 +798,7 @@ export default function AdminTrafficUsage() {
               step="0.1"
               min="0"
               max="9999"
-              className="w-20 [appearance:textfield] bg-transparent text-xs text-dark-200 placeholder-dark-500 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="w-20 bg-transparent text-xs text-dark-200 placeholder-dark-500 [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             {nodeThreshold && (
               <button
@@ -827,9 +827,9 @@ export default function AdminTrafficUsage() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={t('admin.trafficUsage.search')}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pr-4 pl-10 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pl-10 pr-4 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
             />
-            <div className="absolute top-1/2 left-3 -translate-y-1/2 text-dark-500">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dark-500">
               <SearchIcon />
             </div>
           </div>
@@ -861,7 +861,7 @@ export default function AdminTrafficUsage() {
                       return (
                         <th
                           key={header.id}
-                          className={`relative overflow-hidden px-3 py-2 text-xs font-medium text-ellipsis whitespace-nowrap ${
+                          className={`relative overflow-hidden text-ellipsis whitespace-nowrap px-3 py-2 text-xs font-medium ${
                             isBold ? 'font-semibold text-dark-200' : 'text-dark-400'
                           } ${align} ${
                             isSticky ? 'sticky left-0 z-10 bg-dark-800' : ''
@@ -877,11 +877,11 @@ export default function AdminTrafficUsage() {
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
                             onClick={(e) => e.stopPropagation()}
-                            className="absolute top-0 -right-2 z-20 h-full w-5 cursor-col-resize select-none"
+                            className="absolute -right-2 top-0 z-20 h-full w-5 cursor-col-resize select-none"
                             style={{ touchAction: 'none' }}
                           >
                             <div
-                              className={`absolute top-0 right-2 h-full w-1 ${
+                              className={`absolute right-2 top-0 h-full w-1 ${
                                 header.column.getIsResizing()
                                   ? 'bg-accent-500'
                                   : 'bg-transparent hover:bg-dark-500'

@@ -68,11 +68,11 @@ function ProgressView({ progress }: { progress: ProgressState }) {
               total: progress.total,
             })}
           </span>
-          <span className="font-bold text-accent-400 tabular-nums">{percentage}%</span>
+          <span className="font-bold tabular-nums text-accent-400">{percentage}%</span>
         </div>
         <div className="h-2.5 overflow-hidden rounded-full bg-dark-700/60">
           <div
-            className="h-full rounded-full bg-linear-to-r from-accent-500 to-accent-400 transition-all duration-300 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400 transition-all duration-300 ease-out"
             style={{ width: `${percentage}%` }}
           />
         </div>
@@ -81,12 +81,12 @@ function ProgressView({ progress }: { progress: ProgressState }) {
       <div className="flex gap-4">
         <div className="flex items-center gap-1.5">
           <div className="h-2 w-2 rounded-full bg-success-400" />
-          <span className="text-sm text-success-400 tabular-nums">{progress.successCount}</span>
+          <span className="text-sm tabular-nums text-success-400">{progress.successCount}</span>
           <span className="text-xs text-dark-500">{t('admin.bulkActions.progress.succeeded')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="h-2 w-2 rounded-full bg-error-400" />
-          <span className="text-sm text-error-400 tabular-nums">{progress.errorCount}</span>
+          <span className="text-sm tabular-nums text-error-400">{progress.errorCount}</span>
           <span className="text-xs text-dark-500">{t('admin.bulkActions.progress.failed')}</span>
         </div>
       </div>
@@ -322,7 +322,7 @@ export function ActionModal({
               max={365}
               value={days}
               onChange={(e) => setDays(Number(e.target.value))}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 transition-colors outline-none focus:border-accent-500/40"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 outline-none transition-colors focus:border-accent-500/40"
             />
           </div>
         );
@@ -351,7 +351,7 @@ export function ActionModal({
               max={10000}
               value={trafficGb}
               onChange={(e) => setTrafficGb(Number(e.target.value))}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 transition-colors outline-none focus:border-accent-500/40"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 outline-none transition-colors focus:border-accent-500/40"
             />
           </div>
         );
@@ -367,7 +367,7 @@ export function ActionModal({
               max={100000}
               value={balanceRub}
               onChange={(e) => setBalanceRub(Number(e.target.value))}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 transition-colors outline-none focus:border-accent-500/40"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 outline-none transition-colors focus:border-accent-500/40"
             />
           </div>
         );
@@ -399,7 +399,7 @@ export function ActionModal({
               max={50}
               value={deviceLimit}
               onChange={(e) => setDeviceLimit(Number(e.target.value))}
-              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 transition-colors outline-none focus:border-accent-500/40"
+              className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 outline-none transition-colors focus:border-accent-500/40"
             />
           </div>
         );
@@ -426,7 +426,7 @@ export function ActionModal({
                 max={365}
                 value={grantDays}
                 onChange={(e) => setGrantDays(Number(e.target.value))}
-                className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 transition-colors outline-none focus:border-accent-500/40"
+                className="w-full rounded-xl border border-dark-700 bg-dark-800 px-3 py-2.5 text-sm text-dark-100 outline-none transition-colors focus:border-accent-500/40"
               />
             </div>
             <div className="rounded-xl border border-warning-500/20 bg-warning-500/5 px-3 py-2.5">
@@ -527,7 +527,7 @@ export function ActionModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center"
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{
         paddingTop: 'max(1rem, env(safe-area-inset-top))',
         paddingBottom: 'max(1rem, env(safe-area-inset-bottom))',

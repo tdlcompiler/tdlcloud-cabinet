@@ -158,10 +158,10 @@ export default function RenewSubscription() {
                 style={{
                   background: isSelected
                     ? isDark
-                      ? 'rgba(var(--rt-accent-400), 0.08)'
-                      : 'rgba(var(--rt-accent-400), 0.05)'
+                      ? 'rgba(var(--color-accent-400), 0.08)'
+                      : 'rgba(var(--color-accent-400), 0.05)'
                     : g.cardBg,
-                  borderColor: isSelected ? 'rgb(var(--rt-accent-400))' : g.cardBorder,
+                  borderColor: isSelected ? 'rgb(var(--color-accent-400))' : g.cardBorder,
                 }}
               >
                 <div className="flex items-center justify-between">

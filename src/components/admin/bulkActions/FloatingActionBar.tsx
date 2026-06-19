@@ -157,7 +157,7 @@ export function FloatingActionBar({
   ];
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-9999 flex justify-center px-4 pb-[max(5rem,calc(4.5rem+env(safe-area-inset-bottom)))]">
+    <div className="fixed inset-x-0 bottom-0 z-[9999] flex justify-center px-4 pb-[max(5rem,calc(4.5rem+env(safe-area-inset-bottom)))]">
       <div
         ref={menuRef}
         className="relative flex w-full max-w-2xl items-center gap-3 rounded-2xl border border-dark-700/60 bg-dark-800/80 px-5 py-3 shadow-2xl backdrop-blur-xl"
@@ -215,10 +215,10 @@ export function FloatingActionBar({
           </button>
 
           {open && (
-            <div className="absolute right-0 bottom-full mb-2 w-64 overflow-hidden rounded-xl border border-dark-700 bg-dark-800 py-1.5 shadow-2xl">
+            <div className="absolute bottom-full right-0 mb-2 w-64 overflow-hidden rounded-xl border border-dark-700 bg-dark-800 py-1.5 shadow-2xl">
               {isMultiTariff && (
                 <div className="border-b border-dark-700/50 px-4 py-1.5">
-                  <span className="text-[10px] font-semibold tracking-wider text-dark-500 uppercase">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-dark-500">
                     {t('admin.bulkActions.subscriptionTarget')}
                   </span>
                 </div>
@@ -242,7 +242,7 @@ export function FloatingActionBar({
                         disabled ? 'cursor-not-allowed opacity-40' : a.colorClass,
                       )}
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/5 text-xs font-bold">
+                      <span className="border-current/20 bg-current/5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-xs font-bold">
                         {a.icon}
                       </span>
                       {t(a.labelKey)}
@@ -251,8 +251,8 @@ export function FloatingActionBar({
                 })}
 
               {isMultiTariff && (
-                <div className="border-t border-b border-dark-700/50 px-4 py-1.5">
-                  <span className="text-[10px] font-semibold tracking-wider text-dark-500 uppercase">
+                <div className="border-b border-t border-dark-700/50 px-4 py-1.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-dark-500">
                     {t('admin.bulkActions.userTarget')}
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export function FloatingActionBar({
                         disabled ? 'cursor-not-allowed opacity-40' : a.colorClass,
                       )}
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-current/5 text-xs font-bold">
+                      <span className="border-current/20 bg-current/5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-xs font-bold">
                         {a.icon}
                       </span>
                       {t(a.labelKey)}

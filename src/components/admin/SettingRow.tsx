@@ -87,10 +87,10 @@ export function SettingRow({
         {/* Favorite button */}
         <button
           onClick={onToggleFavorite}
-          className={`shrink-0 rounded-xl p-2 transition-all ${
+          className={`flex-shrink-0 rounded-xl p-2 transition-all ${
             isFavorite
               ? 'bg-warning-500/15 text-warning-400 hover:bg-warning-500/25'
-              : 'text-dark-500 opacity-0 group-hover:opacity-100 hover:bg-dark-700/50 hover:text-warning-400'
+              : 'text-dark-500 opacity-0 hover:bg-dark-700/50 hover:text-warning-400 group-hover:opacity-100'
           }`}
           title={
             isFavorite
@@ -117,7 +117,7 @@ export function SettingRow({
           // Read-only / env-locked display
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-2 rounded-lg bg-dark-700/30 px-4 py-2.5 text-dark-300">
-              <span className="font-mono text-sm break-all">{String(setting.current ?? '-')}</span>
+              <span className="break-all font-mono text-sm">{String(setting.current ?? '-')}</span>
             </div>
             {setting.env_locked && !setting.read_only && (
               <p className="text-xs leading-relaxed text-dark-500">
@@ -167,7 +167,7 @@ export function SettingRow({
               <button
                 onClick={onReset}
                 disabled={isResetting}
-                className="shrink-0 rounded-lg p-2 text-dark-400 transition-colors hover:bg-dark-700 hover:text-dark-200 disabled:opacity-50"
+                className="flex-shrink-0 rounded-lg p-2 text-dark-400 transition-colors hover:bg-dark-700 hover:text-dark-200 disabled:opacity-50"
                 title={t('admin.settings.reset')}
               >
                 <RefreshIcon />

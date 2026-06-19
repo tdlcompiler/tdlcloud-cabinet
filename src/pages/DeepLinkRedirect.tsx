@@ -162,14 +162,14 @@ export default function DeepLinkRedirect() {
   const progress = ((COUNTDOWN_SECONDS - countdown) / COUNTDOWN_SECONDS) * 100;
 
   return (
-    <div className="flex min-h-viewport items-center justify-center p-4">
+    <div className="min-h-viewport flex items-center justify-center p-4">
       {/* Background */}
-      <div className="fixed inset-0 bg-linear-to-br from-dark-950 via-dark-900 to-dark-950" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
+      <div className="fixed inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
 
       <div className="relative w-full max-w-sm text-center">
         {/* Logo with pulse animation */}
-        <div className="mx-auto mb-6 flex h-20 w-20 animate-pulse items-center justify-center overflow-hidden rounded-2xl bg-linear-to-br from-accent-400 to-accent-600 shadow-lg shadow-accent-500/30">
+        <div className="mx-auto mb-6 flex h-20 w-20 animate-pulse items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 shadow-lg shadow-accent-500/30">
           {branding?.has_custom_logo && logoUrl ? (
             <img src={logoUrl} alt={projectName || 'Logo'} className="h-full w-full object-cover" />
           ) : (
@@ -187,14 +187,14 @@ export default function DeepLinkRedirect() {
 
         {/* Countdown State */}
         {status === 'countdown' && (
-          <div className="card bg-dark-800/80! p-6 backdrop-blur-sm">
+          <div className="card !bg-dark-800/80 p-6 backdrop-blur-sm">
             {/* App icon */}
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-500/20">
               <span className="text-2xl font-bold text-accent-400">{appIcon}</span>
             </div>
 
             {/* Spinner */}
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-3 border-dark-700 border-t-accent-500" />
+            <div className="border-3 mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-dark-700 border-t-accent-500" />
 
             {/* Timer */}
             <div className="mb-4">
@@ -208,7 +208,7 @@ export default function DeepLinkRedirect() {
             {/* Progress bar */}
             <div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-dark-700">
               <div
-                className="h-full rounded-full bg-linear-to-r from-accent-400 to-accent-600 transition-all duration-1000 ease-linear"
+                className="h-full rounded-full bg-gradient-to-r from-accent-400 to-accent-600 transition-all duration-1000 ease-linear"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -228,7 +228,7 @@ export default function DeepLinkRedirect() {
 
         {/* Fallback State - App didn't open */}
         {status === 'fallback' && (
-          <div className="card bg-dark-800/80! p-6 backdrop-blur-sm">
+          <div className="card !bg-dark-800/80 p-6 backdrop-blur-sm">
             {/* App icon */}
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-500/20">
               <span className="text-2xl font-bold text-accent-400">{appIcon}</span>
@@ -288,7 +288,7 @@ export default function DeepLinkRedirect() {
 
         {/* Error State */}
         {status === 'error' && (
-          <div className="card bg-dark-800/80! p-6 backdrop-blur-sm">
+          <div className="card !bg-dark-800/80 p-6 backdrop-blur-sm">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-error-500/20">
               <ExclamationIcon className="h-8 w-8 text-error-400" />
             </div>

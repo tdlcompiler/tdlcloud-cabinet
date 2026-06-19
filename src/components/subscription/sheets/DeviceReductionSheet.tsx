@@ -133,7 +133,7 @@ export function DeviceReductionSheet({
                   deviceReductionInfo.connected_devices_count,
                 )
               }
-              className="btn-secondary flex h-12 w-12 items-center justify-center p-0! text-2xl"
+              className="btn-secondary flex h-12 w-12 items-center justify-center !p-0 text-2xl"
               aria-label={t('subscription.additionalOptions.decrementDevices', 'Уменьшить')}
             >
               -
@@ -151,7 +151,7 @@ export function DeviceReductionSheet({
                 )
               }
               disabled={targetDeviceLimit >= deviceReductionInfo.current_device_limit - 1}
-              className="btn-secondary flex h-12 w-12 items-center justify-center p-0! text-2xl"
+              className="btn-secondary flex h-12 w-12 items-center justify-center !p-0 text-2xl"
               aria-label={t('subscription.additionalOptions.incrementDevices', 'Увеличить')}
             >
               +

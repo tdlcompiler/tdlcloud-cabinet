@@ -60,7 +60,7 @@ export function SubscriptionSubRow({
               className={cn(
                 'flex h-5 w-5 items-center justify-center rounded-md border-2 transition-all duration-150',
                 isSelected
-                  ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--rt-accent-500),0.4)]'
+                  ? 'border-accent-500 bg-accent-500 shadow-[0_0_8px_rgba(var(--color-accent-500),0.4)]'
                   : 'border-dark-500 bg-dark-700/60 hover:border-accent-500/50 hover:bg-dark-600/60',
               )}
               aria-label={
@@ -108,7 +108,7 @@ export function SubscriptionSubRow({
           </span>
 
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-dark-400 tabular-nums">
+            <span className="text-[10px] tabular-nums text-dark-400">
               {subscription.traffic_used_gb.toFixed(1)} {t('admin.bulkActions.trafficOf')}{' '}
               {subscription.traffic_limit_gb} {t('admin.bulkActions.trafficGbUnit')}
             </span>
@@ -173,7 +173,7 @@ export function StatusBadge({ status }: { status: string | null }) {
   return (
     <span
       className={cn(
-        'inline-flex rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium',
+        'inline-flex rounded-full border px-2 py-0.5 text-[10px] font-medium leading-tight',
         c.class,
       )}
     >

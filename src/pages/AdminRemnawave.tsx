@@ -118,7 +118,7 @@ function NodeTrafficBreakdown({
 }) {
   return (
     <div className="space-y-1">
-      <p className="text-[10px] font-medium tracking-wide text-dark-500 uppercase">{title}</p>
+      <p className="text-[10px] font-medium uppercase tracking-wide text-dark-500">{title}</p>
       {[...items]
         .sort((a, b) => b.totalBytes - a.totalBytes)
         .map((it) => (
@@ -216,7 +216,7 @@ function NodeCard({ node, providerName, realtime, onAction, isLoading }: NodeCar
           </span>
           <h3 className="truncate font-semibold text-dark-100">{node.name}</h3>
           {(providerLabel || providerFavicon) && (
-            <span className="flex max-w-28 min-w-0 shrink items-center gap-1 rounded-md bg-accent-500/15 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-accent-300 uppercase">
+            <span className="flex min-w-0 max-w-[7rem] shrink items-center gap-1 rounded-md bg-accent-500/15 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent-300">
               {providerFavicon && (
                 <img
                   src={providerFavicon}
@@ -279,7 +279,7 @@ function NodeCard({ node, providerName, realtime, onAction, isLoading }: NodeCar
 
       {/* Address + traffic + uptime */}
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-dark-400">
-        <span className="flex max-w-full min-w-0 items-center gap-1 font-mono text-dark-500">
+        <span className="flex min-w-0 max-w-full items-center gap-1 font-mono text-dark-500">
           <GlobeIcon className="h-3 w-3 shrink-0" />
           <span className="truncate">{node.address}</span>
         </span>
@@ -308,7 +308,7 @@ function NodeCard({ node, providerName, realtime, onAction, isLoading }: NodeCar
       {(ramPct !== null || loadAvg || rx > 0 || tx > 0 || node.versions) && (
         <>
           {/* Mobile: processor · traffic · versions */}
-          <div className="mt-2 space-y-1 border-t border-dark-700/60 pt-2 font-mono text-[10.5px] text-dark-500 tabular-nums sm:hidden">
+          <div className="mt-2 space-y-1 border-t border-dark-700/60 pt-2 font-mono text-[10.5px] tabular-nums text-dark-500 sm:hidden">
             {(loadAvg || ramPct !== null) && (
               <div className="flex items-center gap-3">
                 {loadAvg && (
@@ -362,7 +362,7 @@ function NodeCard({ node, providerName, realtime, onAction, isLoading }: NodeCar
           </div>
 
           {/* Desktop: single wrap row (original) */}
-          <div className="mt-2 hidden flex-wrap items-center gap-x-3 gap-y-1 border-t border-dark-700/60 pt-2 font-mono text-[10.5px] text-dark-500 tabular-nums sm:flex">
+          <div className="mt-2 hidden flex-wrap items-center gap-x-3 gap-y-1 border-t border-dark-700/60 pt-2 font-mono text-[10.5px] tabular-nums text-dark-500 sm:flex">
             {ramPct !== null && (
               <span className="flex items-center gap-1.5" title="RAM">
                 <MemoryIcon className="h-3 w-3 text-dark-500" />
@@ -619,7 +619,7 @@ function OverviewTab({
     return (
       <div className="py-12 text-center">
         <p className="text-dark-400">{t('admin.remnawave.noData', 'Failed to load data')}</p>
-        <button onClick={onRefresh} className="mt-4 btn-primary">
+        <button onClick={onRefresh} className="btn-primary mt-4">
           {t('common.retry', 'Retry')}
         </button>
       </div>

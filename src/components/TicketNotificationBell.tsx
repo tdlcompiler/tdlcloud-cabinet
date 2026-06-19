@@ -230,7 +230,7 @@ export default function TicketNotificationBell({ isAdmin = false }: TicketNotifi
       >
         <BellIcon />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] animate-scale-in-bounce items-center justify-center rounded-full bg-error-500 px-1 text-xs font-bold text-white">
+          <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] animate-scale-in-bounce items-center justify-center rounded-full bg-error-500 px-1 text-xs font-bold text-white">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -239,7 +239,7 @@ export default function TicketNotificationBell({ isAdmin = false }: TicketNotifi
       {/* Dropdown */}
       {isOpen && (
         <div
-          className="fixed right-4 left-4 z-50 mt-0 w-auto animate-scale-in overflow-hidden rounded-2xl border border-dark-700/50 bg-dark-900/95 shadow-2xl shadow-black/30 backdrop-blur-xl sm:absolute sm:top-auto sm:right-0 sm:left-auto sm:mt-2 sm:w-96"
+          className="fixed left-4 right-4 z-50 mt-0 w-auto animate-scale-in overflow-hidden rounded-2xl border border-dark-700/50 bg-dark-900/95 shadow-2xl shadow-black/30 backdrop-blur-xl sm:absolute sm:left-auto sm:right-0 sm:top-auto sm:mt-2 sm:w-96"
           style={isMobileFullscreen ? { top: dropdownTop } : undefined}
         >
           {/* Header */}
@@ -275,7 +275,7 @@ export default function TicketNotificationBell({ isAdmin = false }: TicketNotifi
                   }`}
                 >
                   <div className="flex gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-dark-800/50">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-dark-800/50">
                       {getNotificationIcon(notification.notification_type)}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -289,7 +289,7 @@ export default function TicketNotificationBell({ isAdmin = false }: TicketNotifi
                       </p>
                     </div>
                     {!notification.is_read && (
-                      <div className="shrink-0 pt-1">
+                      <div className="flex-shrink-0 pt-1">
                         <span className="block h-2.5 w-2.5 rounded-full bg-accent-500 shadow-lg shadow-accent-500/50"></span>
                       </div>
                     )}

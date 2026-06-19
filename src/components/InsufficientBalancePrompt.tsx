@@ -56,7 +56,7 @@ export default function InsufficientBalancePrompt({
         className={`flex items-center justify-between gap-3 rounded-xl border border-error-500/30 bg-error-500/10 p-3 ${className}`}
       >
         <div className="flex items-center gap-2 text-sm text-error-400">
-          <InfoIcon className="h-4 w-4 shrink-0" />
+          <InfoIcon className="h-4 w-4 flex-shrink-0" />
           <span>
             {message || t('balance.insufficientFunds')}:{' '}
             <span className="font-semibold">
@@ -67,7 +67,7 @@ export default function InsufficientBalancePrompt({
         <button
           onClick={handleTopUpClick}
           disabled={isPreparingTopUp}
-          className="btn-primary px-3 py-1.5 text-xs whitespace-nowrap"
+          className="btn-primary whitespace-nowrap px-3 py-1.5 text-xs"
         >
           {isPreparingTopUp ? (
             <span className="h-3 w-3 animate-spin rounded-full border border-white/30 border-t-white" />
@@ -81,10 +81,10 @@ export default function InsufficientBalancePrompt({
 
   return (
     <div
-      className={`rounded-xl border border-error-500/30 bg-linear-to-br from-error-500/10 to-warning-500/5 p-4 ${className}`}
+      className={`rounded-xl border border-error-500/30 bg-gradient-to-br from-error-500/10 to-warning-500/5 p-4 ${className}`}
     >
       <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-500/20">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-error-500/20">
           <WalletIcon className="h-5 w-5 text-error-400" />
         </div>
         <div className="min-w-0 flex-1">
@@ -103,7 +103,7 @@ export default function InsufficientBalancePrompt({
       <button
         onClick={handleTopUpClick}
         disabled={isPreparingTopUp}
-        className="mt-4 btn-primary flex w-full items-center justify-center gap-2 py-2.5"
+        className="btn-primary mt-4 flex w-full items-center justify-center gap-2 py-2.5"
       >
         {isPreparingTopUp ? (
           <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />

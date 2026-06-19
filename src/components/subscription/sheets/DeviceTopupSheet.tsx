@@ -114,7 +114,7 @@ export function DeviceTopupSheet({
             <button
               onClick={() => onDevicesToAddChange(Math.max(1, devicesToAdd - 1))}
               disabled={devicesToAdd <= 1}
-              className="btn-secondary flex h-12 w-12 items-center justify-center p-0! text-2xl"
+              className="btn-secondary flex h-12 w-12 items-center justify-center !p-0 text-2xl"
               aria-label={t('subscription.additionalOptions.decrementDevices', 'Уменьшить')}
             >
               -
@@ -133,7 +133,7 @@ export function DeviceTopupSheet({
                     devicePriceData.max_device_limit
                   : false
               }
-              className="btn-secondary flex h-12 w-12 items-center justify-center p-0! text-2xl"
+              className="btn-secondary flex h-12 w-12 items-center justify-center !p-0 text-2xl"
               aria-label={t('subscription.additionalOptions.incrementDevices', 'Увеличить')}
             >
               +

@@ -104,7 +104,7 @@ function NodeCard({ node, onRestart, onToggle, isLoading }: NodeCardProps) {
         <div className="mb-3 rounded-lg border border-error-500/20 bg-error-500/10 p-2">
           <div className="flex items-start gap-2">
             <ExclamationIcon className="h-4 w-4" />
-            <span className="text-xs break-all text-error-400">{node.last_status_message}</span>
+            <span className="break-all text-xs text-error-400">{node.last_status_message}</span>
           </div>
         </div>
       )}
@@ -175,7 +175,7 @@ function RevenueChart({ data }: { data: { date: string; amount_rubles: number }[
         return (
           <div key={item.date} className="group">
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-sm font-medium text-dark-300 capitalize">
+              <span className="text-sm font-medium capitalize text-dark-300">
                 {dayName}, {dayNum}
               </span>
               <span className="text-sm font-semibold text-dark-100">
@@ -184,7 +184,7 @@ function RevenueChart({ data }: { data: { date: string; amount_rubles: number }[
             </div>
             <div className="h-3 overflow-hidden rounded-full bg-dark-700/50">
               <div
-                className="h-full rounded-full bg-linear-to-r from-accent-600 to-accent-400 transition-all duration-500 ease-out group-hover:from-accent-500 group-hover:to-accent-300"
+                className="h-full rounded-full bg-gradient-to-r from-accent-600 to-accent-400 transition-all duration-500 ease-out group-hover:from-accent-500 group-hover:to-accent-300"
                 style={{ width: `${Math.max(percentage, 2)}%` }}
               />
             </div>
@@ -649,7 +649,7 @@ export default function AdminDashboard() {
                     className="flex items-center justify-between gap-2 rounded-lg bg-dark-900/50 p-2 transition-colors hover:bg-dark-800/50 sm:p-3"
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dark-700 text-[10px] font-bold text-dark-300 sm:h-6 sm:w-6 sm:text-xs">
+                      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-dark-700 text-[10px] font-bold text-dark-300 sm:h-6 sm:w-6 sm:text-xs">
                         {idx + 1}
                       </span>
                       <div className="min-w-0">
@@ -663,7 +663,7 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="shrink-0 text-right">
+                    <div className="flex-shrink-0 text-right">
                       {referrersTab === 'earnings' ? (
                         <>
                           <div className="text-xs font-semibold text-success-400 sm:text-sm">
@@ -752,7 +752,7 @@ export default function AdminDashboard() {
                   className="flex items-center justify-between gap-2 rounded-lg bg-dark-900/50 p-2 transition-colors hover:bg-dark-800/50 sm:p-3"
                 >
                   <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dark-700 text-[10px] font-bold text-dark-300 sm:h-6 sm:w-6 sm:text-xs">
+                    <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-dark-700 text-[10px] font-bold text-dark-300 sm:h-6 sm:w-6 sm:text-xs">
                       {idx + 1}
                     </span>
                     <div className="min-w-0">
@@ -764,7 +764,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
-                  <div className="shrink-0 text-right">
+                  <div className="flex-shrink-0 text-right">
                     <div className="text-xs font-semibold text-warning-400 sm:text-sm">
                       {formatAmount(campaign.total_revenue_kopeks / 100)} {currencySymbol}
                     </div>
@@ -901,7 +901,7 @@ export default function AdminDashboard() {
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex min-w-0 flex-1 items-center gap-2">
                     <span
-                      className={`rounded-full px-1.5 py-0.5 text-[10px] whitespace-nowrap ${
+                      className={`whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] ${
                         payment.type === 'deposit'
                           ? 'bg-success-500/20 text-success-400'
                           : 'bg-accent-500/20 text-accent-400'
@@ -916,7 +916,7 @@ export default function AdminDashboard() {
                       {payment.display_name}
                     </button>
                   </div>
-                  <span className="ml-2 text-sm font-semibold whitespace-nowrap text-dark-100">
+                  <span className="ml-2 whitespace-nowrap text-sm font-semibold text-dark-100">
                     {formatAmount(payment.amount_rubles)} {currencySymbol}
                   </span>
                 </div>

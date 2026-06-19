@@ -27,7 +27,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
           'border border-dark-700/50 bg-dark-800/80',
           'text-sm text-dark-100 placeholder:text-dark-400',
           'hover:border-dark-600/50 hover:bg-dark-700/80',
-          'focus:ring-2 focus:ring-accent-500/50 focus:ring-offset-2 focus:ring-offset-dark-950 focus:outline-none',
+          'focus:outline-none focus:ring-2 focus:ring-accent-500/50 focus:ring-offset-2 focus:ring-offset-dark-950',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'transition-all duration-200',
           '[&>span]:line-clamp-1',
@@ -56,7 +56,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
       <SelectPrimitive.Content
         ref={ref}
         className={cn(
-          'relative z-50 max-h-80 min-w-32 overflow-hidden',
+          'relative z-50 max-h-80 min-w-[8rem] overflow-hidden',
           'rounded-linear-lg border border-dark-700/50 bg-dark-900/95 backdrop-blur-linear',
           'text-dark-100 shadow-linear-lg',
           position === 'popper' &&
@@ -78,7 +78,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
             className={cn(
               'p-1',
               position === 'popper' &&
-                'h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)',
+                'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
             )}
           >
             {children}
@@ -101,11 +101,11 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     <SelectPrimitive.Item
       ref={ref}
       className={cn(
-        'relative flex w-full cursor-pointer items-center rounded-linear py-2 pr-8 pl-3 select-none',
+        'relative flex w-full cursor-pointer select-none items-center rounded-linear py-2 pl-3 pr-8',
         'text-sm text-dark-200 outline-none',
         'hover:bg-dark-800/80 hover:text-dark-100',
         'focus:bg-dark-800/80 focus:text-dark-100',
-        'data-disabled:pointer-events-none data-disabled:opacity-50',
+        'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         'data-[state=checked]:text-accent-400',
         'transition-colors duration-150',
         className,

@@ -72,7 +72,7 @@ export default function TopUpMethodSelect() {
                     onClick={() => method.is_available && handleMethodClick(method.id)}
                   >
                     <div className="flex items-center gap-3">
-                      <PaymentMethodIcon method={methodKey} className="h-8 w-8 shrink-0" />
+                      <PaymentMethodIcon method={methodKey} className="h-8 w-8 flex-shrink-0" />
                       <div className="font-semibold text-dark-100">
                         {translatedName || method.name}
                       </div>

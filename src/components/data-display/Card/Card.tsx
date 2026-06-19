@@ -10,7 +10,7 @@ const cardVariants = cva(
   [
     'relative overflow-hidden',
     'border border-dark-700/40 bg-dark-900/70',
-    'rounded-(--bento-radius)',
+    'rounded-[var(--bento-radius)]',
     'transition-[border-color,background-color,box-shadow,transform,opacity] duration-200',
     // Glass border inset
     'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]',

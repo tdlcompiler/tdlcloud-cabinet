@@ -483,7 +483,7 @@ export default function TelegramLoginButton({ referralCode }: TelegramLoginButto
                 className="group flex w-full items-center justify-between rounded-lg border border-dark-700 bg-dark-800/50 px-3 py-2 transition-colors hover:border-dark-600"
               >
                 <code className="truncate text-xs text-dark-300">{startCommand}</code>
-                <span className="ml-2 shrink-0 text-[10px] text-dark-500 transition-colors group-hover:text-dark-300">
+                <span className="ml-2 flex-shrink-0 text-[10px] text-dark-500 transition-colors group-hover:text-dark-300">
                   {copied ? t('auth.commandCopied') : t('common.copy')}
                 </span>
               </button>

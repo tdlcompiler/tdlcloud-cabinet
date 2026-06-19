@@ -257,7 +257,7 @@ export function ColorPicker({ value, onChange, label, description, disabled }: C
   const pickerContent = isOpen ? (
     <div
       ref={pickerRef}
-      className="fixed z-9999 w-[280px] overflow-hidden rounded-2xl border border-dark-700 bg-dark-900 shadow-2xl"
+      className="fixed z-[9999] w-[280px] overflow-hidden rounded-2xl border border-dark-700 bg-dark-900 shadow-2xl"
       style={{
         top: pickerPosition.top,
         left: pickerPosition.left,
@@ -337,7 +337,7 @@ export function ColorPicker({ value, onChange, label, description, disabled }: C
             type="text"
             value={localValue}
             onChange={handleHexInputChange}
-            className="h-9 flex-1 rounded-lg border border-dark-700 bg-dark-800 px-3 font-mono text-sm text-dark-100 uppercase focus:border-accent-500 focus:outline-none"
+            className="h-9 flex-1 rounded-lg border border-dark-700 bg-dark-800 px-3 font-mono text-sm uppercase text-dark-100 focus:border-accent-500 focus:outline-none"
             placeholder="#000000"
             maxLength={7}
           />
@@ -378,7 +378,7 @@ export function ColorPicker({ value, onChange, label, description, disabled }: C
           type="button"
           onClick={handleOpen}
           disabled={disabled}
-          className="h-10 w-10 shrink-0 rounded-xl border-2 border-dark-700 shadow-inner transition-all hover:scale-105 hover:border-dark-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-10 w-10 flex-shrink-0 rounded-xl border-2 border-dark-700 shadow-inner transition-all hover:scale-105 hover:border-dark-600 disabled:cursor-not-allowed disabled:opacity-50"
           style={{ backgroundColor: localValue || '#000000' }}
           title={localValue}
         />
@@ -389,7 +389,7 @@ export function ColorPicker({ value, onChange, label, description, disabled }: C
           value={localValue}
           onChange={handleHexInputChange}
           disabled={disabled}
-          className="h-10 min-w-0 flex-1 rounded-xl border border-dark-700 bg-dark-800 px-2 font-mono text-sm text-dark-100 uppercase focus:border-accent-500 focus:outline-none disabled:opacity-50"
+          className="h-10 min-w-0 flex-1 rounded-xl border border-dark-700 bg-dark-800 px-2 font-mono text-sm uppercase text-dark-100 focus:border-accent-500 focus:outline-none disabled:opacity-50"
           placeholder="#000000"
           maxLength={7}
         />

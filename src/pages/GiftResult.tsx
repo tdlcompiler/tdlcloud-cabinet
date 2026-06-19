@@ -115,10 +115,10 @@ function CodeOnlySuccessState({
 
       {/* Gift code display */}
       <div className="w-full rounded-xl border border-accent-500/20 bg-accent-500/5 p-4">
-        <p className="mb-1 text-xs font-medium tracking-wider text-dark-400 uppercase">
+        <p className="mb-1 text-xs font-medium uppercase tracking-wider text-dark-400">
           {t('gift.codeLabel', 'Gift code')}
         </p>
-        <p className="font-mono text-lg font-bold text-accent-400 select-all">{giftCode}</p>
+        <p className="select-all font-mono text-lg font-bold text-accent-400">{giftCode}</p>
       </div>
 
       {/* Share message preview */}
@@ -223,7 +223,7 @@ function DeliveredState({
           </p>
         )}
         {giftMessage && (
-          <p className="mt-2 text-sm text-dark-400 italic">&ldquo;{giftMessage}&rdquo;</p>
+          <p className="mt-2 text-sm italic text-dark-400">&ldquo;{giftMessage}&rdquo;</p>
         )}
       </div>
 

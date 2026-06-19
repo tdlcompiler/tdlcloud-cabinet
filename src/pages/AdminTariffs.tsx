@@ -78,7 +78,7 @@ function SortableTariffCard({
         <button
           {...attributes}
           {...listeners}
-          className="mt-1 shrink-0 cursor-grab touch-none rounded-lg p-2.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-1.5"
+          className="mt-1 flex-shrink-0 cursor-grab touch-none rounded-lg p-2.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-1.5"
           title={t('admin.tariffs.dragToReorder')}
         >
           <GripIcon />
@@ -135,7 +135,7 @@ function SortableTariffCard({
               </div>
             </div>
 
-            <div className="flex items-center gap-2 sm:shrink-0">
+            <div className="flex items-center gap-2 sm:flex-shrink-0">
               <button
                 onClick={onToggle}
                 className={`rounded-lg p-2 transition-colors ${

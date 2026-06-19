@@ -41,7 +41,7 @@ export function ReferralNetwork() {
   return createPortal(
     <div
       id="referral-network-container"
-      className="fixed inset-x-0 bottom-0 z-50 grid grid-rows-[auto_1fr] bg-[#0a0a0f] lg:top-14!"
+      className="fixed inset-x-0 bottom-0 z-50 grid grid-rows-[auto_1fr] bg-[#0a0a0f] lg:!top-14"
       style={
         {
           top: mobileHeaderHeight,
@@ -127,15 +127,15 @@ export function ReferralNetwork() {
             <>
               <NetworkGraph data={networkData} className="absolute inset-0 h-full w-full" />
 
-              <div className="absolute bottom-[calc(12px+var(--safe-bottom,0))] left-3 z-10 sm:bottom-4 sm:left-4">
+              <div className="absolute bottom-[calc(12px+var(--safe-bottom,0px))] left-3 z-10 sm:bottom-4 sm:left-4">
                 <NetworkStats data={networkData} />
               </div>
 
-              <div className="absolute right-3 bottom-[calc(12px+var(--safe-bottom,0))] z-10 hidden sm:right-4 sm:bottom-4 sm:block">
+              <div className="absolute bottom-[calc(12px+var(--safe-bottom,0px))] right-3 z-10 hidden sm:bottom-4 sm:right-4 sm:block">
                 <NetworkLegend />
               </div>
 
-              <div className="absolute bottom-[calc(12px+var(--safe-bottom,0))] left-1/2 z-10 -translate-x-1/2 sm:bottom-4">
+              <div className="absolute bottom-[calc(12px+var(--safe-bottom,0px))] left-1/2 z-10 -translate-x-1/2 sm:bottom-4">
                 <NetworkControls />
               </div>
             </>
@@ -143,7 +143,7 @@ export function ReferralNetwork() {
 
         {/* Detail panel (slide-in from right) */}
         <div
-          className={`absolute top-0 right-0 z-30 flex h-full w-full flex-col border-l border-dark-700/50 bg-dark-900/95 backdrop-blur-md transition-transform duration-300 ease-in-out sm:w-[400px] ${
+          className={`absolute right-0 top-0 z-30 flex h-full w-full flex-col border-l border-dark-700/50 bg-dark-900/95 backdrop-blur-md transition-transform duration-300 ease-in-out sm:w-[400px] ${
             isPanelOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

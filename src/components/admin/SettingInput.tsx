@@ -83,7 +83,7 @@ export function SettingInput({ setting, onUpdate, disabled }: SettingInputProps)
         value={currentValue}
         onChange={(e) => onUpdate(e.target.value)}
         disabled={disabled}
-        className="min-w-[140px] cursor-pointer rounded-lg border border-dark-600 bg-dark-700 px-3 py-2 text-sm text-dark-100 focus:border-accent-500 focus:ring-1 focus:ring-accent-500/30 focus:outline-none disabled:opacity-50"
+        className="min-w-[140px] cursor-pointer rounded-lg border border-dark-600 bg-dark-700 px-3 py-2 text-sm text-dark-100 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500/30 disabled:opacity-50"
       >
         {setting.choices.map((choice, idx) => (
           <option key={idx} value={String(choice.value)}>
@@ -109,7 +109,7 @@ export function SettingInput({ setting, onUpdate, disabled }: SettingInputProps)
           }}
           autoFocus
           placeholder={t('admin.settings.inputPlaceholder')}
-          className="min-h-[100px] w-full resize-none rounded-xl border border-accent-500 bg-dark-700 px-4 py-3 font-mono text-sm text-dark-100 focus:ring-2 focus:ring-accent-500/30 focus:outline-none"
+          className="min-h-[100px] w-full resize-none rounded-xl border border-accent-500 bg-dark-700 px-4 py-3 font-mono text-sm text-dark-100 focus:outline-none focus:ring-2 focus:ring-accent-500/30"
         />
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs text-dark-500">{t('admin.settings.ctrlEnterHint')}</span>
@@ -155,7 +155,7 @@ export function SettingInput({ setting, onUpdate, disabled }: SettingInputProps)
           }}
           autoFocus
           placeholder={t('admin.settings.inputPlaceholder')}
-          className="w-48 rounded-lg border border-accent-500 bg-dark-700 px-3 py-2 text-sm text-dark-100 focus:ring-2 focus:ring-accent-500/30 focus:outline-none sm:w-56"
+          className="w-48 rounded-lg border border-accent-500 bg-dark-700 px-3 py-2 text-sm text-dark-100 focus:outline-none focus:ring-2 focus:ring-accent-500/30 sm:w-56"
         />
         <button
           onClick={handleSave}
@@ -189,7 +189,7 @@ export function SettingInput({ setting, onUpdate, disabled }: SettingInputProps)
       >
         <div className="flex items-start justify-between gap-2">
           <span className="line-clamp-2 flex-1 break-all">{previewValue}</span>
-          <span className="shrink-0 text-dark-500 transition-colors group-hover:text-accent-400">
+          <span className="flex-shrink-0 text-dark-500 transition-colors group-hover:text-accent-400">
             <EditIcon />
           </span>
         </div>
@@ -202,7 +202,7 @@ export function SettingInput({ setting, onUpdate, disabled }: SettingInputProps)
     <button
       onClick={handleStart}
       disabled={disabled}
-      className="group flex max-w-[200px] min-w-[100px] items-center gap-2 truncate rounded-lg border border-dark-600 bg-dark-700 px-3 py-2.5 text-left font-mono text-sm text-dark-200 transition-colors hover:border-dark-500 hover:bg-dark-600 disabled:opacity-50"
+      className="group flex min-w-[100px] max-w-[200px] items-center gap-2 truncate rounded-lg border border-dark-600 bg-dark-700 px-3 py-2.5 text-left font-mono text-sm text-dark-200 transition-colors hover:border-dark-500 hover:bg-dark-600 disabled:opacity-50"
     >
       <span className="flex-1 truncate">{currentValue || '-'}</span>
       <span className="text-dark-500 opacity-0 transition-colors group-focus-within:text-accent-400 group-focus-within:opacity-100 group-hover:text-accent-400 group-hover:opacity-100 [@media(hover:none)]:opacity-100">

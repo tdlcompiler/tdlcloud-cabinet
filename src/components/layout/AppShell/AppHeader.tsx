@@ -176,7 +176,7 @@ export function AppHeader({
     <>
       {/* Header - only on mobile */}
       <header
-        className="fixed top-0 right-0 left-0 z-50 glass shadow-lg shadow-black/10 lg:hidden"
+        className="glass fixed left-0 right-0 top-0 z-50 shadow-lg shadow-black/10 lg:hidden"
         style={{
           paddingTop: isFullscreen
             ? `${Math.max(safeAreaInset.top, contentSafeAreaInset.top) + (telegramPlatform === 'android' ? 48 : 45)}px`
@@ -192,9 +192,9 @@ export function AppHeader({
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={cn('flex shrink-0 items-center gap-2.5', !appName && 'mr-4')}
+              className={cn('flex flex-shrink-0 items-center gap-2.5', !appName && 'mr-4')}
             >
-              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-linear-lg border border-dark-700/50 bg-dark-800/80 shadow-md">
+              <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-linear-lg border border-dark-700/50 bg-dark-800/80 shadow-md">
                 <span
                   className={cn(
                     'absolute text-lg font-bold text-accent-400 transition-opacity duration-200',
@@ -216,7 +216,7 @@ export function AppHeader({
                 )}
               </div>
               {appName && (
-                <span className="text-base font-semibold whitespace-nowrap text-dark-100">
+                <span className="whitespace-nowrap text-base font-semibold text-dark-100">
                   {appName}
                 </span>
               )}
@@ -231,7 +231,7 @@ export function AppHeader({
                     haptic.impact('light');
                     onCommandPaletteOpen();
                   }}
-                  className="hidden btn-icon sm:flex"
+                  className="btn-icon hidden sm:flex"
                   title="Search (⌘K)"
                 >
                   <SearchIcon className="h-5 w-5" />
@@ -317,7 +317,7 @@ export function AppHeader({
 
           {/* Menu content */}
           <div
-            className="mobile-menu-content absolute inset-x-0 top-0 bottom-0 overflow-y-auto overscroll-contain border-t border-dark-800/50 bg-dark-900/95 pb-[calc(5rem+env(safe-area-inset-bottom,0))]"
+            className="mobile-menu-content absolute inset-x-0 bottom-0 top-0 overflow-y-auto overscroll-contain border-t border-dark-800/50 bg-dark-900/95 pb-[calc(5rem+env(safe-area-inset-bottom,0px))]"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             <div className="mx-auto max-w-6xl px-4 py-4">
@@ -370,8 +370,8 @@ export function AppHeader({
 
                 {isAdmin && (
                   <>
-                    <div className="my-3 divider" />
-                    <div className="px-4 py-1 text-xs font-medium tracking-wider text-dark-500 uppercase">
+                    <div className="divider my-3" />
+                    <div className="px-4 py-1 text-xs font-medium uppercase tracking-wider text-dark-500">
                       {t('admin.nav.title')}
                     </div>
                     <Link
@@ -390,7 +390,7 @@ export function AppHeader({
                   </>
                 )}
 
-                <div className="my-3 divider" />
+                <div className="divider my-3" />
 
                 <Link
                   to="/profile"

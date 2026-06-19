@@ -95,7 +95,7 @@ const CountdownTimer = memo(function CountdownTimer({
             : `1px solid ${g.innerBorder}`,
       }}
     >
-      <div className="mb-2 flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-dark-50/35 uppercase">
+      <div className="mb-2 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider text-dark-50/35">
         <div
           className="flex h-6 w-6 items-center justify-center rounded-[7px]"
           style={{
@@ -109,9 +109,9 @@ const CountdownTimer = memo(function CountdownTimer({
           <span
             style={{
               color: isExpired
-                ? 'rgb(var(--rt-critical-500))'
+                ? 'rgb(var(--color-critical-500))'
                 : isUrgent
-                  ? 'rgb(var(--rt-urgent-400))'
+                  ? 'rgb(var(--color-urgent-400))'
                   : g.textSecondary,
             }}
           >
@@ -123,7 +123,7 @@ const CountdownTimer = memo(function CountdownTimer({
       {isExpired ? (
         <div
           className="text-[18px] font-bold tracking-tight"
-          style={{ color: 'rgb(var(--rt-critical-500))' }}
+          style={{ color: 'rgb(var(--color-critical-500))' }}
         >
           {t('subscription.expired')}
         </div>
@@ -134,7 +134,7 @@ const CountdownTimer = memo(function CountdownTimer({
               <>
                 <span
                   className="text-[20px] font-bold tracking-tight"
-                  style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+                  style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
                 >
                   {countdown.days}
                 </span>
@@ -145,31 +145,31 @@ const CountdownTimer = memo(function CountdownTimer({
             )}
             <span
               className="text-[20px] font-bold tracking-tight"
-              style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+              style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
             >
               {String(countdown.hours).padStart(2, '0')}
             </span>
             <span
-              className="-mx-px text-[16px] font-bold opacity-30"
-              style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+              className="mx-[-1px] text-[16px] font-bold opacity-30"
+              style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
             >
               :
             </span>
             <span
               className="text-[20px] font-bold tracking-tight"
-              style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+              style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
             >
               {String(countdown.minutes).padStart(2, '0')}
             </span>
             <span
-              className="-mx-px text-[16px] font-bold opacity-30"
-              style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+              className="mx-[-1px] text-[16px] font-bold opacity-30"
+              style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
             >
               :
             </span>
             <span
               className="text-[20px] font-bold tracking-tight"
-              style={{ color: isUrgent ? 'rgb(var(--rt-urgent-400))' : g.text }}
+              style={{ color: isUrgent ? 'rgb(var(--color-urgent-400))' : g.text }}
             >
               {String(countdown.seconds).padStart(2, '0')}
             </span>
@@ -551,7 +551,7 @@ export default function Subscription() {
               style={{
                 background: g.cardBg,
                 border: subscription.is_trial
-                  ? '1px solid rgba(var(--rt-accent-400), 0.15)'
+                  ? '1px solid rgba(var(--color-accent-400), 0.15)'
                   : isDark
                     ? `1px solid ${g.cardBorder}`
                     : `1px solid ${zone.mainHex}25`,
@@ -584,7 +584,7 @@ export default function Subscription() {
                       aria-hidden="true"
                     />
                     <span
-                      className="font-mono text-[11px] font-semibold tracking-widest uppercase"
+                      className="font-mono text-[11px] font-semibold uppercase tracking-widest"
                       style={{ color: zone.mainHex, transition: 'color 0.6s ease' }}
                     >
                       {isUnlimited ? t('dashboard.unlimited') : t(zone.labelKey)}
@@ -599,7 +599,7 @@ export default function Subscription() {
 
                 {/* Status badge */}
                 <span
-                  className="max-w-[55%] shrink-0 rounded-full px-3 py-1 text-center font-mono text-[10px] font-semibold tracking-wider uppercase"
+                  className="max-w-[55%] shrink-0 rounded-full px-3 py-1 text-center font-mono text-[10px] font-semibold uppercase tracking-wider"
                   style={{
                     background: subscription.is_active
                       ? `${zone.mainHex}15`
@@ -614,8 +614,8 @@ export default function Subscription() {
                     color: subscription.is_active
                       ? zone.mainHex
                       : subscription.is_limited
-                        ? 'rgb(var(--rt-urgent-400))'
-                        : 'rgb(var(--rt-critical-500))',
+                        ? 'rgb(var(--color-urgent-400))'
+                        : 'rgb(var(--color-critical-500))',
                   }}
                 >
                   {subscription.is_active
@@ -642,7 +642,7 @@ export default function Subscription() {
                 >
                   <div className="flex items-start gap-3">
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                      className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
                       style={{ background: 'rgba(255,184,0,0.12)' }}
                     >
                       <svg
@@ -650,7 +650,7 @@ export default function Subscription() {
                         height="16"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="rgb(var(--rt-urgent-400))"
+                        stroke="rgb(var(--color-urgent-400))"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -664,7 +664,7 @@ export default function Subscription() {
                     <div className="min-w-0 flex-1">
                       <p
                         className="text-sm font-semibold"
-                        style={{ color: 'rgb(var(--rt-urgent-400))' }}
+                        style={{ color: 'rgb(var(--color-urgent-400))' }}
                       >
                         {t('subscription.trafficLimitedTitle')}
                       </p>
@@ -682,21 +682,21 @@ export default function Subscription() {
                   className="mb-6 rounded-[14px] p-4"
                   style={{
                     background:
-                      'linear-gradient(135deg, rgba(var(--rt-accent-400), 0.08), rgba(var(--rt-accent-400), 0.03))',
-                    border: '1px solid rgba(var(--rt-accent-400), 0.12)',
+                      'linear-gradient(135deg, rgba(var(--color-accent-400), 0.08), rgba(var(--color-accent-400), 0.03))',
+                    border: '1px solid rgba(var(--color-accent-400), 0.12)',
                   }}
                 >
                   <div className="flex items-start gap-3">
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
-                      style={{ background: 'rgba(var(--rt-accent-400), 0.12)' }}
+                      className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
+                      style={{ background: 'rgba(var(--color-accent-400), 0.12)' }}
                     >
                       <svg
                         width="16"
                         height="16"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="rgb(var(--rt-accent-400))"
+                        stroke="rgb(var(--color-accent-400))"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -708,7 +708,7 @@ export default function Subscription() {
                     <div className="flex-1">
                       <div
                         className="text-sm font-semibold"
-                        style={{ color: 'rgb(var(--rt-accent-400))' }}
+                        style={{ color: 'rgb(var(--color-accent-400))' }}
                       >
                         {t('subscription.trialInfo.title')}
                       </div>
@@ -719,7 +719,7 @@ export default function Subscription() {
                         <div className="flex items-center gap-1.5">
                           <span
                             className="font-mono text-[12px] font-semibold"
-                            style={{ color: 'rgb(var(--rt-accent-400))' }}
+                            style={{ color: 'rgb(var(--color-accent-400))' }}
                           >
                             {subscription.days_left > 0
                               ? t('subscription.days', { count: subscription.days_left })
@@ -732,7 +732,7 @@ export default function Subscription() {
                         <div className="flex items-center gap-1.5">
                           <span
                             className="font-mono text-[12px] font-semibold"
-                            style={{ color: 'rgb(var(--rt-accent-400))' }}
+                            style={{ color: 'rgb(var(--color-accent-400))' }}
                           >
                             {subscription.traffic_limit_gb || '∞'} {t('common.units.gb')}
                           </span>
@@ -743,7 +743,7 @@ export default function Subscription() {
                         <div className="flex items-center gap-1.5">
                           <span
                             className="font-mono text-[12px] font-semibold"
-                            style={{ color: 'rgb(var(--rt-accent-400))' }}
+                            style={{ color: 'rgb(var(--color-accent-400))' }}
                           >
                             {subscription.device_limit === 0 ? '∞' : subscription.device_limit}
                           </span>
@@ -760,7 +760,7 @@ export default function Subscription() {
               {/* ─── Traffic Progress ─── */}
               <div className="mb-6">
                 <div className="mb-2.5 flex items-center justify-between">
-                  <span className="text-[11px] font-medium tracking-wider text-dark-50/40 uppercase">
+                  <span className="text-[11px] font-medium uppercase tracking-wider text-dark-50/40">
                     {t('subscription.traffic')}
                   </span>
                   <div className="flex items-center gap-2">
@@ -772,7 +772,7 @@ export default function Subscription() {
                     <button
                       onClick={() => refreshTrafficMutation.mutate()}
                       disabled={refreshTrafficMutation.isPending || trafficRefreshCooldown > 0}
-                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium text-dark-50/30 transition-colors hover:bg-dark-50/5 hover:text-dark-50/50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium text-dark-50/30 transition-colors hover:bg-dark-50/[0.05] hover:text-dark-50/50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <RefreshIcon
                         className="h-3 w-3"
@@ -816,7 +816,7 @@ export default function Subscription() {
                   style={{ fontFamily: 'inherit' }}
                 >
                   <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] transition-colors duration-500"
+                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] transition-colors duration-500"
                     style={{ background: `${zone.mainHex}12`, color: zone.mainHex }}
                   >
                     <DevicesIcon className="h-4 w-4" />
@@ -836,7 +836,7 @@ export default function Subscription() {
                     {isAtDeviceLimit && (
                       <div
                         className="mt-1 text-[10px] font-medium"
-                        style={{ color: 'rgb(var(--rt-warning-400))' }}
+                        style={{ color: 'rgb(var(--color-warning-400))' }}
                       >
                         {t('dashboard.deviceLimitReached')}
                       </div>
@@ -844,13 +844,13 @@ export default function Subscription() {
                   </div>
                   {subscription.device_limit === 0 ? (
                     <div
-                      className="flex shrink-0 items-center text-lg text-dark-50/40"
+                      className="flex flex-shrink-0 items-center text-lg text-dark-50/40"
                       aria-hidden="true"
                     >
                       ∞
                     </div>
                   ) : subscription.device_limit <= 10 ? (
-                    <div className="flex shrink-0 gap-1.5" aria-hidden="true">
+                    <div className="flex flex-shrink-0 gap-1.5" aria-hidden="true">
                       {Array.from({ length: subscription.device_limit }, (_, i) => (
                         <div
                           key={i}
@@ -863,7 +863,7 @@ export default function Subscription() {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex w-16 shrink-0 items-center" aria-hidden="true">
+                    <div className="flex w-16 flex-shrink-0 items-center" aria-hidden="true">
                       <div
                         className="h-[6px] w-full overflow-hidden rounded-full"
                         style={{ background: g.textGhost }}
@@ -892,7 +892,7 @@ export default function Subscription() {
               {displayedConnectionUrl && !shouldHideConnectionLink && (
                 <div className="mb-5 flex gap-2">
                   <code
-                    className="block min-w-0 flex-1 truncate rounded-[10px] px-3 py-2 font-mono text-[11px] whitespace-nowrap text-dark-50/30"
+                    className="block min-w-0 flex-1 truncate whitespace-nowrap rounded-[10px] px-3 py-2 font-mono text-[11px] text-dark-50/30"
                     style={{
                       background: g.codeBg,
                       border: `1px solid ${g.codeBorder}`,
@@ -905,11 +905,11 @@ export default function Subscription() {
                     onClick={copyUrl}
                     className="flex h-auto items-center rounded-[10px] px-3 transition-colors duration-300"
                     style={{
-                      background: copied ? 'rgba(var(--rt-accent-400), 0.12)' : g.innerBorder,
+                      background: copied ? 'rgba(var(--color-accent-400), 0.12)' : g.innerBorder,
                       border: copied
-                        ? '1px solid rgba(var(--rt-accent-400), 0.2)'
+                        ? '1px solid rgba(var(--color-accent-400), 0.2)'
                         : `1px solid ${g.trackBg}`,
-                      color: copied ? 'rgb(var(--rt-accent-400))' : g.textMuted,
+                      color: copied ? 'rgb(var(--color-accent-400))' : g.textMuted,
                     }}
                     aria-label={t('subscription.copyLink')}
                     title={t('subscription.copyLink')}
@@ -931,7 +931,7 @@ export default function Subscription() {
               {/* ─── Locations ─── */}
               {subscription.servers && subscription.servers.length > 0 && (
                 <div className="mb-5">
-                  <div className="mb-2 text-[10px] font-medium tracking-wider text-dark-50/35 uppercase">
+                  <div className="mb-2 text-[10px] font-medium uppercase tracking-wider text-dark-50/35">
                     {t('subscription.locationsLabel')}
                   </div>
                   <div className="flex flex-wrap gap-1.5">
@@ -959,7 +959,7 @@ export default function Subscription() {
               {/* ─── Purchased Traffic Packages ─── */}
               {subscription.traffic_purchases && subscription.traffic_purchases.length > 0 && (
                 <div className="mb-5">
-                  <div className="mb-2 text-[10px] font-medium tracking-wider text-dark-50/35 uppercase">
+                  <div className="mb-2 text-[10px] font-medium uppercase tracking-wider text-dark-50/35">
                     {t('subscription.purchasedTraffic')}
                   </div>
                   <div className="space-y-2">
@@ -1060,7 +1060,7 @@ export default function Subscription() {
                         Resting position pinned at left:3px; on toggles a 23px
                         slide on the GPU. */}
                     <span
-                      className="absolute top-[3px] left-[3px] h-[22px] w-[22px] rounded-full bg-white transition-transform duration-300"
+                      className="absolute left-[3px] top-[3px] h-[22px] w-[22px] rounded-full bg-white transition-transform duration-300"
                       style={{
                         transform: subscription.autopay_enabled
                           ? 'translateX(23px)'
@@ -1126,16 +1126,16 @@ export default function Subscription() {
               style={{
                 background:
                   subscription.is_daily_paused || subscription.status === 'disabled'
-                    ? 'rgba(var(--rt-accent-400), 0.12)'
+                    ? 'rgba(var(--color-accent-400), 0.12)'
                     : 'rgba(255,184,0,0.12)',
                 border:
                   subscription.is_daily_paused || subscription.status === 'disabled'
-                    ? '1px solid rgba(var(--rt-accent-400), 0.2)'
+                    ? '1px solid rgba(var(--color-accent-400), 0.2)'
                     : '1px solid rgba(255,184,0,0.2)',
                 color:
                   subscription.is_daily_paused || subscription.status === 'disabled'
-                    ? 'rgb(var(--rt-accent-400))'
-                    : 'rgb(var(--rt-urgent-400))',
+                    ? 'rgb(var(--color-accent-400))'
+                    : 'rgb(var(--color-urgent-400))',
               }}
             >
               {pauseMutation.isPending ? (
@@ -1172,7 +1172,7 @@ export default function Subscription() {
                   style={{
                     background: 'rgba(255,59,92,0.08)',
                     border: '1px solid rgba(255,59,92,0.15)',
-                    color: 'rgb(var(--rt-critical-500))',
+                    color: 'rgb(var(--color-critical-500))',
                   }}
                 >
                   {getErrorMessage(pauseMutation.error)}
@@ -1192,12 +1192,12 @@ export default function Subscription() {
               <div className="flex items-start gap-3">
                 <PauseIcon
                   className="h-5 w-5 shrink-0"
-                  style={{ color: 'rgb(var(--rt-urgent-400))' }}
+                  style={{ color: 'rgb(var(--color-urgent-400))' }}
                 />
                 <div>
                   <div
                     className="text-sm font-semibold"
-                    style={{ color: 'rgb(var(--rt-urgent-400))' }}
+                    style={{ color: 'rgb(var(--color-urgent-400))' }}
                   >
                     {t('subscription.pause.pausedInfo')}
                   </div>
@@ -1228,7 +1228,7 @@ export default function Subscription() {
               return (
                 <div className="mt-4">
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="text-[11px] font-medium tracking-wider text-dark-50/35 uppercase">
+                    <span className="text-[11px] font-medium uppercase tracking-wider text-dark-50/35">
                       {t('subscription.pause.nextCharge')}
                     </span>
                     <span className="font-mono text-[12px] font-semibold text-dark-50">
@@ -1246,7 +1246,7 @@ export default function Subscription() {
                       style={{
                         transform: `scaleX(${progress / 100})`,
                         background:
-                          'linear-gradient(90deg, rgb(var(--rt-accent-500)), rgb(var(--rt-accent-400)))',
+                          'linear-gradient(90deg, rgb(var(--color-accent-500)), rgb(var(--color-accent-400)))',
                       }}
                     />
                   </div>
@@ -1458,7 +1458,7 @@ export default function Subscription() {
                 }}
                 disabled={deleteAllDevicesMutation.isPending}
                 className="text-[11px] font-medium transition-colors"
-                style={{ color: 'rgb(var(--rt-critical-500))' }}
+                style={{ color: 'rgb(var(--color-critical-500))' }}
               >
                 {t('subscription.deleteAllDevices')}
               </button>
@@ -1470,7 +1470,7 @@ export default function Subscription() {
               <div
                 className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"
                 style={{
-                  borderColor: 'rgb(var(--rt-accent-500))',
+                  borderColor: 'rgb(var(--color-accent-500))',
                   borderTopColor: 'transparent',
                 }}
               />
@@ -1501,7 +1501,7 @@ export default function Subscription() {
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-3">
                       <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
+                        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
                         style={{ background: g.trackBg }}
                       >
                         <svg
@@ -1560,7 +1560,7 @@ export default function Subscription() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex shrink-0 items-center gap-1">
+                    <div className="flex flex-shrink-0 items-center gap-1">
                       {isEditing ? (
                         <>
                           <button

@@ -190,7 +190,7 @@ export function TelegramPreview({
   if (!open) return null;
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-dark-950/70 p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-dark-950/70 p-4"
       onClick={onClose}
     >
       <div
@@ -228,11 +228,11 @@ export function TelegramPreview({
               <video src={mediaUrl} controls className="mb-2 max-h-72 w-full rounded-lg" />
             )}
             {text ? (
-              <div className="text-[15px] leading-snug wrap-break-word whitespace-pre-wrap">
+              <div className="whitespace-pre-wrap break-words text-[15px] leading-snug">
                 {rendered}
               </div>
             ) : (
-              <div className="text-sm text-white/60 italic">
+              <div className="text-sm italic text-white/60">
                 {t('admin.broadcasts.previewEmpty', '— пусто —')}
               </div>
             )}
@@ -268,7 +268,7 @@ export function EmailPreview({ open, onClose, subject, htmlContent }: EmailPrevi
   const emptyHtml = `<p style="color:#999;font-family:sans-serif">${t('admin.broadcasts.previewEmpty', '— пусто —')}</p>`;
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-dark-950/70 p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-dark-950/70 p-4"
       onClick={onClose}
     >
       <div
@@ -282,7 +282,7 @@ export function EmailPreview({ open, onClose, subject, htmlContent }: EmailPrevi
       >
         <div className="flex items-center justify-between border-b border-gray-200 p-4">
           <div className="min-w-0 flex-1">
-            <div className="text-xs tracking-wider text-gray-400 uppercase">
+            <div className="text-xs uppercase tracking-wider text-gray-400">
               {t('admin.broadcasts.emailSubject', 'Тема')}
             </div>
             <div className="truncate text-base font-semibold text-gray-900">

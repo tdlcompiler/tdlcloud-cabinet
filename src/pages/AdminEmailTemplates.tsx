@@ -50,7 +50,7 @@ function TemplateCard({
           </h3>
           <p className="mt-1 line-clamp-2 text-xs text-dark-400">{description}</p>
         </div>
-        <div className="mt-0.5 flex shrink-0 items-center gap-1 sm:gap-1.5">
+        <div className="mt-0.5 flex flex-shrink-0 items-center gap-1 sm:gap-1.5">
           {Object.entries(template.languages).map(([lang, status]) => (
             <span
               key={lang}
@@ -240,7 +240,7 @@ function TemplateEditor({
         <div className="flex min-w-0 items-start gap-2 sm:items-center sm:gap-3">
           <button
             onClick={onClose}
-            className="mt-0.5 shrink-0 rounded-lg p-1 transition-colors hover:bg-dark-700 sm:mt-0"
+            className="mt-0.5 flex-shrink-0 rounded-lg p-1 transition-colors hover:bg-dark-700 sm:mt-0"
           >
             <BackIcon />
           </button>
@@ -252,7 +252,7 @@ function TemplateEditor({
           </div>
         </div>
         {langData && !langData.is_default && (
-          <span className="shrink-0 rounded-full bg-accent-500/15 px-2 py-1 text-2xs font-medium text-accent-400 ring-1 ring-accent-500/25 sm:px-2.5 sm:text-xs">
+          <span className="flex-shrink-0 rounded-full bg-accent-500/15 px-2 py-1 text-2xs font-medium text-accent-400 ring-1 ring-accent-500/25 sm:px-2.5 sm:text-xs">
             Custom
           </span>
         )}
@@ -271,7 +271,7 @@ function TemplateEditor({
                   return;
                 setActiveLang(lang);
               }}
-              className={`flex flex-1 items-center justify-center gap-1 rounded-md px-2 py-2 text-xs font-medium whitespace-nowrap transition-all duration-150 sm:gap-1.5 sm:px-3 sm:text-sm ${
+              className={`flex flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 py-2 text-xs font-medium transition-all duration-150 sm:gap-1.5 sm:px-3 sm:text-sm ${
                 isActive
                   ? 'bg-dark-700 text-dark-100 shadow-sm'
                   : 'text-dark-400 hover:bg-dark-800 hover:text-dark-200'
@@ -280,7 +280,7 @@ function TemplateEditor({
               <span className="sm:hidden">{LANG_LABELS[lang] || lang}</span>
               <span className="hidden sm:inline">{LANG_FULL_LABELS[lang] || lang}</span>
               {!langInfo.is_default && (
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-400" />
+                <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent-400" />
               )}
             </button>
           );
@@ -421,7 +421,7 @@ function TemplateEditor({
                 setIsDirty(true);
               }}
               rows={12}
-              className="min-h-[200px] input resize-y font-mono text-xs leading-relaxed sm:min-h-[300px] sm:text-sm"
+              className="input min-h-[200px] resize-y font-mono text-xs leading-relaxed sm:min-h-[300px] sm:text-sm"
               placeholder="<h2>Title</h2><p>Content...</p>"
               spellCheck={false}
             />
@@ -511,9 +511,9 @@ export default function AdminEmailTemplates() {
     <div className="mx-auto max-w-4xl space-y-4 px-3 py-4 sm:space-y-6 sm:px-4 sm:py-6">
       {/* Page Header */}
       <div className="flex items-center gap-2 sm:gap-3">
-        <AdminBackButton className="shrink-0 rounded-xl border border-dark-700 bg-dark-800 p-1.5 transition-colors hover:bg-dark-700 sm:p-2" />
+        <AdminBackButton className="flex-shrink-0 rounded-xl border border-dark-700 bg-dark-800 p-1.5 transition-colors hover:bg-dark-700 sm:p-2" />
         <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
-          <div className="shrink-0 rounded-xl bg-linear-to-br from-accent-500/20 to-accent-600/10 p-1.5 text-accent-400 sm:p-2">
+          <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-accent-500/20 to-accent-600/10 p-1.5 text-accent-400 sm:p-2">
             <MailIcon className="h-6 w-6" />
           </div>
           <div className="min-w-0">
