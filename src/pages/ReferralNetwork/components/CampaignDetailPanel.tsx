@@ -43,7 +43,7 @@ export function CampaignDetailPanel({ campaignId, className }: CampaignDetailPan
       </div>
 
       {/* Content */}
-      <div className="overflow-y-auto p-4 pb-[calc(1rem+var(--safe-bottom,0px))]">
+      <div className="overflow-y-auto p-4 pb-[calc(1rem+var(--safe-bottom,0))]">
         {isLoading && (
           <div className="flex items-center justify-center py-8">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-dark-600 border-t-accent-400" />
@@ -128,7 +128,7 @@ export function CampaignDetailPanel({ campaignId, className }: CampaignDetailPan
             {/* Top referrers */}
             {campaign.top_referrers.length > 0 && (
               <div className="rounded-lg border border-dark-700/50 bg-dark-800/40 p-3">
-                <h4 className="mb-2 text-xs font-medium uppercase tracking-wider text-dark-500">
+                <h4 className="mb-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
                   {t('admin.referralNetwork.campaign.topReferrers')}
                 </h4>
                 <div className="space-y-1.5">

@@ -276,9 +276,9 @@ function ReplacementFaqItem({
         style={{ height }}
         className="overflow-hidden transition-[height] duration-300 ease-in-out"
       >
-        <div ref={contentRef} className="border-t border-dark-700/50 px-5 pb-4 pt-3">
+        <div ref={contentRef} className="border-t border-dark-700/50 px-5 pt-3 pb-4">
           <div
-            className="prose prose-sm max-w-none text-dark-300"
+            className="prose-sm prose max-w-none text-dark-300"
             dangerouslySetInnerHTML={{ __html: sanitizedAnswer }}
           />
         </div>
@@ -491,7 +491,7 @@ export default function Info() {
     }
 
     return (
-      <div className="bento-card prose prose-invert max-w-none">
+      <div className="bento-card prose max-w-none prose-invert">
         <div className="overflow-x-auto" dangerouslySetInnerHTML={{ __html: infoPageHtml }} />
       </div>
     );
@@ -542,7 +542,7 @@ export default function Info() {
                 <ChevronIcon expanded={expandedFaq === faq.id} />
               </button>
               {expandedFaq === faq.id && (
-                <div className="prose prose-invert max-w-none px-4 pb-4 text-dark-300">
+                <div className="prose max-w-none px-4 pb-4 prose-invert text-dark-300">
                   <div dangerouslySetInnerHTML={{ __html: formatContent(faq.content) }} />
                 </div>
               )}
@@ -566,7 +566,7 @@ export default function Info() {
       }
 
       return (
-        <div className="bento-card prose prose-invert max-w-none">
+        <div className="bento-card prose max-w-none prose-invert">
           <div
             className="overflow-x-auto"
             dangerouslySetInnerHTML={{ __html: formatContent(rules.content) }}
@@ -594,7 +594,7 @@ export default function Info() {
       }
 
       return (
-        <div className="bento-card prose prose-invert max-w-none">
+        <div className="bento-card prose max-w-none prose-invert">
           <div
             className="overflow-x-auto"
             dangerouslySetInnerHTML={{ __html: formatContent(privacy.content) }}
@@ -622,7 +622,7 @@ export default function Info() {
       }
 
       return (
-        <div className="bento-card prose prose-invert max-w-none">
+        <div className="bento-card prose max-w-none prose-invert">
           <div
             className="overflow-x-auto"
             dangerouslySetInnerHTML={{ __html: formatContent(offer.content) }}
@@ -729,7 +729,7 @@ export default function Info() {
                 </div>
                 <div className="h-3 overflow-hidden rounded-full bg-dark-700">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400 transition-all duration-500"
+                    className="h-full rounded-full bg-linear-to-r from-accent-500 to-accent-400 transition-all duration-500"
                     style={{ width: `${Math.min(100, loyaltyData.progress_percent)}%` }}
                   />
                 </div>
@@ -811,7 +811,7 @@ export default function Info() {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-xs italic text-dark-500">{t('info.noDiscounts')}</div>
+                  <div className="text-xs text-dark-500 italic">{t('info.noDiscounts')}</div>
                 )}
               </div>
             ))}

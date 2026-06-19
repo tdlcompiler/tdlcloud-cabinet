@@ -59,9 +59,9 @@ export default function ResetPassword() {
 
   if (!token) {
     return (
-      <div className="min-h-viewport flex items-center justify-center px-4 py-8 sm:py-12">
-        <div className="fixed inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
-        <div className="fixed right-4 top-4 z-50">
+      <div className="flex min-h-viewport items-center justify-center px-4 py-8 sm:py-12">
+        <div className="fixed inset-0 bg-linear-to-br from-dark-950 via-dark-900 to-dark-950" />
+        <div className="fixed top-4 right-4 z-50">
           <LanguageSwitcher />
         </div>
         <div className="relative w-full max-w-md text-center">
@@ -86,10 +86,10 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-viewport flex items-center justify-center px-4 py-8 sm:py-12">
-      <div className="fixed inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
-      <div className="fixed right-4 top-4 z-50">
+    <div className="flex min-h-viewport items-center justify-center px-4 py-8 sm:py-12">
+      <div className="fixed inset-0 bg-linear-to-br from-dark-950 via-dark-900 to-dark-950" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
+      <div className="fixed top-4 right-4 z-50">
         <LanguageSwitcher />
       </div>
 

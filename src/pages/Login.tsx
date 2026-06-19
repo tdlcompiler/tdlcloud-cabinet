@@ -314,7 +314,7 @@ export default function Login() {
 
   return (
     <div
-      className="flex min-h-[100dvh] items-center justify-center px-4 sm:px-6 lg:px-8"
+      className="flex min-h-dvh items-center justify-center px-4 sm:px-6 lg:px-8"
       style={{
         paddingTop:
           safeTop > 0 ? `${safeTop + 16}px` : 'calc(1rem + env(safe-area-inset-top, 0px))',
@@ -363,7 +363,7 @@ export default function Login() {
           {referralCode && isEmailAuthEnabled && (
             <div className="mt-3 rounded-xl border border-accent-500/30 bg-accent-500/10 p-2.5">
               <div className="flex items-center justify-center gap-2 text-accent-400">
-                <UsersIcon className="h-4 w-4 flex-shrink-0" />
+                <UsersIcon className="h-4 w-4 shrink-0" />
                 <span className="text-xs font-medium">{t('auth.referralInvite')}</span>
               </div>
             </div>
@@ -422,7 +422,7 @@ export default function Login() {
                 <div className="space-y-3 text-center">
                   <button
                     onClick={handleRetryTelegramAuth}
-                    className="btn-primary mx-auto flex items-center gap-2 px-5 py-2.5"
+                    className="mx-auto btn-primary flex items-center gap-2 px-5 py-2.5"
                   >
                     <RefreshIcon className="h-4 w-4" />
                     {t('auth.tryAgain')}
@@ -498,7 +498,7 @@ export default function Login() {
                   style={{ transform: 'translateZ(0)' }}
                 >
                   <div className="overflow-hidden">
-                    <div className="space-y-4 pb-1 pt-1">
+                    <div className="space-y-4 pt-1 pb-1">
                       {showForgotPassword ? (
                         /* Forgot password screen - replaces login/register */
                         forgotPasswordSent ? (

@@ -120,7 +120,7 @@ function PeriodTabs({
           type="button"
           onClick={() => onSelect(period.days)}
           className={cn(
-            'whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
+            'rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200',
             selectedDays === period.days
               ? 'bg-accent-500 text-on-accent shadow-lg shadow-accent-500/25'
               : 'bg-dark-800/50 text-dark-300 hover:bg-dark-700/50 hover:text-dark-100',
@@ -200,7 +200,7 @@ function ContactForm({
           value={contactValue}
           onChange={(e) => onContactChange(e.target.value)}
           placeholder={t('landing.contactPlaceholder', 'email@example.com or @telegram')}
-          className="w-full rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 outline-none transition-colors focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
+          className="w-full rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 transition-colors outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
         />
         <p className="mt-1.5 text-xs text-dark-500">{t('landing.contactHint')}</p>
       </div>
@@ -228,7 +228,7 @@ function ContactForm({
                 value={giftRecipient}
                 onChange={(e) => onGiftRecipientChange(e.target.value)}
                 placeholder={t('landing.recipientPlaceholder', 'Recipient email or @telegram')}
-                className="w-full rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 outline-none transition-colors focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
+                className="w-full rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 transition-colors outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
               />
             </div>
             <div>
@@ -247,7 +247,7 @@ function ContactForm({
                   'Add a personal message (optional)',
                 )}
                 rows={3}
-                className="w-full resize-none rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 outline-none transition-colors focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
+                className="w-full resize-none rounded-xl border border-dark-700/50 bg-dark-800/50 px-4 py-3 text-sm text-dark-50 placeholder-dark-500 transition-colors outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/25"
               />
             </div>
           </motion.div>
@@ -399,7 +399,7 @@ function PaymentMethodCard({
 
       {/* Sub-options */}
       {isSelected && hasSubOptions && (
-        <div className="border-t border-dark-800/30 px-4 pb-4 pt-3">
+        <div className="border-t border-dark-800/30 px-4 pt-3 pb-4">
           <div className="flex flex-wrap gap-2">
             {method.sub_options!.map((opt) => (
               <button
@@ -440,7 +440,10 @@ function SanitizedHtml({ html, className }: { html: string; className?: string }
   }, [html]);
 
   return (
-    <div className={cn('break-words', className)} dangerouslySetInnerHTML={{ __html: sanitized }} />
+    <div
+      className={cn('wrap-break-word', className)}
+      dangerouslySetInnerHTML={{ __html: sanitized }}
+    />
   );
 }
 
@@ -483,7 +486,7 @@ function SummaryCard({
       <div className="rounded-2xl border border-dark-800/50 bg-dark-900/50 p-5">
         {selectedTariff && (
           <div className="mb-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-dark-500">
+            <p className="text-xs font-medium tracking-wider text-dark-500 uppercase">
               {t('landing.selectedTariff', 'Tariff')}
             </p>
             <p className="mt-1 text-sm font-semibold text-dark-50">{selectedTariff.name}</p>
@@ -491,7 +494,7 @@ function SummaryCard({
         )}
         {selectedPeriod && (
           <div className="mb-4">
-            <p className="text-xs font-medium uppercase tracking-wider text-dark-500">
+            <p className="text-xs font-medium tracking-wider text-dark-500 uppercase">
               {t('landing.period', 'Period')}
             </p>
             <p className="mt-1 text-sm text-dark-200">
@@ -500,7 +503,7 @@ function SummaryCard({
           </div>
         )}
         <div className="border-t border-dark-800/50 pt-4">
-          <p className="text-xs font-medium uppercase tracking-wider text-dark-500">
+          <p className="text-xs font-medium tracking-wider text-dark-500 uppercase">
             {t('landing.total', 'Total')}
           </p>
           <div className="mt-1 flex items-center gap-2">
@@ -557,7 +560,7 @@ function SummaryCard({
       {stickyPayButton && isMobile ? (
         createPortal(
           <div
-            className="fixed bottom-0 left-0 right-0 z-50 p-3"
+            className="fixed right-0 bottom-0 left-0 z-50 p-3"
             style={{
               background:
                 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%)',
@@ -570,9 +573,9 @@ function SummaryCard({
                   const el = document.getElementById('contact-input');
                   if (el) {
                     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    el.classList.add('!border-error-500', '!ring-2', '!ring-error-500/50');
+                    el.classList.add('border-error-500!', 'ring-2!', 'ring-error-500/50!');
                     setTimeout(() => {
-                      el.classList.remove('!border-error-500', '!ring-2', '!ring-error-500/50');
+                      el.classList.remove('border-error-500!', 'ring-2!', 'ring-error-500/50!');
                     }, 2000);
                   }
                   return;
@@ -613,12 +616,12 @@ function SummaryCard({
               const el = document.getElementById('contact-input');
               if (el) {
                 el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                el.classList.add('!border-error-500', '!ring-2', '!ring-error-500/50');
+                el.classList.add('border-error-500!', 'ring-2!', 'ring-error-500/50!');
                 setTimeout(() => {
                   el.focus();
                 }, 300);
                 setTimeout(() => {
-                  el.classList.remove('!border-error-500', '!ring-2', '!ring-error-500/50');
+                  el.classList.remove('border-error-500!', 'ring-2!', 'ring-error-500/50!');
                 }, 2000);
               }
               return;
@@ -664,10 +667,10 @@ function SummaryCard({
 function TimeUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-800/80 text-lg font-bold tabular-nums text-dark-50 sm:h-12 sm:w-12 sm:text-xl">
+      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-800/80 text-lg font-bold text-dark-50 tabular-nums sm:h-12 sm:w-12 sm:text-xl">
         {String(value).padStart(2, '0')}
       </span>
-      <span className="mt-1 text-[10px] uppercase tracking-wider text-dark-500">{label}</span>
+      <span className="mt-1 text-[10px] tracking-wider text-dark-500 uppercase">{label}</span>
     </div>
   );
 }
@@ -729,7 +732,7 @@ function DiscountBanner({
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="mb-8 overflow-hidden rounded-2xl border border-accent-500/30 bg-gradient-to-r from-accent-500/10 via-accent-500/5 to-transparent"
+      className="mb-8 overflow-hidden rounded-2xl border border-accent-500/30 bg-linear-to-r from-accent-500/10 via-accent-500/5 to-transparent"
     >
       <div className="flex flex-col items-center gap-4 px-5 py-5 sm:flex-row sm:justify-between">
         {/* Left: badge + text */}
@@ -1169,7 +1172,7 @@ export default function QuickPurchase() {
             {/* Period tabs */}
             {allPeriods.length > 0 && (
               <div>
-                <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-dark-400">
+                <h2 className="mb-3 text-sm font-medium tracking-wider text-dark-400 uppercase">
                   {t('landing.choosePeriod', 'Choose period')}
                 </h2>
                 <PeriodTabs
@@ -1208,7 +1211,7 @@ export default function QuickPurchase() {
             {/* Tariff cards */}
             {showTariffCards && (
               <div>
-                <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-dark-400">
+                <h2 className="mb-3 text-sm font-medium tracking-wider text-dark-400 uppercase">
                   {t('landing.chooseTariff', 'Choose tariff')}
                 </h2>
                 <div
@@ -1235,7 +1238,7 @@ export default function QuickPurchase() {
             {/* Payment methods */}
             {config.payment_methods.length > 0 && (
               <div>
-                <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-dark-400">
+                <h2 className="mb-3 text-sm font-medium tracking-wider text-dark-400 uppercase">
                   {t('landing.paymentMethod', 'Payment method')}
                 </h2>
                 <div

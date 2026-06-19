@@ -86,7 +86,7 @@ function SortableLandingCard({
         <button
           {...attributes}
           {...listeners}
-          className="mt-0.5 flex-shrink-0 cursor-grab touch-none rounded-lg p-2 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:mt-1 sm:p-1.5"
+          className="mt-0.5 shrink-0 cursor-grab touch-none rounded-lg p-2 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:mt-1 sm:p-1.5"
           title={t('admin.tariffs.dragToReorder')}
         >
           <GripIcon />

@@ -28,7 +28,7 @@ export default function Meteors({ settings }: Props) {
       {meteors.map((meteor) => (
         <span
           key={meteor.id}
-          className="absolute top-0 rotate-[215deg] animate-meteor-effect rounded-[9999px]"
+          className="absolute top-0 rotate-215 animate-meteor-effect rounded-[9999px]"
           style={{
             left: meteor.left,
             animationDelay: meteor.delay,

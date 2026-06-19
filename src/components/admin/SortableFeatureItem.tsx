@@ -49,7 +49,7 @@ export function SortableFeatureItem({
       <button
         {...attributes}
         {...listeners}
-        className="mt-2 flex-shrink-0 cursor-grab touch-none text-dark-500 hover:text-dark-300 active:cursor-grabbing"
+        className="mt-2 shrink-0 cursor-grab touch-none text-dark-500 hover:text-dark-300 active:cursor-grabbing"
       >
         <GripIcon />
       </button>
@@ -80,7 +80,7 @@ export function SortableFeatureItem({
       </div>
       <button
         onClick={() => onRemove(index)}
-        className="mt-2 flex-shrink-0 text-dark-500 hover:text-error-400"
+        className="mt-2 shrink-0 text-dark-500 hover:text-error-400"
       >
         <TrashIcon />
       </button>

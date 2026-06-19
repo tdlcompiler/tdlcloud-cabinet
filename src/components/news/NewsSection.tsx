@@ -49,7 +49,7 @@ const CategoryBadge = memo(function CategoryBadge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest',
+        'inline-flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-[11px] font-bold tracking-widest uppercase',
         className,
       )}
       style={{
@@ -79,7 +79,7 @@ const TagBadge = memo(function TagBadge({ text, color }: TagBadgeProps) {
   const c = safeColor(color);
   return (
     <span
-      className="inline-block rounded px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider"
+      className="inline-block rounded px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase"
       style={{
         color: c,
         border: `1px solid ${c}33`,
@@ -168,33 +168,33 @@ const FeaturedCard = memo(function FeaturedCard({ item, onClick }: FeaturedCardP
           onClick();
         }
       }}
-      className="group col-span-full cursor-pointer rounded-2xl p-px transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
+      className="group col-span-full cursor-pointer rounded-2xl p-px transition-all duration-500 focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950 focus-visible:outline-none"
       style={{
         background:
-          'linear-gradient(135deg, rgba(var(--color-accent-400), 0.2), rgba(var(--color-dark-900), 0.2), rgba(var(--color-accent-400), 0.2))',
+          'linear-gradient(135deg, rgba(var(--rt-accent-400), 0.2), rgba(var(--rt-dark-900), 0.2), rgba(var(--rt-accent-400), 0.2))',
       }}
       whileHover={{
         background:
-          'linear-gradient(135deg, rgba(var(--color-accent-400), 0.4), rgba(var(--color-accent-500), 0.4), rgba(var(--color-accent-400), 0.4))',
+          'linear-gradient(135deg, rgba(var(--rt-accent-400), 0.4), rgba(var(--rt-accent-500), 0.4), rgba(var(--rt-accent-400), 0.4))',
       }}
       onClick={onClick}
     >
       <div className="relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[15px] bg-dark-900 p-7 sm:p-10">
         {/* Corner decoration */}
         <div
-          className="pointer-events-none absolute right-0 top-0 h-[200px] w-[200px]"
+          className="pointer-events-none absolute top-0 right-0 h-[200px] w-[200px]"
           style={{
             background:
-              'radial-gradient(circle at top right, rgba(var(--color-accent-400), 0.08), transparent 70%)',
+              'radial-gradient(circle at top right, rgba(var(--rt-accent-400), 0.08), transparent 70%)',
           }}
         />
 
         {/* Shimmer top border */}
         <div
-          className="absolute -top-px left-[20%] right-[20%] h-px"
+          className="absolute -top-px right-[20%] left-[20%] h-px"
           style={{
             background:
-              'linear-gradient(90deg, transparent, rgba(var(--color-accent-400), 0.4), transparent)',
+              'linear-gradient(90deg, transparent, rgba(var(--rt-accent-400), 0.4), transparent)',
             animation: 'newsShimmer 3s ease-in-out infinite',
           }}
         />
@@ -208,7 +208,7 @@ const FeaturedCard = memo(function FeaturedCard({ item, onClick }: FeaturedCardP
             </span>
           </div>
 
-          <h2 className="mb-3 max-w-[700px] break-words text-2xl font-extrabold leading-tight text-dark-50 transition-colors duration-300 group-hover:text-white sm:text-[28px]">
+          <h2 className="mb-3 max-w-[700px] text-2xl leading-tight font-extrabold wrap-break-word text-dark-50 transition-colors duration-300 group-hover:text-white sm:text-[28px]">
             {item.title}
           </h2>
 
@@ -257,10 +257,10 @@ const NewsCard = memo(function NewsCard({ item, index, onClick }: NewsCardProps)
           onClick();
         }
       }}
-      className="group cursor-pointer rounded-[14px] p-px transition-all duration-[450ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
+      className="group cursor-pointer rounded-[14px] p-px transition-all duration-450 focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950 focus-visible:outline-none"
       style={{
         background:
-          'linear-gradient(160deg, rgba(var(--color-dark-700), 0.25), rgba(var(--color-dark-900), 0.25))',
+          'linear-gradient(160deg, rgba(var(--rt-dark-700), 0.25), rgba(var(--rt-dark-900), 0.25))',
       }}
       whileHover={{
         y: -4,
@@ -271,7 +271,7 @@ const NewsCard = memo(function NewsCard({ item, index, onClick }: NewsCardProps)
       <div className="relative flex h-full min-h-[210px] flex-col justify-between overflow-hidden rounded-[13px] bg-dark-900 p-7">
         {/* Subtle corner glow on hover */}
         <div
-          className="pointer-events-none absolute -bottom-5 -right-5 h-[100px] w-[100px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute -right-5 -bottom-5 h-[100px] w-[100px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             background: `radial-gradient(circle, ${color}08, transparent 70%)`,
           }}
@@ -280,7 +280,7 @@ const NewsCard = memo(function NewsCard({ item, index, onClick }: NewsCardProps)
         <div>
           <div className="mb-3.5 flex items-center gap-2.5">
             <span
-              className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest"
+              className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest uppercase"
               style={{ color }}
             >
               <span
@@ -295,7 +295,7 @@ const NewsCard = memo(function NewsCard({ item, index, onClick }: NewsCardProps)
             {item.tag && <TagBadge text={item.tag} color={color} />}
           </div>
 
-          <h3 className="mb-2.5 break-words text-[17px] font-bold leading-snug text-dark-100 transition-colors duration-300 group-hover:text-white">
+          <h3 className="mb-2.5 text-[17px] leading-snug font-bold wrap-break-word text-dark-100 transition-colors duration-300 group-hover:text-white">
             {item.title}
           </h3>
 
@@ -414,10 +414,10 @@ export default function NewsSection() {
           className="mb-8"
         >
           <div className="mb-2 flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-400 to-accent-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-accent-400 to-accent-600">
               <NewsIcon className="h-[18px] w-[18px] text-dark-950" />
             </div>
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-dark-500">
+            <span className="font-mono text-[11px] font-bold tracking-[0.18em] text-dark-500 uppercase">
               {t('news.title')}
             </span>
           </div>

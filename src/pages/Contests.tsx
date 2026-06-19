@@ -79,7 +79,7 @@ export default function Contests() {
 
       {/* Game Modal */}
       {selectedContest && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-dark-950/70 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-dark-950/70 p-4 backdrop-blur-sm">
           <div
             className="bento-card max-h-[80vh] w-full max-w-lg overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
@@ -185,7 +185,7 @@ export default function Contests() {
             )}
 
             {result && (
-              <button onClick={handleCloseGame} className="btn-secondary mt-4 w-full">
+              <button onClick={handleCloseGame} className="mt-4 btn-secondary w-full">
                 {t('common.close')}
               </button>
             )}
@@ -200,7 +200,7 @@ export default function Contests() {
             <div key={contest.id} className="card">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <h3 className="break-words text-lg font-semibold">{contest.name}</h3>
+                  <h3 className="text-lg font-semibold wrap-break-word">{contest.name}</h3>
                   {contest.description && (
                     <p className="mt-1 text-sm text-dark-400">{contest.description}</p>
                   )}

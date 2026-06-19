@@ -124,7 +124,7 @@ export default function Polls() {
             aria-modal="true"
             aria-labelledby="poll-dialog-title"
             tabIndex={-1}
-            className="card relative max-h-[80vh] w-full max-w-lg overflow-y-auto"
+            className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto card"
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 id="poll-dialog-title" className="text-xl font-bold">
@@ -207,7 +207,7 @@ export default function Polls() {
             <div key={poll.id} className="card">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <h3 className="break-words text-lg font-semibold">{poll.title}</h3>
+                  <h3 className="text-lg font-semibold wrap-break-word">{poll.title}</h3>
                   {poll.description && (
                     <p className="mt-1 text-sm text-dark-400">{poll.description}</p>
                   )}

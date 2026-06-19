@@ -264,9 +264,9 @@ export default function Dashboard() {
             <span
               className="inline-flex max-w-[160px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
               style={{
-                background: 'rgba(var(--color-accent-400), 0.1)',
-                border: '1px solid rgba(var(--color-accent-400), 0.2)',
-                color: 'rgb(var(--color-accent-400))',
+                background: 'rgba(var(--rt-accent-400), 0.1)',
+                border: '1px solid rgba(var(--rt-accent-400), 0.2)',
+                color: 'rgb(var(--rt-accent-400))',
               }}
             >
               <StarIcon filled className="h-2.5 w-2.5 shrink-0" />
@@ -333,14 +333,14 @@ export default function Dashboard() {
           {subLoading ? (
             <div className="bento-card">
               <div className="mb-4 flex items-center justify-between">
-                <div className="skeleton h-5 w-20" />
-                <div className="skeleton h-6 w-16 rounded-full" />
+                <div className="h-5 w-20 skeleton" />
+                <div className="h-6 w-16 skeleton rounded-full" />
               </div>
-              <div className="skeleton mb-3 h-10 w-32" />
-              <div className="skeleton mb-3 h-4 w-40" />
-              <div className="skeleton h-3 w-full rounded-full" />
+              <div className="mb-3 h-10 w-32 skeleton" />
+              <div className="mb-3 h-4 w-40 skeleton" />
+              <div className="h-3 w-full skeleton rounded-full" />
               <div className="mt-5">
-                <div className="skeleton h-12 w-full rounded-xl" />
+                <div className="h-12 w-full skeleton rounded-xl" />
               </div>
             </div>
           ) : subscription?.is_expired ||
@@ -402,7 +402,7 @@ export default function Dashboard() {
 
       {/* Fortune Wheel Banner */}
       {wheelConfig?.is_enabled && (
-        <Link to="/wheel" className="bento-card-hover group flex items-center justify-between">
+        <Link to="/wheel" className="group bento-card-hover flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-3xl">🎰</span>
             <div className="min-w-0 flex-1">
@@ -410,7 +410,7 @@ export default function Dashboard() {
               <p className="text-sm text-dark-400">{t('wheel.banner.description')}</p>
             </div>
           </div>
-          <div className="flex-shrink-0 text-dark-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-400">
+          <div className="shrink-0 text-dark-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-400">
             <ChevronRightIcon />
           </div>
         </Link>

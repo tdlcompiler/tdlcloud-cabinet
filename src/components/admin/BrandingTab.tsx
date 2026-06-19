@@ -105,7 +105,7 @@ export function BrandingTab({ accentColor = '#3b82f6' }: BrandingTabProps) {
 
         <div className="flex items-start gap-6">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <div
               className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl text-3xl font-bold text-white"
               style={{

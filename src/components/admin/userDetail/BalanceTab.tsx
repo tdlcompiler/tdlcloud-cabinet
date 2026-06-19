@@ -122,7 +122,7 @@ export function BalanceTab({
   return (
     <div className="space-y-4">
       {/* Current balance */}
-      <div className="rounded-xl border border-accent-500/30 bg-gradient-to-r from-accent-500/20 to-accent-700/20 p-4">
+      <div className="rounded-xl border border-accent-500/30 bg-linear-to-r from-accent-500/20 to-accent-700/20 p-4">
         <div className="mb-1 text-sm text-dark-400">{t('admin.users.detail.balance.current')}</div>
         <div className="text-3xl font-bold text-dark-100">
           {formatWithCurrency(user.balance_rubles)}

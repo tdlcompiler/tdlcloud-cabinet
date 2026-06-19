@@ -51,7 +51,7 @@ function UserRow({ user, onClick, formatAmount }: UserRowProps) {
       className="flex cursor-pointer items-start gap-3 rounded-xl border border-dark-700 bg-dark-800/50 p-3 transition-all hover:border-dark-600 hover:bg-dark-800 sm:items-center sm:gap-4 sm:p-4"
     >
       {/* Avatar */}
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-sm font-medium text-white sm:text-base">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-sm font-medium text-white sm:text-base">
         {user.first_name?.[0] || user.username?.[0] || '?'}
       </div>
 
@@ -236,9 +236,9 @@ export default function AdminUsers() {
                   setOffset(0);
                 }}
                 placeholder={t('admin.users.search')}
-                className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pl-10 pr-4 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
+                className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pr-4 pl-10 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
               />
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dark-500">
+              <div className="absolute top-1/2 left-3 -translate-y-1/2 text-dark-500">
                 <SearchIcon />
               </div>
             </div>
@@ -253,9 +253,9 @@ export default function AdminUsers() {
                   setOffset(0);
                 }}
                 placeholder={t('admin.users.searchEmail')}
-                className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pl-10 pr-4 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
+                className="w-full rounded-xl border border-dark-700 bg-dark-800 py-2 pr-4 pl-10 text-dark-100 placeholder-dark-500 focus:border-dark-600 focus:outline-none"
               />
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dark-500">
+              <div className="absolute top-1/2 left-3 -translate-y-1/2 text-dark-500">
                 <SearchIcon />
               </div>
             </div>

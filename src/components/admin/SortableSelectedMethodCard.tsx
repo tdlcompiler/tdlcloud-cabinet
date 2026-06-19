@@ -56,7 +56,7 @@ export function SortableSelectedMethodCard({
         <button
           {...attributes}
           {...listeners}
-          className="flex-shrink-0 cursor-grab touch-none text-dark-500 hover:text-dark-300 active:cursor-grabbing"
+          className="shrink-0 cursor-grab touch-none text-dark-500 hover:text-dark-300 active:cursor-grabbing"
         >
           <GripIcon />
         </button>
@@ -65,13 +65,13 @@ export function SortableSelectedMethodCard({
         </button>
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="flex-shrink-0 text-dark-500 hover:text-dark-300"
+          className="shrink-0 text-dark-500 hover:text-dark-300"
         >
           <ChevronDownIcon open={expanded} />
         </button>
         <button
           onClick={() => onRemove(method.method_id)}
-          className="flex-shrink-0 text-dark-500 hover:text-error-400"
+          className="shrink-0 text-dark-500 hover:text-error-400"
         >
           <TrashIcon />
         </button>

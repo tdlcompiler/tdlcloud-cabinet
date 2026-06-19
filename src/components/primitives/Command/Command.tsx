@@ -52,8 +52,8 @@ export const CommandList = forwardRef<HTMLDivElement, CommandListProps>(
     <CommandPrimitive.List
       ref={ref}
       className={cn(
-        'max-h-[300px] overflow-y-auto overflow-x-hidden',
-        'scrollbar-thin scrollbar-track-transparent scrollbar-thumb-dark-700',
+        'max-h-[300px] overflow-x-hidden overflow-y-auto',
+        'scrollbar-thin scrollbar-thumb-dark-700 scrollbar-track-transparent',
         className,
       )}
       {...props}
@@ -87,8 +87,8 @@ export const CommandGroup = forwardRef<HTMLDivElement, CommandGroupProps>(
       ref={ref}
       className={cn(
         'overflow-hidden p-1 text-dark-100',
-        '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5',
-        '[&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-dark-400',
+        '**:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5',
+        '**:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-dark-400',
         className,
       )}
       {...props}
@@ -121,7 +121,7 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
     <CommandPrimitive.Item
       ref={ref}
       className={cn(
-        'relative flex cursor-pointer select-none items-center gap-2 rounded-linear px-2 py-2',
+        'relative flex cursor-pointer items-center gap-2 rounded-linear px-2 py-2 select-none',
         'text-sm text-dark-200 outline-none',
         'aria-selected:bg-dark-800/80 aria-selected:text-dark-100',
         'data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',

@@ -80,9 +80,9 @@ export function MultiSelectDropdown({
         type="button"
         onClick={() => setOpen(!open)}
         className={cn(
-          'flex w-full items-center justify-between rounded-xl border bg-dark-800 px-3 py-2.5 text-left text-sm outline-none transition-colors',
+          'flex w-full items-center justify-between rounded-xl border bg-dark-800 px-3 py-2.5 text-left text-sm transition-colors outline-none',
           open
-            ? 'border-accent-500/40 shadow-[0_0_0_3px_rgba(var(--color-accent-500),0.08)]'
+            ? 'border-accent-500/40 shadow-[0_0_0_3px_rgba(var(--rt-accent-500),0.08)]'
             : 'border-dark-700',
           selected.length > 0 ? 'text-dark-100' : 'text-dark-500',
         )}
@@ -98,7 +98,7 @@ export function MultiSelectDropdown({
       </button>
 
       {open && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-dark-700 bg-dark-800 py-1 shadow-2xl">
+        <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-dark-700 bg-dark-800 py-1 shadow-2xl">
           <div className="flex items-center gap-1 border-b border-dark-700/50 px-3 py-1.5">
             <button
               type="button"

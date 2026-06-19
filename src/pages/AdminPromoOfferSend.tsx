@@ -367,7 +367,7 @@ export default function AdminPromoOfferSend() {
                   // Search input
                   <>
                     <div className="relative">
-                      <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-dark-400">
+                      <div className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-dark-400">
                         <SearchIcon className="h-4 w-4" />
                       </div>
                       <input
@@ -382,7 +382,7 @@ export default function AdminPromoOfferSend() {
                         className="input pl-10"
                       />
                       {isSearching && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
                           <div className="h-4 w-4 animate-spin rounded-full border-2 border-accent-500 border-t-transparent" />
                         </div>
                       )}
@@ -390,7 +390,7 @@ export default function AdminPromoOfferSend() {
 
                     {/* Dropdown results */}
                     {showDropdown && searchQuery.length >= 2 && (
-                      <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-lg border border-dark-600 bg-dark-800 shadow-xl">
+                      <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-64 overflow-y-auto rounded-lg border border-dark-600 bg-dark-800 shadow-xl">
                         {filteredUsers.length > 0 ? (
                           filteredUsers.map((user) => (
                             <button
@@ -398,7 +398,7 @@ export default function AdminPromoOfferSend() {
                               onClick={() => handleSelectUser(user)}
                               className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-dark-700"
                             >
-                              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-dark-600">
+                              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-dark-600">
                                 <UserIcon />
                               </div>
                               <div className="min-w-0 flex-1">
@@ -411,7 +411,7 @@ export default function AdminPromoOfferSend() {
                                 </div>
                               </div>
                               {user.has_subscription && (
-                                <span className="flex-shrink-0 rounded bg-success-500/20 px-1.5 py-0.5 text-xs text-success-400">
+                                <span className="shrink-0 rounded bg-success-500/20 px-1.5 py-0.5 text-xs text-success-400">
                                   {t('admin.promoOffers.send.hasSubscription')}
                                 </span>
                               )}
@@ -437,7 +437,7 @@ export default function AdminPromoOfferSend() {
                 {t('admin.promoOffers.send.preview')}
               </h4>
               <div className="rounded-lg bg-dark-700/50 p-4">
-                <div className="whitespace-pre-wrap text-sm text-dark-200">
+                <div className="text-sm whitespace-pre-wrap text-dark-200">
                   {selectedTemplate.message_text}
                 </div>
                 <div className="mt-4">

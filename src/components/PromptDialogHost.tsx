@@ -36,7 +36,7 @@ export function PromptDialogHost() {
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-120 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-dark-950/60" onClick={cancel} aria-hidden="true" />
       <form
         ref={dialogRef}
@@ -44,7 +44,7 @@ export function PromptDialogHost() {
         aria-modal="true"
         aria-label={request.title ?? request.label}
         onSubmit={handleSubmit}
-        className="card relative w-full max-w-sm space-y-4"
+        className="relative w-full max-w-sm space-y-4 card"
       >
         {request.title && <h2 className="text-lg font-semibold text-dark-50">{request.title}</h2>}
         <label className="block">

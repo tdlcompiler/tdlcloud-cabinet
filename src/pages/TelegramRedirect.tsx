@@ -129,14 +129,14 @@ export default function TelegramRedirect() {
   }, [status]);
 
   return (
-    <div className="min-h-viewport flex items-center justify-center p-4">
+    <div className="flex min-h-viewport items-center justify-center p-4">
       {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
+      <div className="fixed inset-0 bg-linear-to-br from-dark-950 via-dark-900 to-dark-950" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-accent-500/10 via-transparent to-transparent" />
 
       <div className="relative w-full max-w-sm text-center">
         {/* Logo */}
-        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 shadow-lg shadow-accent-500/30">
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-linear-to-br from-accent-400 to-accent-600 shadow-lg shadow-accent-500/30">
           {branding?.has_custom_logo && logoUrl ? (
             <img src={logoUrl} alt={appName} className="h-full w-full object-cover" />
           ) : (
@@ -149,7 +149,7 @@ export default function TelegramRedirect() {
         {/* Loading State */}
         {status === 'loading' && (
           <div className="mt-8">
-            <div className="border-3 mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-accent-500 border-t-transparent" />
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-3 border-accent-500 border-t-transparent" />
             <p className="text-dark-400">{t('auth.authenticating')}</p>
             <p className="mt-2 text-sm text-dark-500">{t('common.loading')}</p>
           </div>

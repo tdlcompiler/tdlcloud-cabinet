@@ -260,7 +260,7 @@ function ButtonChip({
             <div className="space-y-2">
               {BOT_LOCALES.map((locale) => (
                 <div key={locale} className="flex items-center gap-2">
-                  <span className="w-7 shrink-0 text-center text-[10px] font-semibold uppercase text-dark-500">
+                  <span className="w-7 shrink-0 text-center text-[10px] font-semibold text-dark-500 uppercase">
                     {locale}
                   </span>
                   <input
@@ -342,7 +342,7 @@ function SortableRow({
         <button
           {...attributes}
           {...listeners}
-          className="flex-shrink-0 cursor-grab touch-none rounded-lg p-1.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing"
+          className="shrink-0 cursor-grab touch-none rounded-lg p-1.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing"
           title={t('admin.menuEditor.dragToReorder')}
         >
           <GripIcon />

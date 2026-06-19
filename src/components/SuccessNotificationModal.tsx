@@ -148,7 +148,7 @@ export default function SuccessNotificationModal() {
   };
 
   const modalContent = (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div className="fixed inset-0 z-100 flex items-center justify-center">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-dark-950/80 backdrop-blur-sm" onClick={handleClose} />
 
@@ -169,14 +169,14 @@ export default function SuccessNotificationModal() {
         <button
           onClick={handleClose}
           aria-label={t('common.close')}
-          className="absolute right-3 top-3 z-10 rounded-xl p-2 text-dark-400 transition-colors hover:bg-dark-800 hover:text-dark-200"
+          className="absolute top-3 right-3 z-10 rounded-xl p-2 text-dark-400 transition-colors hover:bg-dark-800 hover:text-dark-200"
         >
           <CloseIcon />
         </button>
 
         {/* Success header with animation */}
         <div
-          className={`flex flex-col items-center bg-gradient-to-br ${gradientClass} px-6 pb-8 pt-10`}
+          className={`flex flex-col items-center bg-linear-to-br ${gradientClass} px-6 pt-10 pb-8`}
         >
           {/* Use animate-pulse for celebration; bounce easing reads dated and
               the lift is the moment, not the bounce. */}

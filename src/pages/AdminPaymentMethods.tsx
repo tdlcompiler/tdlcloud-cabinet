@@ -87,7 +87,7 @@ function SortablePaymentCard({ config, onClick }: SortableCardProps) {
       <button
         {...attributes}
         {...listeners}
-        className="flex-shrink-0 cursor-grab touch-none rounded-lg p-2.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-1.5"
+        className="shrink-0 cursor-grab touch-none rounded-lg p-2.5 text-dark-500 hover:bg-dark-700/50 hover:text-dark-300 active:cursor-grabbing sm:p-1.5"
         title={t('admin.paymentMethods.dragToReorder')}
       >
         <GripIcon />
@@ -98,21 +98,21 @@ function SortablePaymentCard({ config, onClick }: SortableCardProps) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="truncate font-semibold text-dark-100">{displayName}</span>
           {config.is_enabled ? (
-            <span className="flex-shrink-0 rounded-full border border-success-500/20 bg-success-500/15 px-2 py-0.5 text-xs text-success-400">
+            <span className="shrink-0 rounded-full border border-success-500/20 bg-success-500/15 px-2 py-0.5 text-xs text-success-400">
               {t('admin.paymentMethods.enabled')}
             </span>
           ) : (
-            <span className="flex-shrink-0 rounded-full border border-dark-700/30 bg-dark-700/50 px-2 py-0.5 text-xs text-dark-500">
+            <span className="shrink-0 rounded-full border border-dark-700/30 bg-dark-700/50 px-2 py-0.5 text-xs text-dark-500">
               {t('admin.paymentMethods.disabled')}
             </span>
           )}
           {!config.is_provider_configured && (
-            <span className="flex-shrink-0 rounded-full border border-warning-500/20 bg-warning-500/15 px-2 py-0.5 text-xs text-warning-400">
+            <span className="shrink-0 rounded-full border border-warning-500/20 bg-warning-500/15 px-2 py-0.5 text-xs text-warning-400">
               {t('admin.paymentMethods.notConfigured')}
             </span>
           )}
           {subOptionsInfo && (
-            <span className="flex-shrink-0 rounded-full bg-dark-700/50 px-2 py-0.5 text-xs text-dark-400">
+            <span className="shrink-0 rounded-full bg-dark-700/50 px-2 py-0.5 text-xs text-dark-400">
               {subOptionsInfo}
             </span>
           )}
@@ -136,7 +136,7 @@ function SortablePaymentCard({ config, onClick }: SortableCardProps) {
       {/* Chevron */}
       <button
         onClick={onClick}
-        className="flex-shrink-0 p-1 text-dark-500 transition-colors hover:text-dark-300"
+        className="shrink-0 p-1 text-dark-500 transition-colors hover:text-dark-300"
       >
         <ChevronRightIcon />
       </button>

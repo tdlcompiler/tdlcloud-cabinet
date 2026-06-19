@@ -64,7 +64,7 @@ export function SettingsTableRow({
     <div
       className={cn(
         'group px-4 py-3 transition-colors hover:bg-dark-800/40',
-        isModified && 'bg-warning-500/[0.02]',
+        isModified && 'bg-warning-500/2',
         !isLast && 'border-b border-dark-700/30',
         className,
       )}
@@ -81,20 +81,20 @@ export function SettingsTableRow({
             <span className="text-[13px] font-medium text-dark-100">{displayName}</span>
 
             {isModified && (
-              <span className="rounded-full bg-warning-500/20 px-1.5 py-0.5 text-[10px] font-medium leading-none text-warning-400">
+              <span className="rounded-full bg-warning-500/20 px-1.5 py-0.5 text-[10px] leading-none font-medium text-warning-400">
                 {t('admin.settings.modified')}
               </span>
             )}
 
             {setting.has_override && !locked && (
-              <span className="rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-medium leading-none text-sky-400">
+              <span className="rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[10px] leading-none font-medium text-sky-400">
                 {t('admin.settings.badgeDb')}
               </span>
             )}
 
             {setting.env_locked && (
               <span
-                className="flex items-center gap-0.5 rounded-full bg-warning-500/15 px-1.5 py-0.5 text-[10px] font-medium leading-none text-warning-400"
+                className="flex items-center gap-0.5 rounded-full bg-warning-500/15 px-1.5 py-0.5 text-[10px] leading-none font-medium text-warning-400"
                 title={t('admin.settings.envLockedHint')}
               >
                 {t('admin.settings.badgeEnv')}
@@ -118,7 +118,7 @@ export function SettingsTableRow({
         <div
           className={cn(
             'flex items-center gap-2',
-            isLongValue ? 'w-full' : 'max-lg:self-end lg:flex-shrink-0',
+            isLongValue ? 'w-full' : 'max-lg:self-end lg:shrink-0',
           )}
         >
           {locked ? (
@@ -147,7 +147,7 @@ export function SettingsTableRow({
             <button
               onClick={onReset}
               disabled={isResetting}
-              className="flex-shrink-0 rounded-lg p-1.5 text-dark-500 opacity-0 transition-all hover:bg-dark-700 hover:text-dark-200 disabled:opacity-50 group-focus-within:opacity-100 group-hover:opacity-100 max-lg:opacity-100 [@media(hover:none)]:opacity-100"
+              className="shrink-0 rounded-lg p-1.5 text-dark-500 opacity-0 transition-all group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-dark-700 hover:text-dark-200 disabled:opacity-50 max-lg:opacity-100 [@media(hover:none)]:opacity-100"
               title={t('admin.settings.reset')}
               aria-label={t('admin.settings.reset')}
             >
@@ -159,10 +159,10 @@ export function SettingsTableRow({
           <button
             onClick={onToggleFavorite}
             className={cn(
-              'flex-shrink-0 rounded-lg p-1.5 transition-all',
+              'shrink-0 rounded-lg p-1.5 transition-all',
               isFavorite
                 ? 'text-warning-400 hover:bg-warning-500/15'
-                : 'text-dark-500 opacity-0 hover:bg-dark-700/50 hover:text-warning-400 group-focus-within:opacity-100 group-hover:opacity-100 max-lg:opacity-100 [@media(hover:none)]:opacity-100',
+                : 'text-dark-500 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-dark-700/50 hover:text-warning-400 max-lg:opacity-100 [@media(hover:none)]:opacity-100',
             )}
             title={
               isFavorite

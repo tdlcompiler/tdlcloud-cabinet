@@ -315,7 +315,7 @@ export default function Support() {
             <button
               type="button"
               onClick={() => onRemove(idx)}
-              className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-dark-600 text-dark-300 hover:bg-error-500 hover:text-white"
+              className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-dark-600 text-dark-300 hover:bg-error-500 hover:text-white"
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -404,7 +404,7 @@ export default function Support() {
                 >
                   <div className="mb-2 flex items-start justify-between gap-2">
                     <div className="truncate font-medium text-dark-100">{ticket.title}</div>
-                    <span className={`${getStatusBadge(ticket.status)} flex-shrink-0`}>
+                    <span className={`${getStatusBadge(ticket.status)} shrink-0`}>
                       {getStatusLabel(ticket.status)}
                     </span>
                   </div>
@@ -467,7 +467,7 @@ export default function Support() {
                   </label>
                   <textarea
                     id="support-message"
-                    className="input min-h-[150px]"
+                    className="min-h-[150px] input"
                     placeholder={t('support.messagePlaceholder')}
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -568,7 +568,7 @@ export default function Support() {
                   <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent-500 border-t-transparent" />
                 </div>
               ) : ticketDetail?.messages ? (
-                <div className="scrollbar-hide mb-6 max-h-96 flex-1 space-y-4 overflow-y-auto">
+                <div className="mb-6 scrollbar-hide max-h-96 flex-1 space-y-4 overflow-y-auto">
                   {ticketDetail.messages.map((msg) => (
                     <div
                       key={msg.id}
@@ -623,7 +623,7 @@ export default function Support() {
                   <div className="space-y-3">
                     <div className="flex gap-3">
                       <textarea
-                        className="input min-h-[80px] flex-1"
+                        className="min-h-[80px] input flex-1"
                         placeholder={t('support.replyPlaceholder')}
                         value={replyMessage}
                         onChange={(e) => setReplyMessage(e.target.value)}

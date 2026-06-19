@@ -28,7 +28,7 @@ export default function TrafficProgressBar({
   const zone = useTrafficZone(percent);
 
   // Gradient always starts from the accent color (normal zone)
-  const startColor = 'rgb(var(--color-accent-400))';
+  const startColor = 'rgb(var(--rt-accent-400))';
   const clampedPercent = Math.min(percent, 100);
   const barHeight = compact ? 8 : 14;
 
@@ -38,10 +38,10 @@ export default function TrafficProgressBar({
   const fillGradient = useMemo(() => {
     if (percent < 50) return `linear-gradient(90deg, ${startColor}, ${zone.mainVar})`;
     if (percent < 75)
-      return `linear-gradient(90deg, ${startColor}, rgb(var(--color-warning-400)), ${zone.mainVar})`;
+      return `linear-gradient(90deg, ${startColor}, rgb(var(--rt-warning-400)), ${zone.mainVar})`;
     if (percent < 90)
-      return `linear-gradient(90deg, ${startColor}, rgb(var(--color-warning-400)), rgb(var(--color-warning-300)), ${zone.mainVar})`;
-    return `linear-gradient(90deg, ${startColor}, rgb(var(--color-warning-400)), rgb(var(--color-warning-300)), rgb(var(--color-error-400)))`;
+      return `linear-gradient(90deg, ${startColor}, rgb(var(--rt-warning-400)), rgb(var(--rt-warning-300)), ${zone.mainVar})`;
+    return `linear-gradient(90deg, ${startColor}, rgb(var(--rt-warning-400)), rgb(var(--rt-warning-300)), rgb(var(--rt-error-400)))`;
   }, [percent, zone.mainVar, startColor]);
 
   if (isUnlimited) {
@@ -74,7 +74,7 @@ export default function TrafficProgressBar({
           />
           {/* Top highlight */}
           <div
-            className="absolute left-0 right-0 top-0"
+            className="absolute top-0 right-0 left-0"
             style={{
               height: '50%',
               background: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)',
@@ -108,15 +108,15 @@ export default function TrafficProgressBar({
         {/* Warning zone tint backgrounds */}
         <div className="absolute inset-0 flex" aria-hidden="true">
           <div style={{ flex: '50 0 0', background: 'transparent' }} />
-          <div style={{ flex: '25 0 0', background: 'rgba(var(--color-warning-400), 0.03)' }} />
-          <div style={{ flex: '15 0 0', background: 'rgba(var(--color-warning-300), 0.04)' }} />
-          <div style={{ flex: '10 0 0', background: 'rgba(var(--color-error-400), 0.05)' }} />
+          <div style={{ flex: '25 0 0', background: 'rgba(var(--rt-warning-400), 0.03)' }} />
+          <div style={{ flex: '15 0 0', background: 'rgba(var(--rt-warning-300), 0.04)' }} />
+          <div style={{ flex: '10 0 0', background: 'rgba(var(--rt-error-400), 0.05)' }} />
         </div>
 
         {/* Fill bar — scaleX (compositor) instead of width (layout reflow).
             Use top-left origin so fill grows left→right same as width. */}
         <div
-          className="absolute bottom-0 left-0 top-0 w-full origin-left overflow-hidden"
+          className="absolute top-0 bottom-0 left-0 w-full origin-left overflow-hidden"
           style={{
             transform: `scaleX(${clampedPercent / 100})`,
             borderRadius: 10,
@@ -142,7 +142,7 @@ export default function TrafficProgressBar({
           />
           {/* Top highlight */}
           <div
-            className="absolute left-0 right-0 top-0"
+            className="absolute top-0 right-0 left-0"
             style={{
               height: '50%',
               background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%)',
@@ -156,7 +156,7 @@ export default function TrafficProgressBar({
         {THRESHOLDS.map((threshold) => (
           <div
             key={threshold}
-            className="absolute bottom-0 top-0"
+            className="absolute top-0 bottom-0"
             style={{
               left: `${threshold}%`,
               width: 1,

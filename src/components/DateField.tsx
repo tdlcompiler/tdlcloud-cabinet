@@ -74,7 +74,7 @@ export function DateField({ value, onChange, placeholder, min, max, className }:
           type="button"
           className={
             className ??
-            'flex min-w-[8rem] items-center justify-start gap-2 whitespace-nowrap rounded-lg border border-dark-600 bg-dark-800 px-3 py-1.5 text-sm text-dark-200 transition-colors hover:border-dark-500'
+            'flex min-w-32 items-center justify-start gap-2 rounded-lg border border-dark-600 bg-dark-800 px-3 py-1.5 text-sm whitespace-nowrap text-dark-200 transition-colors hover:border-dark-500'
           }
         >
           <CalendarIcon className="h-4 w-4 shrink-0 text-dark-500" />

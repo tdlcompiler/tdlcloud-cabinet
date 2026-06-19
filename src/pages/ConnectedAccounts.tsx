@@ -241,14 +241,14 @@ function TelegramLinkWidget() {
   if (scriptFailed) {
     return (
       <div className="flex max-w-[200px] flex-col items-center gap-1.5">
-        <p className="break-words text-center text-xs text-dark-400">
+        <p className="text-center text-xs wrap-break-word text-dark-400">
           {t('profile.accounts.telegramLinkUnavailable')}
         </p>
         <a
           href={`https://t.me/${botUsername}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="break-all text-sm text-accent-400 transition-colors hover:text-accent-300"
+          className="text-sm break-all text-accent-400 transition-colors hover:text-accent-300"
         >
           @{botUsername}
         </a>

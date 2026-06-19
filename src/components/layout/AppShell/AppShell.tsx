@@ -190,7 +190,7 @@ export function AppShell({ children }: AppShellProps) {
       <PromptDialogHost />
 
       {/* Desktop Header */}
-      <header className="fixed left-0 right-0 top-0 z-50 hidden border-b border-dark-800/50 bg-dark-950/95 lg:block">
+      <header className="fixed top-0 right-0 left-0 z-50 hidden border-b border-dark-800/50 bg-dark-950/95 lg:block">
         {/* 3-зонный grid: лого | капсула | действия. Колонки 1fr_auto_1fr держат
             капсулу строго по центру вьюпорта НЕЗАВИСИМО от ширины лого/действий,
             а действия — у правого края. Поэтому ничего не «скачет» при переходах
@@ -202,7 +202,7 @@ export function AppShell({ children }: AppShellProps) {
             className="flex shrink-0 items-center gap-2.5 justify-self-start"
             onClick={handleNavClick}
           >
-            <div className="relative flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-dark-800">
+            <div className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-dark-800">
               <span
                 className={cn(
                   'absolute text-sm font-bold text-accent-400 transition-opacity duration-200',

@@ -171,16 +171,16 @@ export default function SubscriptionPurchase() {
                 className="mb-6 rounded-[14px] p-4"
                 style={{
                   background:
-                    'linear-gradient(135deg, rgba(255,184,0,0.08), rgba(var(--color-accent-400),0.06))',
+                    'linear-gradient(135deg, rgba(255,184,0,0.08), rgba(var(--rt-accent-400),0.06))',
                   border: '1px solid rgba(255,184,0,0.15)',
                 }}
               >
                 <div className="flex items-start gap-3">
                   <div
-                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
                     style={{
                       background: 'rgba(255,184,0,0.12)',
-                      color: 'rgb(var(--color-urgent-400))',
+                      color: 'rgb(var(--rt-urgent-400))',
                     }}
                   >
                     <SparklesIcon className="h-4 w-4" />
@@ -188,7 +188,7 @@ export default function SubscriptionPurchase() {
                   <div>
                     <div
                       className="text-sm font-semibold"
-                      style={{ color: 'rgb(var(--color-urgent-400))' }}
+                      style={{ color: 'rgb(var(--rt-urgent-400))' }}
                     >
                       {t('subscription.trialUpgrade.title')}
                     </div>
@@ -214,10 +214,10 @@ export default function SubscriptionPurchase() {
               >
                 <div className="flex items-start gap-3">
                   <div
-                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
                     style={{
                       background: 'rgba(255,59,92,0.12)',
-                      color: 'rgb(var(--color-critical-500))',
+                      color: 'rgb(var(--rt-critical-500))',
                     }}
                   >
                     <ExclamationIcon className="h-4 w-4" />
@@ -225,7 +225,7 @@ export default function SubscriptionPurchase() {
                   <div>
                     <div
                       className="text-sm font-semibold"
-                      style={{ color: 'rgb(var(--color-critical-500))' }}
+                      style={{ color: 'rgb(var(--rt-critical-500))' }}
                     >
                       {t('subscription.expiredBanner.title')}
                     </div>

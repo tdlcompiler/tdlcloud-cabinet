@@ -60,7 +60,7 @@ function UserSearchDropdown({
   if (selectedUser) {
     return (
       <div className="flex items-center gap-2 rounded-lg border border-dark-600 bg-dark-900 px-3 py-2">
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
           {selectedUser.first_name?.[0] || selectedUser.username?.[0] || '?'}
         </div>
         <div className="min-w-0 flex-1">
@@ -95,9 +95,9 @@ function UserSearchDropdown({
             if (searchQuery.length >= 2) setIsOpen(true);
           }}
           placeholder={t('admin.roleAssign.searchPlaceholder')}
-          className="w-full rounded-lg border border-dark-600 bg-dark-900 py-2 pl-10 pr-3 text-dark-100 placeholder-dark-500 outline-none transition-colors focus:border-accent-500"
+          className="w-full rounded-lg border border-dark-600 bg-dark-900 py-2 pr-3 pl-10 text-dark-100 placeholder-dark-500 transition-colors outline-none focus:border-accent-500"
         />
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dark-500">
+        <div className="absolute top-1/2 left-3 -translate-y-1/2 text-dark-500">
           <SearchIcon />
         </div>
       </div>
@@ -106,7 +106,7 @@ function UserSearchDropdown({
         <>
           {/* Backdrop to close dropdown */}
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} aria-hidden="true" />
-          <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-dark-600 bg-dark-800 shadow-xl">
+          <div className="absolute top-full right-0 left-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-dark-600 bg-dark-800 shadow-xl">
             {searching ? (
               <div className="flex items-center justify-center py-4">
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-accent-500 border-t-transparent" />
@@ -123,7 +123,7 @@ function UserSearchDropdown({
                   onClick={() => handleSelect(user)}
                   className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left transition-colors hover:bg-dark-700"
                 >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
                     {user.first_name?.[0] || user.username?.[0] || '?'}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -391,7 +391,7 @@ export default function AdminRoleAssign() {
                     onChange={(e) =>
                       setSelectedRoleId(e.target.value ? Number(e.target.value) : null)
                     }
-                    className="w-full appearance-none rounded-lg border border-dark-600 bg-dark-900 px-3 py-2 pr-8 text-dark-100 outline-none transition-colors focus:border-accent-500"
+                    className="w-full appearance-none rounded-lg border border-dark-600 bg-dark-900 px-3 py-2 pr-8 text-dark-100 transition-colors outline-none focus:border-accent-500"
                   >
                     <option value="">{t('admin.roleAssign.selectRole')}</option>
                     {assignableRoles.map((role) => (
@@ -400,7 +400,7 @@ export default function AdminRoleAssign() {
                       </option>
                     ))}
                   </select>
-                  <ChevronDownIcon className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-dark-400" />
+                  <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-2.5 h-4 w-4 -translate-y-1/2 text-dark-400" />
                 </div>
               </div>
 
@@ -417,7 +417,7 @@ export default function AdminRoleAssign() {
                   type="datetime-local"
                   value={expiresAt}
                   onChange={(e) => setExpiresAt(e.target.value)}
-                  className="w-full rounded-lg border border-dark-600 bg-dark-900 px-3 py-2 text-dark-100 outline-none transition-colors [color-scheme:dark] focus:border-accent-500"
+                  className="w-full rounded-lg border border-dark-600 bg-dark-900 px-3 py-2 text-dark-100 scheme-dark transition-colors outline-none focus:border-accent-500"
                 />
                 <p className="mt-1 text-xs text-dark-500">{t('admin.roleAssign.expiresHint')}</p>
               </div>
@@ -468,22 +468,22 @@ export default function AdminRoleAssign() {
           <>
             {/* Desktop table header */}
             <div className="hidden border-b border-dark-700 px-4 py-2.5 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-5">
-              <div className="col-span-3 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-3 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.user')}
               </div>
-              <div className="col-span-2 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.role')}
               </div>
-              <div className="col-span-2 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.assignedBy')}
               </div>
-              <div className="col-span-2 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.assignedAt')}
               </div>
-              <div className="col-span-2 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-2 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.expires')}
               </div>
-              <div className="col-span-1 text-xs font-medium uppercase tracking-wider text-dark-500">
+              <div className="col-span-1 text-xs font-medium tracking-wider text-dark-500 uppercase">
                 {t('admin.roleAssign.table.actions')}
               </div>
             </div>
@@ -504,7 +504,7 @@ export default function AdminRoleAssign() {
                   >
                     {/* User */}
                     <div className="col-span-3 mb-2 flex items-center gap-2.5 sm:mb-0">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-accent-500 to-accent-700 text-xs font-medium text-white">
                         {assignment.user_first_name?.[0] || '?'}
                       </div>
                       <div className="min-w-0">

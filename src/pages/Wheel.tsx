@@ -533,7 +533,7 @@ export default function Wheel() {
 
       {/* Wheel Section */}
       <Card>
-        <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr,280px]">
+        <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_280px]">
           {/* Left: Wheel and Controls */}
           <div>
             {/* Wheel */}
@@ -548,7 +548,7 @@ export default function Wheel() {
             <div className="mt-8 space-y-4">
               {/* Payment type selector */}
               {(starsEnabled || daysEnabled) && (
-                <div className="rounded-xl border border-dark-700/30 bg-dark-800/30 px-1 pb-1 pt-2">
+                <div className="rounded-xl border border-dark-700/30 bg-dark-800/30 px-1 pt-2 pb-1">
                   <p className="mb-1 text-center text-xs text-dark-400">{t('wheel.spinCost')}</p>
                   <div
                     className={`grid gap-1 ${bothMethodsAvailable ? 'grid-cols-2' : 'grid-cols-1'}`}
@@ -726,7 +726,7 @@ export default function Wheel() {
                   {spinResult.promocode && (
                     <div className="mt-3 rounded-linear border border-accent-500/20 bg-accent-500/10 p-3 text-center">
                       <p className="mb-1 text-xs text-accent-400">{t('wheel.yourPromoCode')}</p>
-                      <p className="select-all font-mono text-lg font-bold tracking-wider text-white">
+                      <p className="font-mono text-lg font-bold tracking-wider text-white select-all">
                         {spinResult.promocode}
                       </p>
                     </div>
@@ -772,7 +772,7 @@ export default function Wheel() {
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="border-t border-dark-700/30 px-4 pb-4 pt-2">
+              <div className="border-t border-dark-700/30 px-4 pt-2 pb-4">
                 {history && history.items.length > 0 ? (
                   <motion.div
                     variants={staggerContainer}
@@ -799,7 +799,7 @@ export default function Wheel() {
                             </div>
                           </div>
                         </div>
-                        <div className="whitespace-nowrap text-sm text-dark-400">
+                        <div className="text-sm whitespace-nowrap text-dark-400">
                           -
                           {item.payment_type === 'telegram_stars'
                             ? `${item.payment_amount} ⭐`
