@@ -1045,7 +1045,7 @@
     "openSupport": "Open Support",
     "contactSupport": "Please contact {{username}} for support",
     "contactUs": "Contact Support in Telegram",
-    "create_ticket": "Create ticket"
+    "create_ticket": "Create ticket",
     "writeButton": "Message"
   },
   "wheel": {
