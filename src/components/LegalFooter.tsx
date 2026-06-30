@@ -8,9 +8,8 @@ interface LegalLink {
 }
 
 const LINKS: LegalLink[] = [
-  { href: '/offer', labelKey: 'footer.offer', fallback: 'Публичная оферта' },
-  { href: '/privacy', labelKey: 'footer.privacy', fallback: 'Политика конфиденциальности' },
-  { href: '/recurrent-payments', labelKey: 'footer.recurrent', fallback: 'Рекуррентные платежи' },
+  { href: 'https://law.tdlcloud.ru/terms', labelKey: 'footer.offer', fallback: 'Публичная оферта' },
+  { href: 'https://law.tdlcloud.ru/privacy', labelKey: 'footer.privacy', fallback: 'Политика конфиденциальности' },
 ];
 
 interface LegalFooterProps {
