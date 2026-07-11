@@ -6,10 +6,14 @@ language js
 // canonical implementations) are exempted by the filename conditions below.
 
 file(name=$name, body=$body) where {
-  $name <: not includes "platform",
+  // Exempt the canonical implementations only, matching the old eslint override
+  // scope (`src/platform/**`, `src/utils/clipboard.ts`) — an anchored path
+  // fragment, not a bare "platform" substring that would also spare any
+  // unrelated file with "platform" in its name.
+  $name <: not includes "src/platform/",
   $name <: not includes or {
-    "clipboard.ts",
-    "clipboard.js"
+    "utils/clipboard.ts",
+    "utils/clipboard.js"
   },
   $body <: contains bubble or {
     `window.confirm` as $use where {
