@@ -190,7 +190,11 @@ export function AppShell({ children }: AppShellProps) {
       <PromptDialogHost />
 
       {/* Desktop Header */}
-      <header className="fixed left-0 right-0 top-0 z-50 hidden border-b border-dark-800/50 bg-dark-950/95 lg:block">
+      {/* w-screen вместо left-0 right-0: right-0 упирается в край вьюпорта БЕЗ
+          скроллбара, и капсула по центру прыгала бы на полширины скроллбара при
+          переходах между страницами со скроллом и без. 100vw даёт ту же ось
+          центрирования, что и у body (тоже 100vw). */}
+      <header className="fixed left-0 top-0 z-50 hidden w-screen border-b border-dark-800/50 bg-dark-950/95 lg:block">
         {/* 3-зонный grid: лого | капсула | действия. Колонки 1fr_auto_1fr держат
             капсулу строго по центру вьюпорта НЕЗАВИСИМО от ширины лого/действий,
             а действия — у правого края. Поэтому ничего не «скачет» при переходах
