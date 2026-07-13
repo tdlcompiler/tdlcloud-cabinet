@@ -3641,7 +3641,8 @@
             "redeemed": "Redeemed",
             "approved": "Approved",
             "rejected": "Rejected",
-            "completed": "Completed"
+            "completed": "Completed",
+            "command": "Command"
           }
         }
       },

@@ -4047,7 +4047,8 @@
             "redeemed": "Погашен",
             "approved": "Одобрена",
             "rejected": "Отклонена",
-            "completed": "Выполнена"
+            "completed": "Выполнена",
+            "command": "Команда"
           }
         }
       },

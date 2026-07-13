@@ -3145,7 +3145,8 @@
             "redeemed": "استفاده شده",
             "approved": "تأیید شده",
             "rejected": "رد شده",
-            "completed": "انجام شده"
+            "completed": "انجام شده",
+            "command": "دستور"
           }
         }
       },

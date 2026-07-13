@@ -3144,7 +3144,8 @@
             "redeemed": "已兑换",
             "approved": "已批准",
             "rejected": "已拒绝",
-            "completed": "已完成"
+            "completed": "已完成",
+            "command": "命令"
           }
         }
       },
