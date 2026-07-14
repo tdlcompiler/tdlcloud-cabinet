@@ -3133,7 +3133,8 @@
         "subscriptionDays": "Subscription days",
         "trialSubscription": "Trial subscription",
         "promoGroup": "Discount group",
-        "discount": "Discount %"
+        "discount": "Discount %",
+        "balanceAndDays": "Balance + days"
       },
       "modal": {
         "editPromocode": "Edit promo code",
@@ -3151,6 +3152,11 @@
         "typeTrialSubscription": "Trial subscription",
         "typePromoGroup": "Discount group",
         "typeDiscount": "Percentage discount",
+        "typeBonusSet": "Bonus set (balance / days / promo group)",
+        "bonusComposition": "Promo code contents",
+        "includeBalance": "Balance bonus",
+        "includeDays": "Subscription days",
+        "includePromoGroup": "Promo group",
         "bonusAmount": "Bonus amount",
         "rub": "RUB",
         "daysCount": "Number of days",
@@ -3242,6 +3248,7 @@
       },
       "validation": {
         "codeRequired": "Enter promo code",
+        "bonusSetEmpty": "Select at least one bonus for the promo code",
         "balanceRequired": "Bonus amount must be greater than 0",
         "daysRequired": "Number of days must be greater than 0",
         "groupRequired": "Select a discount group",

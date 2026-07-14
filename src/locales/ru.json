@@ -3537,7 +3537,8 @@
         "subscriptionDays": "Дни подписки",
         "trialSubscription": "Тестовая подписка",
         "promoGroup": "Группа скидок",
-        "discount": "Скидка %"
+        "discount": "Скидка %",
+        "balanceAndDays": "Баланс + дни"
       },
       "modal": {
         "editPromocode": "Редактирование промокода",
@@ -3555,6 +3556,11 @@
         "typeTrialSubscription": "Тестовая подписка",
         "typePromoGroup": "Группа скидок",
         "typeDiscount": "Процентная скидка",
+        "typeBonusSet": "Набор бонусов (баланс / дни / промогруппа)",
+        "bonusComposition": "Состав промокода",
+        "includeBalance": "Бонус на баланс",
+        "includeDays": "Дни подписки",
+        "includePromoGroup": "Промогруппа",
         "bonusAmount": "Сумма бонуса",
         "rub": "руб.",
         "daysCount": "Количество дней",
@@ -3648,6 +3654,7 @@
       },
       "validation": {
         "codeRequired": "Введите код промокода",
+        "bonusSetEmpty": "Выберите хотя бы один бонус в составе промокода",
         "balanceRequired": "Сумма бонуса должна быть больше 0",
         "daysRequired": "Количество дней должно быть больше 0",
         "groupRequired": "Выберите группу скидок",
