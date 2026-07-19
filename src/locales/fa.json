@@ -2669,7 +2669,8 @@
         "subscriptionDays": "روزهای اشتراک",
         "trialSubscription": "اشتراک آزمایشی",
         "promoGroup": "گروه تخفیف",
-        "discount": "تخفیف %"
+        "discount": "تخفیف %",
+        "balanceAndDays": "موجودی + روزها"
       },
       "modal": {
         "editPromocode": "ویرایش کد تخفیف",
@@ -2687,6 +2688,11 @@
         "typeTrialSubscription": "اشتراک آزمایشی",
         "typePromoGroup": "گروه تخفیف",
         "typeDiscount": "تخفیف درصدی",
+        "typeBonusSet": "مجموعه پاداش (موجودی / روزها / گروه تخفیف)",
+        "bonusComposition": "محتوای کد تخفیف",
+        "includeBalance": "پاداش موجودی",
+        "includeDays": "روزهای اشتراک",
+        "includePromoGroup": "گروه تخفیف",
         "bonusAmount": "مبلغ پاداش",
         "rub": "روبل",
         "daysCount": "تعداد روزها",
@@ -2776,6 +2782,7 @@
       },
       "validation": {
         "codeRequired": "کد تخفیف را وارد کنید",
+        "bonusSetEmpty": "حداقل یک پاداش برای کد تخفیف انتخاب کنید",
         "balanceRequired": "مبلغ پاداش باید بیشتر از 0 باشد",
         "daysRequired": "تعداد روزها باید بیشتر از 0 باشد",
         "groupRequired": "یک گروه تخفیف انتخاب کنید",

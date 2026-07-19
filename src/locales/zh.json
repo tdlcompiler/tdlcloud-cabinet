@@ -2668,7 +2668,8 @@
         "subscriptionDays": "订阅天数",
         "trialSubscription": "试用订阅",
         "promoGroup": "折扣组",
-        "discount": "折扣 %"
+        "discount": "折扣 %",
+        "balanceAndDays": "余额 + 天数"
       },
       "modal": {
         "editPromocode": "编辑促销码",
@@ -2686,6 +2687,11 @@
         "typeTrialSubscription": "试用订阅",
         "typePromoGroup": "折扣组",
         "typeDiscount": "百分比折扣",
+        "typeBonusSet": "奖励组合（余额 / 天数 / 优惠组）",
+        "bonusComposition": "促销码内容",
+        "includeBalance": "余额奖励",
+        "includeDays": "订阅天数",
+        "includePromoGroup": "优惠组",
         "bonusAmount": "奖金金额",
         "rub": "卢布",
         "daysCount": "天数",
@@ -2775,6 +2781,7 @@
       },
       "validation": {
         "codeRequired": "请输入促销码",
+        "bonusSetEmpty": "请为促销码至少选择一项奖励",
         "balanceRequired": "奖金金额必须大于0",
         "daysRequired": "天数必须大于0",
         "groupRequired": "请选择折扣组",
