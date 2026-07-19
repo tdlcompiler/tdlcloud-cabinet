@@ -775,6 +775,9 @@
       "jupiter": {
         "description": "Оплата СБП через Jupiter (FPGate P2P)"
       },
+      "cispay": {
+        "description": "Оплата картой или через СБП (cisPay)"
+      },
       "donut": {
         "description": "Оплата картой и СБП через Donut P2P"
       },
@@ -2198,6 +2201,7 @@
         "payments_etoplatezhi": "Etoplatezhi",
         "payments_antilopay": "Antilopay",
         "payments_jupiter": "Jupiter",
+        "payments_cispay": "CisPay",
         "payments_donut": "Donut",
         "payments_lava": "Lava",
         "payments_apple_iap": "Apple IAP",
