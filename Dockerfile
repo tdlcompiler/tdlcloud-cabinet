@@ -1,5 +1,5 @@
 # Stage 1: Build the React application
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
@@ -15,8 +15,8 @@ COPY . .
 # Build arguments for environment variables
 ARG VITE_API_URL=/api
 ARG VITE_TELEGRAM_BOT_USERNAME
-ARG VITE_APP_NAME=Cabinet
-ARG VITE_APP_LOGO=V
+ARG VITE_APP_NAME=TDL Cloud
+ARG VITE_APP_LOGO=T
 
 # Set environment variables for build
 ENV VITE_API_URL=$VITE_API_URL
@@ -42,4 +42,3 @@ EXPOSE 80
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
-
