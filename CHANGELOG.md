@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.76.1](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/compare/v1.76.0...v1.76.1) (2026-09-16)
+
+
+### Bug Fixes
+
+* в строке списка видно временный доступ и сколько у человека тарифов ([29c54f4](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/29c54f431b169a934fc1d58b49f1c8fd5db1400f))
+* зелёная точка «в сети» гаснет сама, без ответа сервера ([051a8d8](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/051a8d8a2a63201e515e035d579b87d962465850))
+* карточка сверки объясняет временный доступ вместо «Есть отличия» ([3e443f6](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/3e443f6cfc48045ddab956ef4a1629495c8a949b))
+* отказ сброса триала объясняется словами, а не английской строкой ([82bf3ac](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/82bf3ac074d64ef921f008986346f8279704afd3))
+* телефон — пометка временного доступа, клавиша ввода в поиске, кнопка «Наверх» ([82326b0](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/82326b09e04aa9badf70171bc528077cb8ce77c7))
+
+## [1.76.0](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/compare/v1.75.0...v1.76.0) (2026-09-15)
+
+
+### Features
+
+* **users:** второй проход раздела «Пользователи» по референсу — меньше надписей, всё доделано ([6625ccd](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/6625ccd83b6cf024e9a38cc801785a9ae1cdaed4))
+* **users:** замечания владельца — иконка раздела, фильтры одной кнопкой, онлайн по панели, плитки с иконками, без дублей ([ab4852b](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/ab4852bb6785607f0ce690886f62da38bfa6aa83))
+* **users:** карточка — шапка с фактами, пять вкладок из адреса, опасные действия за подтверждением ([8b58efd](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/8b58efd857e175487bd3de9f031e93f30bfdf500))
+* **users:** одно поле поиска, сегменты и чипы фильтров, адрес и лента вместо страниц ([9edaea6](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/9edaea6f75b912488fb9f4a56957b30bcdc28da8))
+* **users:** состояние списка в адресе, разбор одного поля поиска и относительное время ([cac1374](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/cac1374c5fec7890878f76cea9c3ed6e890c3e54))
+* **users:** шапка без «Продлить», плитки по режиму продаж — классика, тариф, мультитариф ([7190728](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/71907284b5a6e85648efae41ff4ae15d7bc934a7))
+
+
+### Bug Fixes
+
+* **admin:** админка на телефоне — ничего не уезжает за экран, таблицы листаются, суммы не рвутся ([b5b4a0d](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/b5b4a0d73cb5af54ca0246f0676ce4181d0be322))
+* **ui:** вёрстка на телефоне — ничего не режется и не слипается, «Выгодно» одним видом на всех витринах ([468e227](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/468e227086573c327ee750bc09c911db81b2ddc0))
+* **users:** без дублей выборки и BSCHEKER, два направления сверки с панелью, рефералы в окне у кнопки ([e04b786](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/e04b78609be32e8c8007122913360f7dd810f6c3))
+* **users:** все действия карточки — кнопками, без многоточий в подписях ([d8b2c70](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/d8b2c7049f24b825e21f36d1b020ec503cfb05b6))
+* **users:** плитки «Рефералов» и «Баланса» — к общему виду карточки ([95634ce](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/commit/95634ce7ecb65a2d8f2a9fd72b41a1555f3aeee6))
+
 ## [1.75.0](https://github.com/BEDOLAGA-DEV/bedolaga-cabinet/compare/v1.74.0...v1.75.0) (2026-09-14)
 
 
