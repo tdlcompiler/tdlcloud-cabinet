@@ -1,3 +1,4 @@
+import { useAuthStore } from '../store/auth';
 import { getLocalizedApiErrorMessage } from '../utils/api-error-display';
 import { uiLocale } from '@/utils/uiLocale';
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
@@ -421,6 +422,9 @@ function BuyTabContent({
   const [selectedTariffId, setSelectedTariffId] = useState<number | null>(null);
   const [selectedPeriodDays, setSelectedPeriodDays] = useState<number | null>(null);
   const [paymentMode, setPaymentMode] = useState<'balance' | 'gateway'>('balance');
+  const accountReceiptEmail = useAuthStore((state) => state.user?.receipt_email ?? state.user?.email ?? '');
+  const [receiptEmail, setReceiptEmail] = useState<string | null>(null);
+  const effectiveReceiptEmail = receiptEmail ?? accountReceiptEmail;
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [selectedSubOption, setSelectedSubOption] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -480,13 +484,18 @@ function BuyTabContent({
     if (!selectedTariffId || !selectedPeriodDays) return false;
     if (paymentMode === 'gateway' && !selectedMethod) return false;
     if (insufficientBalance) return false;
+    if (paymentMode === 'gateway' && selectedMethod?.startsWith('yookassa') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(effectiveReceiptEmail.trim())) return false;
     return true;
-  }, [selectedTariffId, selectedPeriodDays, paymentMode, selectedMethod, insufficientBalance]);
+  }, [selectedTariffId, selectedPeriodDays, paymentMode, selectedMethod, insufficientBalance, effectiveReceiptEmail]);
 
   // Purchase mutation
   const purchaseMutation = useMutation({
     mutationFn: (data: GiftPurchaseRequest) => giftApi.createPurchase(data),
     onSuccess: async (result) => {
+      if (paymentMode === 'gateway' && selectedMethod?.startsWith('yookassa')) {
+        const user = useAuthStore.getState().user;
+        if (user) useAuthStore.getState().setUser({ ...user, receipt_email: effectiveReceiptEmail.trim() });
+      }
       if (result.payment_url) {
         // Telegram Stars: open invoice natively instead of redirect
         const isStars = selectedMethod === 'telegram_stars';
@@ -546,6 +555,7 @@ function BuyTabContent({
       period_days: selectedPeriodDays,
       payment_mode: paymentMode,
       payment_method: paymentMethod,
+      receipt_email: paymentMethod?.startsWith('yookassa') ? effectiveReceiptEmail.trim() : undefined,
     };
 
     purchaseMutation.mutate(data);
@@ -686,6 +696,13 @@ function BuyTabContent({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {paymentMode === 'gateway' && selectedMethod?.startsWith('yookassa') && (
+        <label className="block space-y-2 text-sm text-dark-400">
+          <span>{t('balance.receiptEmail', 'Email для чека')}</span>
+          <input className="input w-full" type="email" required maxLength={254} value={effectiveReceiptEmail} onChange={(e) => setReceiptEmail(e.target.value)} />
+        </label>
+      )}
 
       {/* Summary / Balance info */}
       {paymentMode === 'balance' && (

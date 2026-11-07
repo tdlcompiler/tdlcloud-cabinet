@@ -64,7 +64,7 @@ export const balanceApi = {
       amount_kopeks: amountKopeks,
       payment_method: paymentMethod,
     };
-    if (customerEmail && paymentMethod === 'antilopay') payload.customer_email = customerEmail;
+    if (customerEmail && (paymentMethod === 'antilopay' || paymentMethod === 'yookassa')) payload.customer_email = customerEmail;
     if (paymentOption) {
       payload.payment_option = paymentOption;
     }

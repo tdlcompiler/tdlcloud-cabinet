@@ -6,6 +6,7 @@ export interface User {
   first_name: string | null;
   last_name: string | null;
   email: string | null;
+  receipt_email?: string | null;
   email_verified: boolean;
   balance_kopeks: number;
   balance_rubles: number;

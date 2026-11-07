@@ -991,6 +991,8 @@
     }
   },
   "balance": {
+    "receiptEmail": "Email для чека",
+    "receiptEmailHelp": "На этот адрес ЮКасса отправит чек. Email аккаунта не изменится.",
     "paymentEmail": "Email для оплаты",
     "paymentEmailHelp": "Antilopay нужен контакт покупателя. Email аккаунта не изменится.",
     "paymentEmailInvalid": "Укажите корректный email для оплаты.",

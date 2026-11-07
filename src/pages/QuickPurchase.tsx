@@ -832,6 +832,8 @@ export default function QuickPurchase() {
   const [selectedPeriodDays, setSelectedPeriodDays] = useState<number | null>(null);
   const contactKey = `lp_contact_${slug ?? ''}`;
   const [contactValue, setContactValue] = useState(() => readContactPrefill(contactKey));
+  const [receiptEmail, setReceiptEmail] = useState<string | null>(null);
+  const effectiveReceiptEmail = receiptEmail ?? (detectContactType(contactValue) === 'email' ? contactValue : '');
   // Контакт уже в состоянии — вычищаем его из адресной строки, чтобы личный
   // email не уехал в Метрику, Referer и историю браузера.
   useEffect(() => {
@@ -997,9 +999,10 @@ export default function QuickPurchase() {
   const canSubmit = useMemo(() => {
     if (!selectedTariffId || !selectedPeriodDays || !selectedMethod) return false;
     if (!isValidContact(contactValue)) return false;
+    if (selectedMethod?.startsWith('yookassa') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(effectiveReceiptEmail.trim())) return false;
     if (isGift && !isValidContact(giftRecipient)) return false;
     return true;
-  }, [selectedTariffId, selectedPeriodDays, selectedMethod, contactValue, isGift, giftRecipient]);
+  }, [selectedTariffId, selectedPeriodDays, selectedMethod, contactValue, isGift, giftRecipient, effectiveReceiptEmail]);
 
   // Purchase mutation
   const purchaseMutation = useMutation({
@@ -1042,6 +1045,7 @@ export default function QuickPurchase() {
       contact_type: detectContactType(contactValue),
       contact_value: contactValue.trim(),
       payment_method: paymentMethod,
+      receipt_email: paymentMethod.startsWith('yookassa') ? effectiveReceiptEmail.trim() : undefined,
       language: i18n.language,
       is_gift: isGift,
       referrer: safeSession.getItem('landing_referrer') || undefined,
@@ -1188,6 +1192,13 @@ export default function QuickPurchase() {
               giftMessage={giftMessage}
               onGiftMessageChange={setGiftMessage}
             />
+
+            {selectedMethod?.startsWith('yookassa') && (
+              <label className="block space-y-2 text-sm text-dark-400">
+                <span>{t('balance.receiptEmail', 'Email для чека')}</span>
+                <input className="input w-full" type="email" required maxLength={254} value={effectiveReceiptEmail} onChange={(e) => setReceiptEmail(e.target.value)} />
+              </label>
+            )}
 
             {/* Tariff cards */}
             {showTariffCards && (

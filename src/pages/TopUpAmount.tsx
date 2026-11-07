@@ -141,9 +141,10 @@ export default function TopUpAmount() {
 
   const initialDisplayAmount = getInitialAmount();
   const userEmail = useAuthStore((state) => state.user?.email);
+  const receiptEmail = useAuthStore((state) => state.user?.receipt_email);
   const [paymentEmail, setPaymentEmail] = useState<string | null>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const customerEmail = paymentEmail ?? userEmail ?? '';
+  const customerEmail = paymentEmail ?? (method?.id === 'yookassa' ? receiptEmail : null) ?? userEmail ?? '';
   const [amount, setAmount] = useState(initialDisplayAmount);
   const [error, setError] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(
@@ -229,7 +230,7 @@ export default function TopUpAmount() {
   >({
     mutationFn: (amountKopeks: number) => {
       if (!method) throw new Error('Method not loaded');
-      if (method.id === 'antilopay') {
+      if ((method.id === 'antilopay' || method.id === 'yookassa')) {
         return balanceApi.createTopUp(
           amountKopeks,
           method.id,
@@ -240,6 +241,10 @@ export default function TopUpAmount() {
       return balanceApi.createTopUp(amountKopeks, method.id, selectedOption || undefined);
     },
     onSuccess: (data) => {
+      if (method?.id === 'yookassa') {
+        const user = useAuthStore.getState().user;
+        if (user) useAuthStore.getState().setUser({ ...user, receipt_email: customerEmail.trim() });
+      }
       const redirectUrl = data.payment_url || data.invoice_url;
       if (redirectUrl) {
         // Save payment info for the result page (do BEFORE possible redirect,
@@ -344,7 +349,7 @@ export default function TopUpAmount() {
     setQrPayload(null);
     inputRef.current?.blur();
     if (
-      method.id === 'antilopay' &&
+      (method.id === 'antilopay' || method.id === 'yookassa') &&
       (!customerEmail.trim() || !emailRef.current?.checkValidity())
     ) {
       setError(t('balance.paymentEmailInvalid'));
@@ -501,10 +506,10 @@ export default function TopUpAmount() {
         </motion.div>
       )}
 
-      {method.id === 'antilopay' && (
+      {(method.id === 'antilopay' || method.id === 'yookassa') && (
         <motion.div variants={staggerItem} className="space-y-2">
           <label htmlFor="payment-email" className="text-sm font-medium text-dark-400">
-            {t('balance.paymentEmail')}
+            {t(method.id === 'yookassa' ? 'balance.receiptEmail' : 'balance.paymentEmail')}
           </label>
           <input
             ref={emailRef}
@@ -523,7 +528,7 @@ export default function TopUpAmount() {
             className="input w-full"
           />
           <p id="payment-email-help" className="text-sm text-dark-400">
-            {t('balance.paymentEmailHelp')}
+            {t(method.id === 'yookassa' ? 'balance.receiptEmailHelp' : 'balance.paymentEmailHelp')}
           </p>
         </motion.div>
       )}
@@ -605,7 +610,7 @@ export default function TopUpAmount() {
                   setQuickRub(a);
                   inputRef.current?.blur();
                   if (
-                    method.id === 'antilopay' &&
+                    (method.id === 'antilopay' || method.id === 'yookassa') &&
                     (!customerEmail.trim() || !emailRef.current?.checkValidity())
                   ) {
                     setError(t('balance.paymentEmailInvalid'));

@@ -963,6 +963,8 @@
     }
   },
   "balance": {
+    "receiptEmail": "Receipt email",
+    "receiptEmailHelp": "YooKassa will send the receipt to this address. Your account email will not change.",
     "paymentEmail": "Payment email",
     "paymentEmailHelp": "Antilopay requires a customer contact. Your account email will not change.",
     "paymentEmailInvalid": "Enter a valid payment email.",
